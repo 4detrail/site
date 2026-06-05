@@ -1,0 +1,16 @@
+# HEXAGES GAMES - robots.txt
+# https://hexagesgames.com
+
+User-agent: *
+Allow: /
+
+# Giriş ve hesap sayfaları
+Disallow: /giris.html
+Disallow: /profil.html
+Disallow: /sifremi-unuttum.html
+
+# Destek ticket sistemi (giriş gerektirir)
+Disallow: /ticket.html
+
+# Sitemap (yayınladıktan sonra güncelleyin)
+Sitemap: https://hexagesgames.com/sitemap.xml
