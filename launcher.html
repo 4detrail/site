@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEXAGES GAMES – Launcher İndir</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+
+  <main>
+    <section style="min-height:100vh;padding-top:128px;padding-bottom:96px;padding-left:24px;padding-right:24px">
+      <div class="container">
+
+        <!-- Header -->
+        <div class="anim-in anim-in-delay-1" style="text-align:center;margin-bottom:80px">
+          <span class="mono-label">// İNDİR</span>
+          <h1 style="font-family:var(--font-heading);font-weight:900;font-size:clamp(2.5rem,7vw,6rem);line-height:1;margin-top:8px">LAUNCHER İNDİR</h1>
+          <p style="color:var(--muted-foreground);margin-top:16px;font-family:var(--font-mono);font-size:13px;max-width:512px;margin-left:auto;margin-right:auto">Tüm HEXAGES oyunlarına tek noktadan erişin. Platform seçin ve indirin.</p>
+        </div>
+
+        <!-- Download Cards -->
+        <div class="dl-cards anim-in anim-in-delay-2">
+
+          <!-- PC -->
+          <div class="dl-card card-3d">
+            <div class="dl-card-top-line"></div>
+            <div class="dl-card-header">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              <h2>PC VERSİYONU</h2>
+            </div>
+            <p class="dl-card-desc">Tüm HEXAGES oyunlarına tek bir noktadan erişin. Otomatik güncellemeler, topluluk özellikleri ve daha fazlası.</p>
+            <button class="dl-btn" id="dl-pc" onclick="startDownload('dl-pc','https://github.com/4detrail/hexagesgames-release/releases/download/v1.1.9/Hexagesgames_Setup_1.1.9.exe')">
+              <span class="dl-btn-label">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                LAUNCHER'I ŞİMDİ İNDİR
+              </span>
+            </button>
+            <p class="dl-meta">Sürüm: 1.1.9 | Boyut: ~118 MB | Platform: Windows 10/11</p>
+            <div class="specs-grid">
+              <div class="spec-box">
+                <div class="spec-heading">MİNİMUM</div>
+                <div class="spec-item"><span class="spec-key">İşletim Sistemi</span><span class="spec-val">Windows 10 64-bit</span></div>
+                <div class="spec-item"><span class="spec-key">İşlemci</span><span class="spec-val">Intel i3 / Ryzen 3</span></div>
+                <div class="spec-item"><span class="spec-key">Bellek</span><span class="spec-val">4 GB RAM</span></div>
+                <div class="spec-item"><span class="spec-key">Ekran Kartı</span><span class="spec-val">Intel HD 620</span></div>
+                <div class="spec-item"><span class="spec-key">Depolama</span><span class="spec-val">500 MB</span></div>
+              </div>
+              <div class="spec-box green">
+                <div class="spec-heading green">ÖNERİLEN</div>
+                <div class="spec-item"><span class="spec-key">İşletim Sistemi</span><span class="spec-val">Windows 11 64-bit</span></div>
+                <div class="spec-item"><span class="spec-key">İşlemci</span><span class="spec-val">Intel i5 / Ryzen 5</span></div>
+                <div class="spec-item"><span class="spec-key">Bellek</span><span class="spec-val">8 GB RAM</span></div>
+                <div class="spec-item"><span class="spec-key">Ekran Kartı</span><span class="spec-val">GTX 1050 Ti</span></div>
+                <div class="spec-item"><span class="spec-key">Bağlantı</span><span class="spec-val">Geniş Bant</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile -->
+          <div class="dl-card blue card-3d">
+            <div class="dl-card-top-line"></div>
+            <div class="dl-card-header">
+              <svg width="24" height="24" fill="none" stroke="#93c5fd" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+              <h2>MOBİL DEMO</h2>
+            </div>
+            <p class="dl-card-desc">HEXAGES oyunlarını mobil cihazınızda deneyin. Beta versiyonlarını telefonunuzda test edin ve geri bildirim gönderin.</p>
+            <button class="dl-btn blue" id="dl-mobile" onclick="startDownload('dl-mobile','https://github.com/4detrail/hexagesgames-release/releases/download/V1.0.2/hexages-mobile.apk')">
+              <span class="dl-btn-label">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                MOBİL DEMOYU AÇ
+              </span>
+            </button>
+            <p class="dl-meta">Sürüm: DEMO - 1.0.2 | Beta | Android/iOS Uyumlu</p>
+            <div class="specs-grid">
+              <div class="spec-box blue">
+                <div class="spec-heading blue">MOBİL GEREKSİNİMLER</div>
+                <div class="spec-item"><span class="spec-key">İşletim Sistemi</span><span class="spec-val">Android 8+ / iOS 12+</span></div>
+                <div class="spec-item"><span class="spec-key">İşlemci</span><span class="spec-val">2+ Çekirdekli</span></div>
+                <div class="spec-item"><span class="spec-key">Bellek</span><span class="spec-val">2 GB RAM</span></div>
+                <div class="spec-item"><span class="spec-key">Depolama</span><span class="spec-val">100 MB</span></div>
+                <div class="spec-item"><span class="spec-key">Bağlantı</span><span class="spec-val">Geniş Bant</span></div>
+              </div>
+              <div class="spec-box blue">
+                <div class="spec-heading blue">DEMO ÖZELLİKLERİ</div>
+                <div class="spec-item"><span class="spec-key">Çevrimiçi Erişim</span><span class="spec-val">Evet</span></div>
+                <div class="spec-item"><span class="spec-key">Beta Oyunlar</span><span class="spec-val">3 Oyun</span></div>
+                <div class="spec-item"><span class="spec-key">Kontrol</span><span class="spec-val">Dokunmatik/Gamepad</span></div>
+                <div class="spec-item"><span class="spec-key">Cloud Kayıt</span><span class="spec-val">Evet</span></div>
+                <div class="spec-item"><span class="spec-key">Geri Bildirim</span><span class="spec-val">Entegre</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- end dl-cards -->
+
+        <!-- FAQ -->
+        <div class="reveal" style="margin-top:80px">
+          <h2 style="font-family:var(--font-heading);font-weight:900;font-size:24px;margin-bottom:32px;text-align:center">SIK SORULAN SORULAR</h2>
+          <div class="faq-grid">
+            <div class="faq-item">
+              <p class="faq-q">Q: Launcher güvenli mi?</p>
+              <p class="faq-a">A: Evet, tüm dosyalarımız GitHub üzerinden imzalı olarak yayınlanmaktadır.</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q">Q: Mobil demo ücretsiz mi?</p>
+              <p class="faq-a">A: Evet, demo sürümü tamamen ücretsizdir. Beta test için erken erişim.</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q">Q: Hangi Windows sürümleri destekleniyor?</p>
+              <p class="faq-a">A: Windows 10 ve Windows 11 64-bit desteklenmektedir.</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q">Q: Launcher otomatik güncelleniyor mu?</p>
+              <p class="faq-a">A: Evet, yeni sürüm çıktığında launcher otomatik olarak güncelleme bildirir.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import { initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav } from './js/app.js';
+
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+  </script>
+
+  <script>
+    function startDownload(btnId, href) {
+      const btn = document.getElementById(btnId);
+      if (btn.dataset.state === 'done') return;
+      btn.dataset.state = 'loading';
+      btn.disabled = true;
+
+      // Create progress overlay
+      const prog = document.createElement('div');
+      prog.className = 'dl-btn-progress';
+      prog.style.width = '0%';
+      btn.style.position = 'relative';
+      btn.prepend(prog);
+
+      const label = btn.querySelector('.dl-btn-label');
+
+      let p = 0;
+      const iv = setInterval(() => {
+        p += Math.random() * 15;
+        if (p >= 100) {
+          p = 100;
+          prog.style.width = '100%';
+          label.textContent = '✓ İNDİRME BAŞLADI';
+          clearInterval(iv);
+          btn.dataset.state = 'done';
+          setTimeout(() => {
+            window.open(href, '_blank');
+          }, 500);
+        } else {
+          prog.style.width = p + '%';
+          label.textContent = Math.round(p) + '% — HAZIRLANIYOR...';
+        }
+      }, 100);
+    }
+  </script>
+</body>
+</html>

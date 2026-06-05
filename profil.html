@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEXAGES GAMES – Profil</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+
+  <main>
+    <section style="min-height:100vh;padding-top:128px;padding-bottom:96px;padding-left:24px;padding-right:24px">
+      <div class="container" style="max-width:1024px">
+
+        <div class="anim-in anim-in-delay-1" style="margin-bottom:48px">
+          <span class="mono-label">// OYUNCU DOSYASI</span>
+          <h1 style="font-family:var(--font-heading);font-weight:900;font-size:clamp(2.5rem,6vw,5rem);line-height:1;margin-top:8px">PROFİL</h1>
+        </div>
+
+        <div id="not-logged" style="display:none;text-align:center;padding:64px 24px;border:1px solid var(--border)">
+          <p style="font-family:var(--font-mono);font-size:13px;color:var(--muted-foreground);margin-bottom:24px">Bu sayfayı görüntülemek için giriş yapmalısınız.</p>
+          <a href="giris.html" class="btn-download" style="font-size:11px">GİRİŞ YAP</a>
+        </div>
+
+        <div id="profile-content" style="display:none">
+          <div class="profile-grid-react">
+            <!-- Avatar sidebar -->
+            <div class="profile-card" style="text-align:center">
+              <div id="profile-avatar-wrap">
+                <div class="profile-avatar float-anim" id="profile-avatar">?</div>
+              </div>
+              <div id="access-badge" class="access-badge">USER ACCESS</div>
+              <button onclick="handleLogout()" class="btn-logout">ÇIKIŞ YAP</button>
+            </div>
+
+            <!-- Info -->
+            <div class="profile-card profile-info-card">
+              <span class="mono-label" style="display:block;margin-bottom:24px">// KİMLİK BİLGİLERİ</span>
+
+              <div class="profile-field">
+                <label class="form-label">KULLANICI ADI</label>
+                <div id="name-view" style="display:flex;align-items:center;gap:12px">
+                  <span class="profile-name" id="profile-name">—</span>
+                  <button onclick="startEdit()" class="btn-icon" type="button">✎</button>
+                </div>
+                <div id="name-edit" style="display:none;gap:8px;align-items:center">
+                  <input type="text" id="edit-name" class="form-input" style="flex:1">
+                  <button onclick="updateName()" class="btn-icon btn-icon-ok" type="button">✓</button>
+                  <button onclick="cancelEdit()" class="btn-icon btn-icon-cancel" type="button">✕</button>
+                </div>
+                <div id="edit-error" class="error-msg" style="display:none;margin-top:8px"></div>
+                <div id="edit-success" class="success-msg" style="display:none;margin-top:8px">Ad başarıyla güncellendi!</div>
+              </div>
+
+              <div class="profile-field">
+                <label class="form-label">E-POSTA</label>
+                <div class="profile-email" id="profile-email">—</div>
+              </div>
+
+              <div class="profile-field">
+                <label class="form-label">KAYIT TARİHİ</label>
+                <div class="profile-email" id="profile-joined">—</div>
+              </div>
+
+              <div class="profile-field" style="border-bottom:none;padding-bottom:0">
+                <label class="form-label">OYUNCU ID</label>
+                <div class="profile-email" id="profile-uid" style="word-break:break-all">—</div>
+              </div>
+            </div>
+
+            <!-- Quick links -->
+            <div class="profile-card profile-quick-card">
+              <span class="mono-label" style="display:block;margin-bottom:20px">// HIZLI ERİŞİM</span>
+              <div class="quick-links-grid">
+                <a href="ticket.html" class="quick-link-card">
+                  <span class="quick-link-title">TİCKETLARIM</span>
+                  <span class="quick-link-desc">Destek taleplerim</span>
+                </a>
+                <a href="launcher.html" class="quick-link-card">
+                  <span class="quick-link-title">LAUNCHER</span>
+                  <span class="quick-link-desc">İndir &amp; güncelle</span>
+                </a>
+                <a href="oyunlar.html" class="quick-link-card">
+                  <span class="quick-link-title">OYUNLAR</span>
+                  <span class="quick-link-desc">Gelecek projeler</span>
+                </a>
+                <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="quick-link-card">
+                  <span class="quick-link-title">DİSCORD</span>
+                  <span class="quick-link-desc">Topluluğa katıl</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import {
+      auth, isAdmin, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
+      onAuthStateChanged, signOut, updateProfile
+    } from './js/app.js';
+
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        document.getElementById('not-logged').style.display = 'block';
+        return;
+      }
+      document.getElementById('profile-content').style.display = 'block';
+
+      const name = user.displayName || 'İsimsiz Oyuncu';
+      const initial = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
+
+      const avatarWrap = document.getElementById('profile-avatar-wrap');
+      if (user.photoURL) {
+        avatarWrap.innerHTML = `<img src="${user.photoURL}" alt="Avatar" style="width:96px;height:96px;border-radius:50%;border:1px solid var(--border);margin:0 auto 20px;display:block">`;
+      } else {
+        document.getElementById('profile-avatar').textContent = initial;
+      }
+
+      document.getElementById('profile-name').textContent = name;
+      document.getElementById('profile-email').textContent = user.email;
+      document.getElementById('edit-name').value = user.displayName || '';
+
+      const joined = user.metadata?.creationTime
+        ? new Date(user.metadata.creationTime).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })
+        : 'Bilinmiyor';
+      document.getElementById('profile-joined').textContent = joined;
+      document.getElementById('profile-uid').textContent = user.uid;
+
+      const badge = document.getElementById('access-badge');
+      if (isAdmin(user.email)) {
+        badge.textContent = '⚡ ADMIN ACCESS';
+        badge.classList.add('admin');
+      }
+    });
+
+    window.handleLogout = async () => {
+      await signOut(auth);
+      window.location.href = 'index.html';
+    };
+
+    window.startEdit = () => {
+      document.getElementById('name-view').style.display = 'none';
+      const edit = document.getElementById('name-edit');
+      edit.style.display = 'flex';
+    };
+
+    window.cancelEdit = () => {
+      document.getElementById('name-edit').style.display = 'none';
+      document.getElementById('name-view').style.display = 'flex';
+      document.getElementById('edit-name').value = auth.currentUser?.displayName || '';
+      document.getElementById('edit-error').style.display = 'none';
+    };
+
+    window.updateName = async () => {
+      const name = document.getElementById('edit-name').value.trim();
+      const errEl = document.getElementById('edit-error');
+      const okEl = document.getElementById('edit-success');
+      errEl.style.display = 'none';
+      okEl.style.display = 'none';
+      if (!name) {
+        errEl.textContent = 'Ad boş olamaz.';
+        errEl.style.display = 'block';
+        return;
+      }
+      try {
+        await updateProfile(auth.currentUser, { displayName: name });
+        document.getElementById('profile-name').textContent = name;
+        const avatar = document.getElementById('profile-avatar');
+        if (avatar) avatar.textContent = name.charAt(0).toUpperCase();
+        okEl.style.display = 'block';
+        cancelEdit();
+        setTimeout(() => { okEl.style.display = 'none'; }, 3000);
+      } catch {
+        errEl.textContent = 'Güncelleme başarısız.';
+        errEl.style.display = 'block';
+      }
+    };
+  </script>
+</body>
+</html>
