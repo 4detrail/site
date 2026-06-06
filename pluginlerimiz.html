@@ -36,6 +36,48 @@
 
         <div class="games-grid stagger-children" id="plugins-grid"></div>
 
+        <!-- KULLANIM KILAVUZLARI -->
+        <div class="reveal" style="margin-top:96px;padding-top:64px;border-top:1px solid var(--border)">
+          <div style="margin-bottom:48px">
+            <span class="mono-label">// KULLANIM KILAVUZLARI</span>
+            <h2 style="font-family:var(--font-heading);font-weight:900;font-size:clamp(2rem,5vw,3.5rem);line-height:1;margin-top:12px">VİDEO REHBERLER</h2>
+            <p style="color:var(--muted-foreground);margin-top:16px;font-family:var(--font-mono);font-size:13px;max-width:640px">Her plugin için adım adım kurulum ve kullanım videoları YouTube kanalımızda. Takıldığın yerde rehberlere göz at.</p>
+          </div>
+
+          <div class="video-grid stagger-children" id="guides-grid"></div>
+        </div>
+
+        <!-- YOUTUBE KANALI -->
+        <div class="youtube-cta reveal" style="margin-top:80px">
+          <div class="youtube-cta-glow"></div>
+          <div class="youtube-cta-inner">
+            <div class="youtube-cta-left">
+              <div class="youtube-icon-wrap">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor" aria-hidden="true">
+                  <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="youtube-handle">@zcrosty</p>
+                <h3 class="youtube-title">HEXAGES YOUTUBE KANALI</h3>
+                <p class="youtube-desc">Plugin kurulumları, kullanım ipuçları ve yeni güncellemeler — hepsi burada. Yeni videolardan haberdar olmak için kanala abone ol!</p>
+                <p class="youtube-reminder">
+                  <span class="subscribe-pulse"></span>
+                  Abone olmayı unutma — destek için tek tık yeter!
+                </p>
+              </div>
+            </div>
+            <div class="youtube-cta-actions">
+              <a href="https://www.youtube.com/@zcrosty?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-subscribe">
+                ▶ KANALA ABONE OL
+              </a>
+              <a href="https://www.youtube.com/@zcrosty" target="_blank" rel="noopener noreferrer" class="btn-youtube-outline">
+                TÜM VİDEOLARI GÖR →
+              </a>
+            </div>
+          </div>
+        </div>
+
         <div style="margin-top:80px;text-align:center;border:1px solid var(--border);padding:64px 32px;position:relative;overflow:hidden" class="reveal">
           <div class="shimmer" style="position:absolute;inset:0"></div>
           <div style="position:relative">
@@ -77,6 +119,232 @@
       transition: opacity 0.3s;
     }
     .plugin-card-link:hover .plugin-download { opacity: 1; }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .video-grid { grid-template-columns: 1fr; } }
+
+    .video-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+      background: var(--card);
+    }
+    .video-card:hover {
+      border-color: rgba(255, 0, 0, 0.5);
+      transform: translateY(-4px);
+    }
+    .video-thumb {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .video-thumb::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 4px);
+    }
+    .video-play {
+      width: 56px;
+      height: 56px;
+      border: 2px solid rgba(255,255,255,0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      padding-left: 4px;
+      background: rgba(255,0,0,0.85);
+      border-color: #ff0000;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+    .video-card:hover .video-play {
+      transform: scale(1.1);
+      box-shadow: 0 0 24px rgba(255,0,0,0.4);
+    }
+    .video-duration {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 4px 8px;
+      background: rgba(0,0,0,0.8);
+      border: 1px solid var(--border);
+      z-index: 1;
+    }
+    .video-body { padding: 20px; }
+    .video-plugin-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: #ff4444;
+      margin-bottom: 8px;
+    }
+    .video-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .video-desc {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted-foreground);
+      line-height: 1.6;
+    }
+
+    .youtube-cta {
+      position: relative;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(255,0,0,0.08), transparent 60%);
+    }
+    .youtube-cta-glow {
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255,0,0,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .youtube-cta-inner {
+      position: relative;
+      padding: 48px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .youtube-cta-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      flex: 1;
+      min-width: 280px;
+    }
+    .youtube-icon-wrap {
+      flex-shrink: 0;
+      width: 64px;
+      height: 64px;
+      border: 1px solid rgba(255,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ff0000;
+      background: rgba(255,0,0,0.1);
+    }
+    .youtube-handle {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: #ff4444;
+      margin-bottom: 6px;
+    }
+    .youtube-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .youtube-desc {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted-foreground);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 16px;
+    }
+    .youtube-reminder {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--foreground);
+      padding: 10px 14px;
+      border: 1px dashed rgba(255,0,0,0.35);
+      background: rgba(255,0,0,0.05);
+      width: fit-content;
+    }
+    .subscribe-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ff0000;
+      flex-shrink: 0;
+      animation: subscribePulse 1.5s ease-in-out infinite;
+    }
+    @keyframes subscribePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+    .youtube-cta-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .btn-subscribe {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 16px 32px;
+      background: #ff0000;
+      color: #fff;
+      border: none;
+      text-align: center;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      white-space: nowrap;
+    }
+    .btn-subscribe:hover {
+      background: #cc0000;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,0,0,0.35);
+    }
+    .btn-youtube-outline {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      padding: 12px 24px;
+      border: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted-foreground);
+      transition: border-color 0.3s, color 0.3s;
+      white-space: nowrap;
+    }
+    .btn-youtube-outline:hover {
+      border-color: rgba(255,255,255,0.4);
+      color: var(--foreground);
+    }
+    @media (max-width: 768px) {
+      .youtube-cta-inner { padding: 32px 24px; }
+      .youtube-cta-actions { width: 100%; }
+      .btn-subscribe, .btn-youtube-outline { width: 100%; }
+    }
   </style>
 
   <script type="module">
@@ -93,24 +361,32 @@
     initReveal();
     initAuthNav();
 
+    const YOUTUBE_CHANNEL = 'https://www.youtube.com/@zcrosty';
+
     const plugins = [
       {
         name: 'HEXAGES BANKNOTES',
         desc: 'Sunucu ekonomisi için banknot sistemi',
         url: 'https://modrinth.com/plugin/hexagesbanknotes',
-        tag: 'EKONOMİ'
+        tag: 'EKONOMİ',
+        guideTitle: 'HEXAGES Banknotes Kurulum Rehberi',
+        guideDesc: 'Kurulum, yapılandırma ve ekonomi sistemi kullanımı'
       },
       {
         name: 'NEX ADMIN',
         desc: 'Güçlü yönetim ve moderasyon araçları',
         url: 'https://modrinth.com/plugin/nexadmin',
-        tag: 'YÖNETİM'
+        tag: 'YÖNETİM',
+        guideTitle: 'Nex Admin Kullanım Kılavuzu',
+        guideDesc: 'Yetki ayarları, komutlar ve moderasyon araçları'
       },
       {
         name: 'NEX DUELS',
         desc: 'Oyuncu düelloları ve arena sistemi',
         url: 'https://modrinth.com/plugin/nexduels',
-        tag: 'PVP'
+        tag: 'PVP',
+        guideTitle: 'Nex Duels Arena Rehberi',
+        guideDesc: 'Arena kurulumu, düello sistemi ve oyuncu yönetimi'
       }
     ];
 
@@ -149,6 +425,23 @@
                 <div class="game-progress-fill" style="width:0%" data-width="100%"></div>
               </div>
             </div>
+          </div>
+        </a>
+      `;
+    });
+
+    const guidesGrid = document.getElementById('guides-grid');
+    plugins.forEach(plugin => {
+      guidesGrid.innerHTML += `
+        <a href="${YOUTUBE_CHANNEL}" target="_blank" rel="noopener noreferrer" class="video-card card-3d">
+          <div class="video-thumb">
+            <div class="video-play">▶</div>
+            <span class="video-duration">YOUTUBE</span>
+          </div>
+          <div class="video-body">
+            <p class="video-plugin-tag">// ${plugin.name}</p>
+            <p class="video-title">${plugin.guideTitle}</p>
+            <p class="video-desc">${plugin.guideDesc} — @zcrosty kanalında izle.</p>
           </div>
         </a>
       `;
