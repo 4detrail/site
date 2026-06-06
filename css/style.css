@@ -109,12 +109,12 @@ nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 50;
-  transition: background 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease;
+  transition: all 0.5s ease;
+  height: 64px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
 }
-nav.scrolled,
-nav.menu-open {
+nav.scrolled {
   background: rgba(0,0,0,0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
@@ -124,11 +124,9 @@ nav.menu-open {
   margin: 0 auto;
   padding: 0 24px;
   width: 100%;
-  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-shrink: 0;
 }
 .nav-logo {
   display: flex;
@@ -209,54 +207,24 @@ nav.menu-open {
   text-decoration: none;
 }
 .btn-profile:hover { border-color: white; background: white; color: black; }
+
 /* ===== HAMBURGER ===== */
 .btn-hamburger {
   display: none;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
   background: transparent;
-  border: 1px solid var(--border);
+  border: none;
   color: white;
   cursor: pointer;
-  padding: 0;
-  position: relative;
-  z-index: 51;
-  transition: border-color 0.3s, background 0.3s;
+  padding: 8px;
 }
-.btn-hamburger:hover { border-color: rgba(255,255,255,0.5); }
-.btn-hamburger .hamburger-line {
-  display: block;
-  width: 18px;
-  height: 2px;
-  background: currentColor;
-  transition: transform 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
-}
-.btn-hamburger .hamburger-line + .hamburger-line { margin-top: 4px; }
-.btn-hamburger.open .hamburger-line:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-.btn-hamburger.open .hamburger-line:nth-child(2) { opacity: 0; }
-.btn-hamburger.open .hamburger-line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 .mobile-menu {
-  display: flex;
+  display: none;
   flex-direction: column;
-  width: 100%;
-  border-top: 1px solid transparent;
+  border-top: 1px solid var(--border);
   background: rgba(0,0,0,0.98);
   backdrop-filter: blur(12px);
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  visibility: hidden;
-  transition: max-height 0.35s ease, opacity 0.3s ease, visibility 0.3s ease, border-color 0.3s ease;
 }
-.mobile-menu.open {
-  max-height: min(80vh, 480px);
-  opacity: 1;
-  visibility: visible;
-  border-top-color: var(--border);
-  overflow-y: auto;
-}
+.mobile-menu.open { display: flex; }
 .mobile-menu a {
   display: block;
   padding: 16px 24px;
@@ -266,29 +234,14 @@ nav.menu-open {
   color: var(--muted-foreground);
   border-bottom: 1px solid rgba(255,255,255,0.05);
   transition: all 0.3s;
-  text-decoration: none;
 }
 .mobile-menu a:hover, .mobile-menu a.active { color: white; background: rgba(255,255,255,0.05); }
-.mobile-menu-auth {
-  padding: 16px 24px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-.mobile-menu-auth .btn-login,
-.mobile-menu-auth .btn-profile {
-  display: inline-flex;
-  width: 100%;
-  justify-content: center;
-}
-body.menu-open { overflow: hidden; }
+
 @media (max-width: 768px) {
   .nav-links { display: none; }
-  .btn-hamburger { display: flex; flex-direction: column; }
-  #nav-auth .btn-login,
-  #nav-auth .btn-profile { display: none; }
+  .btn-hamburger { display: flex; }
+  .btn-login, .btn-profile { display: none; }
   .btn-theme { display: flex; }
-}
-@media (min-width: 769px) {
-  .mobile-menu { display: none !important; }
 }
 
 /* ===== PAGE LAYOUT ===== */
@@ -1091,13 +1044,18 @@ footer {
   font-size: 11px;
   color: var(--muted-foreground);
 }
-.light nav.scrolled,
-.light nav.menu-open {
+.light nav.scrolled {
   background: rgba(247,247,247,0.95);
 }
 .light .mobile-menu {
   background: rgba(247,247,247,0.98);
 }
-.light .btn-hamburger { color: var(--foreground); }
-.light .mobile-menu a:hover,
-.light .mobile-menu a.active { color: var(--foreground); background: rgba(0,0,0,0.05); }
+.light .nav-links a:hover, .light .nav-links a.active { color: var(--foreground); }
+.light .nav-links a::after { background: var(--foreground); }
+.light .btn-login { border-color: var(--foreground); background: var(--foreground); color: var(--background); }
+.light .btn-login:hover { background: transparent; color: var(--foreground); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .stagger-children > *, .float-anim, .shimmer,
+  .glitch-text::before, .glitch-text::after, .scroll-line { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+}
