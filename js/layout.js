@@ -15,6 +15,7 @@ export function getNavHTML() {
     <ul class="nav-links">
       <li><a href="index.html" class="nav-link">ANA SAYFA</a></li>
       <li><a href="oyunlar.html" class="nav-link">OYUNLAR</a></li>
+      <li><a href="pluginlerimiz.html" class="nav-link">PLUGINLER</a></li>
       <li><a href="launcher.html" class="nav-link">LAUNCHER</a></li>
       <li><a href="iletisim.html" class="nav-link">İLETİŞİM</a></li>
       <li><a href="ticket.html" class="nav-link">TİCKET</a></li>
@@ -32,6 +33,7 @@ export function getNavHTML() {
   <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
     <a href="index.html" class="nav-link">→ ANA SAYFA</a>
     <a href="oyunlar.html" class="nav-link">→ OYUNLAR</a>
+    <a href="pluginlerimiz.html" class="nav-link">→ PLUGINLER</a>
     <a href="launcher.html" class="nav-link">→ LAUNCHER</a>
     <a href="iletisim.html" class="nav-link">→ İLETİŞİM</a>
     <a href="ticket.html" class="nav-link">→ TİCKET</a>
@@ -58,6 +60,7 @@ export function getFooterHTML() {
         <div class="footer-links">
           <a href="index.html">→ ANA SAYFA</a>
           <a href="oyunlar.html">→ OYUNLAR</a>
+          <a href="pluginlerimiz.html">→ PLUGINLER</a>
           <a href="launcher.html">→ LAUNCHER</a>
           <a href="iletisim.html">→ İLETİŞİM</a>
         </div>
