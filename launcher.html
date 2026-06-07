@@ -20,33 +20,24 @@
           <p style="color:var(--muted-foreground);margin-top:16px;font-family:var(--font-mono);font-size:13px;max-width:512px;margin-left:auto;margin-right:auto">Tüm HEXAGES oyunlarına tek noktadan erişin. Platform seçin ve indirin.</p>
         </div>
 
-        <!-- Uyarı Banner -->
-        <div class="anim-in anim-in-delay-1" style="background:rgba(255,180,0,0.12);border:1px solid rgba(255,180,0,0.35);border-radius:12px;padding:18px 24px;display:flex;align-items:flex-start;gap:14px;margin-bottom:40px;max-width:860px;margin-left:auto;margin-right:auto">
-          <svg width="22" height="22" fill="none" stroke="#f59e0b" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:2px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          <div>
-            <p style="color:#f59e0b;font-weight:700;font-size:14px;margin:0 0 4px">LAUNCHER GEÇİCİ OLARAK DURDURULMUŞTUR</p>
-            <p style="color:#f59e0b;font-size:13px;margin:0;opacity:0.85">Bug ve lag sorunları nedeniyle indirme geçici olarak kapatılmıştır. Sorunlar çözüldükten sonra yeniden açılacaktır. Anlayışınız için teşekkür ederiz.</p>
-          </div>
-        </div>
-
         <!-- Download Cards -->
         <div class="dl-cards anim-in anim-in-delay-2">
 
           <!-- PC -->
-          <div class="dl-card card-3d" style="position:relative;overflow:hidden">
+          <div class="dl-card card-3d">
             <div class="dl-card-top-line"></div>
             <div class="dl-card-header">
               <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
               <h2>PC VERSİYONU</h2>
             </div>
             <p class="dl-card-desc">Tüm HEXAGES oyunlarına tek bir noktadan erişin. Otomatik güncellemeler, topluluk özellikleri ve daha fazlası.</p>
-            <button class="dl-btn" disabled style="opacity:0.45;cursor:not-allowed;position:relative">
+            <button class="dl-btn" id="dl-pc" onclick="startDownload('dl-pc','https://github.com/4detrail/hexagesgames-release/releases/download/v1.2.1/Hexagesgames_Setup_1.2.1.exe')">
               <span class="dl-btn-label">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline"><path d="M18.36 6.64A9 9 0 115.64 17.36"/><path d="M23 12h-4"/></svg>
-                İNDİRME GEÇİCİ OLARAK KAPALI
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                LAUNCHER'I ŞİMDİ İNDİR
               </span>
             </button>
-            <p class="dl-meta">Sürüm: 1.1.9 | Boyut: ~118 MB | Platform: Windows 10/11</p>
+            <p class="dl-meta">Sürüm: 1.2.1 | Boyut: ~118 MB | Platform: Windows 10/11</p>
             <div class="specs-grid">
               <div class="spec-box">
                 <div class="spec-heading">MİNİMUM</div>
@@ -65,17 +56,9 @@
                 <div class="spec-item"><span class="spec-key">Bağlantı</span><span class="spec-val">Geniş Bant</span></div>
               </div>
             </div>
-            <!-- Kart Üzeri Çarpı Overlay -->
-            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border-radius:inherit;z-index:10;pointer-events:none">
-              <div style="width:64px;height:64px;border-radius:50%;background:rgba(239,68,68,0.2);border:2px solid rgba(239,68,68,0.6);display:flex;align-items:center;justify-content:center">
-                <svg width="32" height="32" fill="none" stroke="#ef4444" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              </div>
-              <p style="color:#fff;font-weight:700;font-size:13px;margin:0;letter-spacing:0.05em">GEÇİCİ OLARAK DURDURULDU</p>
-              <p style="color:rgba(255,255,255,0.6);font-size:11px;margin:0;text-align:center;padding:0 24px">Bug ve lag sorunları nedeniyle</p>
-            </div>
           </div>
 
-          <!-- Mobile -->
+          <!-- Mobile — KAPALI -->
           <div class="dl-card blue card-3d" style="position:relative;overflow:hidden">
             <div class="dl-card-top-line"></div>
             <div class="dl-card-header">
@@ -108,7 +91,7 @@
                 <div class="spec-item"><span class="spec-key">Geri Bildirim</span><span class="spec-val">Entegre</span></div>
               </div>
             </div>
-            <!-- Kart Üzeri Çarpı Overlay -->
+            <!-- Kapalı Overlay -->
             <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border-radius:inherit;z-index:10;pointer-events:none">
               <div style="width:64px;height:64px;border-radius:50%;background:rgba(239,68,68,0.2);border:2px solid rgba(239,68,68,0.6);display:flex;align-items:center;justify-content:center">
                 <svg width="32" height="32" fill="none" stroke="#ef4444" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -119,17 +102,6 @@
           </div>
 
         </div><!-- end dl-cards -->
-
-        <!-- Ticket Kutusu -->
-        <div class="reveal" style="margin-top:40px;max-width:860px;margin-left:auto;margin-right:auto">
-          <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:12px;padding:18px 24px;display:flex;align-items:center;gap:16px">
-            <svg width="24" height="24" fill="none" stroke="#818cf8" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0"><path d="M15 5v2M15 11v2M15 17v2M5 5h14a2 2 0 012 2v3a2 2 0 000 4v3a2 2 0 01-2 2H5a2 2 0 01-2-2v-3a2 2 0 000-4V7a2 2 0 012-2z"/></svg>
-            <div>
-              <p style="color:#818cf8;font-weight:700;font-size:14px;margin:0 0 4px">SORUN MU YAŞIYORSUNUZ?</p>
-              <p style="color:#818cf8;font-size:13px;margin:0;opacity:0.85">Yaşadığınız sorunlar için bir <strong>destek talebi (ticket)</strong> açın. Ekibimiz en kısa sürede size geri dönecektir.</p>
-            </div>
-          </div>
-        </div>
 
         <!-- FAQ -->
         <div class="reveal" style="margin-top:80px">
@@ -170,5 +142,39 @@
     initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
   </script>
 
+  <script>
+    function startDownload(btnId, href) {
+      const btn = document.getElementById(btnId);
+      if (btn.dataset.state === 'done') return;
+      btn.dataset.state = 'loading';
+      btn.disabled = true;
+
+      const prog = document.createElement('div');
+      prog.className = 'dl-btn-progress';
+      prog.style.width = '0%';
+      btn.style.position = 'relative';
+      btn.prepend(prog);
+
+      const label = btn.querySelector('.dl-btn-label');
+
+      let p = 0;
+      const iv = setInterval(() => {
+        p += Math.random() * 15;
+        if (p >= 100) {
+          p = 100;
+          prog.style.width = '100%';
+          label.textContent = '✓ İNDİRME BAŞLADI';
+          clearInterval(iv);
+          btn.dataset.state = 'done';
+          setTimeout(() => {
+            window.open(href, '_blank');
+          }, 500);
+        } else {
+          prog.style.width = p + '%';
+          label.textContent = Math.round(p) + '% — HAZIRLANIYOR...';
+        }
+      }, 100);
+    }
+  </script>
 </body>
 </html>
