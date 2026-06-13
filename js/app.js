@@ -1,4 +1,4 @@
-// ===== FIREBASE CONFIG =====
+
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
 import {
   getStorage,
@@ -48,8 +48,6 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-// [GÜVENLİK] Admin e-postaları artık sadece UI amacıyla kullanılır (menü gösterimi).
-// Gerçek yetki kontrolü Firestore Security Rules tarafında yapılır.
 const ADMIN_EMAILS = ['yigittr1922@gmail.com', 'admin@hexages.games'];
 
 function isAdmin(email) {
@@ -65,18 +63,6 @@ function sanitize(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#x27;')
     .replace(/\//g, '&#x2F;');
-}
-
-// [GÜVENLİK] photoURL'yi doğrula — sadece http/https ile başlayan URL'lere izin ver
-function safePhotoURL(url) {
-  if (typeof url !== 'string') return null;
-  try {
-    const parsed = new URL(url);
-    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return null;
-    return url;
-  } catch {
-    return null;
-  }
 }
 
 const _rateLimits = {};
@@ -97,7 +83,7 @@ function validateTicketInput(subject, message, category) {
   return null;
 }
 
-// ===== STARFIELD =====
+
 function initStarfield() {
   const canvas = document.getElementById('starfield');
   if (!canvas) return;
@@ -136,7 +122,7 @@ function initStarfield() {
   window.addEventListener('resize', resize);
 }
 
-// ===== CURSOR GLOW =====
+
 function initCursorGlow() {
   const glow = document.getElementById('cursor-glow');
   if (!glow) return;
@@ -146,7 +132,7 @@ function initCursorGlow() {
   });
 }
 
-// ===== THEME =====
+
 function initTheme() {
   const saved = localStorage.getItem('hx-theme') || 'dark';
   applyTheme(saved);
@@ -163,7 +149,7 @@ function toggleTheme() {
   applyTheme(current === 'dark' ? 'light' : 'dark');
 }
 
-// ===== NAVBAR =====
+
 function initNavbar() {
   const nav = document.querySelector('nav');
   const hamburger = document.getElementById('hamburger');
@@ -195,7 +181,7 @@ function initNavbar() {
   });
 }
 
-// ===== REVEAL =====
+
 function initReveal() {
   const observer = new IntersectionObserver(
     (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
@@ -204,7 +190,7 @@ function initReveal() {
   document.querySelectorAll('.reveal, .stagger-children').forEach((el) => observer.observe(el));
 }
 
-// ===== AUTH NAV =====
+
 function initAuthNav() {
   onAuthStateChanged(auth, (user) => {
     const navAuth = document.getElementById('nav-auth');
@@ -229,12 +215,13 @@ function initAuthNav() {
   });
 }
 
-// ===== FIRESTORE — Ticket =====
+
 
 async function getTickets() {
   const user = auth.currentUser;
   if (!user) return [];
   try {
+
     const q = query(collection(db, 'launcher_tickets'), orderBy('createdAt', 'desc'));
     const snap = await getDocs(q);
     const all = snap.docs.map(d => ({
@@ -244,6 +231,7 @@ async function getTickets() {
       updatedAt: d.data().updatedAt?.toDate?.().toISOString() || null
     }));
     if (isAdmin(user.email)) return all;
+
     return all.filter(t => t.uid === user.uid || t.email === user.email);
   } catch (err) {
     console.error('getTickets hatası:', err.code || err.message);
@@ -287,7 +275,8 @@ async function updateTicketStatus(ticketId, status, adminReply) {
   await updateDoc(ref, updates);
 }
 
-// ===== FIRESTORE — Fatura =====
+
+
 
 async function uploadDekontFoto(faturaNo, file) {
   const user = auth.currentUser;
@@ -302,6 +291,7 @@ async function uploadDekontFoto(faturaNo, file) {
   const url = await getDownloadURL(ref);
   return url;
 }
+
 
 async function saveFatura(fatura, dekontFile) {
   const user = auth.currentUser;
@@ -332,6 +322,7 @@ async function saveFatura(fatura, dekontFile) {
   return faturaNo;
 }
 
+
 async function getFaturaByNo(faturaNo) {
   if (!faturaNo) return null;
   const user = auth.currentUser;
@@ -349,6 +340,7 @@ async function getFaturaByNo(faturaNo) {
   return { id: snap.id, ...data, createdAt: data.createdAt?.toDate?.().toISOString() || null };
 }
 
+
 async function getAllFaturalar() {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
@@ -360,6 +352,7 @@ async function getAllFaturalar() {
     createdAt: d.data().createdAt?.toDate?.().toISOString() || null
   }));
 }
+
 
 async function deleteFatura(faturaId, dekontURL) {
   const user = auth.currentUser;
@@ -376,7 +369,7 @@ async function deleteFatura(faturaId, dekontURL) {
 }
 
 export {
-  auth, db, storage, isAdmin, sanitize, safePhotoURL, checkRateLimit,
+  auth, db, storage, isAdmin, sanitize, checkRateLimit,
   onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, GoogleAuthProvider, signInWithPopup, updateProfile, sendPasswordResetEmail,
   getTickets, saveTicket, updateTicketStatus,
