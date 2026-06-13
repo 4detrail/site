@@ -308,7 +308,7 @@ async function saveFatura(fatura, dekontFile) {
     faturaNo: fatura.faturaNo.trim().toUpperCase(),
     email: fatura.email.trim().toLowerCase(),
     tarih: fatura.tarih,
-    aciklama: fatura.aciklama.trim().slice(0, 500),
+    aciklama: fatura.aciklama.trim().slice(0, 1000),
     odemeYontemi: fatura.odemeYontemi,
     tutar: fatura.tutar || '',
     durum: 'aktif',
