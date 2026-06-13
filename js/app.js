@@ -4,7 +4,8 @@ import {
   getStorage,
   ref as storageRef,
   uploadBytes,
-  getDownloadURL
+  getDownloadURL,
+  deleteObject
 } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js';
 import {
   getAuth,
@@ -24,6 +25,7 @@ import {
   getDocs,
   doc,
   updateDoc,
+  deleteDoc,
   serverTimestamp,
   query,
   orderBy,
@@ -343,11 +345,26 @@ async function getAllFaturalar() {
   }));
 }
 
+// Admin — fatura sil (dekont fotoğrafı varsa Storage'dan da siler)
+async function deleteFatura(faturaId, dekontURL) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  if (dekontURL) {
+    try {
+      const path = decodeURIComponent(dekontURL.split('/o/')[1].split('?')[0]);
+      await deleteObject(storageRef(storage, path));
+    } catch (err) {
+      console.warn('Dekont dosyası silinemedi:', err.code || err.message);
+    }
+  }
+  await deleteDoc(doc(db, 'faturalar', faturaId));
+}
+
 export {
   auth, db, storage, isAdmin, sanitize, checkRateLimit,
   onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, GoogleAuthProvider, signInWithPopup, updateProfile, sendPasswordResetEmail,
   getTickets, saveTicket, updateTicketStatus,
-  saveFatura, getFaturaByNo, getAllFaturalar, uploadDekontFoto,
+  saveFatura, getFaturaByNo, getAllFaturalar, uploadDekontFoto, deleteFatura,
   initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme
 };
