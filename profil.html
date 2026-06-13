@@ -139,18 +139,7 @@
 
       const avatarWrap = document.getElementById('profile-avatar-wrap');
       if (user.photoURL) {
-        // [GÜVENLİK] DOM API ile oluştur, innerHTML kullanma — XSS önleme
-        const url = user.photoURL;
-        if (/^https?:\/\//.test(url)) {
-          const img = document.createElement('img');
-          img.src = url;
-          img.alt = 'Avatar';
-          img.style.cssText = 'width:96px;height:96px;border-radius:50%;border:1px solid var(--border);margin:0 auto 20px;display:block';
-          avatarWrap.innerHTML = '';
-          avatarWrap.appendChild(img);
-        } else {
-          document.getElementById('profile-avatar').textContent = initial;
-        }
+        avatarWrap.innerHTML = `<img src="${user.photoURL}" alt="Avatar" style="width:96px;height:96px;border-radius:50%;border:1px solid var(--border);margin:0 auto 20px;display:block">`;
       } else {
         document.getElementById('profile-avatar').textContent = initial;
       }
@@ -233,6 +222,7 @@
           errEl.style.display = 'block';
           return;
         }
+        // Sahiplik kontrolü
         const user = auth.currentUser;
         if (!isAdmin(user?.email) && user?.email?.toLowerCase() !== fatura.email.toLowerCase()) {
           errEl.textContent = 'Bu fatura numarası hesabınıza ait değil.';
@@ -246,6 +236,7 @@
       }
     };
 
+    // Enter tuşuyla sorgulama
     document.addEventListener('DOMContentLoaded', () => {
       const input = document.getElementById('fatura-no-input');
       if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') window.sorgulaFatura(); });
