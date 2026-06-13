@@ -227,19 +227,25 @@
       btn.disabled = true;
       btn.textContent = 'GÖNDERİLİYOR...';
 
-      await saveTicket({
-        subject, category, message,
-        email: currentUser.email,
-        name: currentUser.displayName || currentUser.email
-      });
+      try {
+        await saveTicket({
+          subject, category, message,
+          email: currentUser.email,
+          name: currentUser.displayName || currentUser.email
+        });
 
-      document.getElementById('t-subject').value = '';
-      document.getElementById('t-message').value = '';
-      okEl.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = 'TİCKET GÖNDER';
-      setTimeout(() => okEl.style.display = 'none', 5000);
-      await loadTickets();
+        document.getElementById('t-subject').value = '';
+        document.getElementById('t-message').value = '';
+        okEl.style.display = 'block';
+        setTimeout(() => okEl.style.display = 'none', 5000);
+        await loadTickets();
+      } catch (err) {
+        errEl.textContent = err.message || 'Ticket gönderilemedi. Lütfen tekrar deneyin.';
+        errEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'TİCKET GÖNDER';
+      }
     };
   </script>
 </body>
