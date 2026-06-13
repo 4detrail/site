@@ -1,4 +1,4 @@
-
+// ===== FIREBASE CONFIG =====
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
 import {
   getStorage,
@@ -83,7 +83,7 @@ function validateTicketInput(subject, message, category) {
   return null;
 }
 
-
+// ===== STARFIELD =====
 function initStarfield() {
   const canvas = document.getElementById('starfield');
   if (!canvas) return;
@@ -122,7 +122,7 @@ function initStarfield() {
   window.addEventListener('resize', resize);
 }
 
-
+// ===== CURSOR GLOW =====
 function initCursorGlow() {
   const glow = document.getElementById('cursor-glow');
   if (!glow) return;
@@ -132,7 +132,7 @@ function initCursorGlow() {
   });
 }
 
-
+// ===== THEME =====
 function initTheme() {
   const saved = localStorage.getItem('hx-theme') || 'dark';
   applyTheme(saved);
@@ -149,7 +149,7 @@ function toggleTheme() {
   applyTheme(current === 'dark' ? 'light' : 'dark');
 }
 
-
+// ===== NAVBAR =====
 function initNavbar() {
   const nav = document.querySelector('nav');
   const hamburger = document.getElementById('hamburger');
@@ -181,7 +181,7 @@ function initNavbar() {
   });
 }
 
-
+// ===== REVEAL =====
 function initReveal() {
   const observer = new IntersectionObserver(
     (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
@@ -190,7 +190,7 @@ function initReveal() {
   document.querySelectorAll('.reveal, .stagger-children').forEach((el) => observer.observe(el));
 }
 
-
+// ===== AUTH NAV =====
 function initAuthNav() {
   onAuthStateChanged(auth, (user) => {
     const navAuth = document.getElementById('nav-auth');
@@ -215,13 +215,14 @@ function initAuthNav() {
   });
 }
 
-
+// ===== FIRESTORE — Ticket =====
 
 async function getTickets() {
   const user = auth.currentUser;
   if (!user) return [];
   try {
-
+    // where + orderBy composite index gerektiriyor, bu yüzden sadece orderBy kullanıp
+    // filtrelemeyi client tarafında yapıyoruz
     const q = query(collection(db, 'launcher_tickets'), orderBy('createdAt', 'desc'));
     const snap = await getDocs(q);
     const all = snap.docs.map(d => ({
@@ -231,7 +232,7 @@ async function getTickets() {
       updatedAt: d.data().updatedAt?.toDate?.().toISOString() || null
     }));
     if (isAdmin(user.email)) return all;
-
+    // uid veya email ile eşleştir (eski JSONBin ticketlar uid içermiyor olabilir)
     return all.filter(t => t.uid === user.uid || t.email === user.email);
   } catch (err) {
     console.error('getTickets hatası:', err.code || err.message);
@@ -275,9 +276,9 @@ async function updateTicketStatus(ticketId, status, adminReply) {
   await updateDoc(ref, updates);
 }
 
+// ===== FIRESTORE — Fatura =====
 
-
-
+// Dekont fotoğrafı yükle → Storage'a kaydet, URL döndür
 async function uploadDekontFoto(faturaNo, file) {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
@@ -292,7 +293,7 @@ async function uploadDekontFoto(faturaNo, file) {
   return url;
 }
 
-
+// Admin fatura kaydeder
 async function saveFatura(fatura, dekontFile) {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
@@ -322,7 +323,7 @@ async function saveFatura(fatura, dekontFile) {
   return faturaNo;
 }
 
-
+// Fatura numarasına göre sorgula (kullanıcı)
 async function getFaturaByNo(faturaNo) {
   if (!faturaNo) return null;
   const user = auth.currentUser;
@@ -340,7 +341,7 @@ async function getFaturaByNo(faturaNo) {
   return { id: snap.id, ...data, createdAt: data.createdAt?.toDate?.().toISOString() || null };
 }
 
-
+// Admin — tüm faturalar
 async function getAllFaturalar() {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
@@ -353,7 +354,7 @@ async function getAllFaturalar() {
   }));
 }
 
-
+// Admin — fatura sil (dekont fotoğrafı varsa Storage'dan da siler)
 async function deleteFatura(faturaId, dekontURL) {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
