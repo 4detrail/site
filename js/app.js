@@ -26,6 +26,7 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  setDoc,
   serverTimestamp,
   query,
   orderBy,
@@ -296,16 +297,19 @@ async function uploadDekontFoto(faturaNo, file) {
 async function saveFatura(fatura, dekontFile) {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
-  const existing = await getFaturaByNo(fatura.faturaNo);
-  if (existing) throw new Error('Bu fatura numarası zaten kullanımda.');
+  const faturaNo = fatura.faturaNo.trim().toUpperCase();
+  if (!/^[A-Z0-9\-]{3,40}$/.test(faturaNo)) throw new Error('Geçersiz fatura numarası formatı.');
+
+  const existing = await getDoc(doc(db, 'faturalar', faturaNo));
+  if (existing.exists()) throw new Error('Bu fatura numarası zaten kullanımda.');
 
   let dekontURL = null;
   if (dekontFile) {
-    dekontURL = await uploadDekontFoto(fatura.faturaNo, dekontFile);
+    dekontURL = await uploadDekontFoto(faturaNo, dekontFile);
   }
 
-  const docRef = await addDoc(collection(db, 'faturalar'), {
-    faturaNo: fatura.faturaNo.trim().toUpperCase(),
+  await setDoc(doc(db, 'faturalar', faturaNo), {
+    faturaNo: faturaNo,
     email: fatura.email.trim().toLowerCase(),
     tarih: fatura.tarih,
     aciklama: fatura.aciklama.trim(),
@@ -316,20 +320,25 @@ async function saveFatura(fatura, dekontFile) {
     createdAt: serverTimestamp(),
     createdBy: user.email
   });
-  return docRef.id;
+  return faturaNo;
 }
 
 // Fatura numarasına göre sorgula (kullanıcı)
 async function getFaturaByNo(faturaNo) {
   if (!faturaNo) return null;
-  const q = query(
-    collection(db, 'faturalar'),
-    where('faturaNo', '==', faturaNo.trim().toUpperCase())
-  );
-  const snap = await getDocs(q);
-  if (snap.empty) return null;
-  const d = snap.docs[0];
-  return { id: d.id, ...d.data(), createdAt: d.data().createdAt?.toDate?.().toISOString() || null };
+  const user = auth.currentUser;
+  if (!user) return null;
+  const no = faturaNo.trim().toUpperCase();
+
+  const snap = await getDoc(doc(db, 'faturalar', no));
+  if (!snap.exists()) return null;
+  const data = snap.data();
+
+  if (!isAdmin(user.email) && user.email.toLowerCase() !== (data.email || '').toLowerCase()) {
+    return null;
+  }
+
+  return { id: snap.id, ...data, createdAt: data.createdAt?.toDate?.().toISOString() || null };
 }
 
 // Admin — tüm faturalar
