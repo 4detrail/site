@@ -1,6 +1,12 @@
 // ===== FIREBASE CONFIG =====
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
 import {
+  getStorage,
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL
+} from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js';
+import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -37,6 +43,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 const ADMIN_EMAILS = ['yigittr1922@gmail.com', 'admin@hexages.games'];
 
@@ -188,8 +195,16 @@ function initAuthNav() {
     if (!navAuth) return;
     if (user) {
       const name = user.displayName ? user.displayName.split(' ')[0].toUpperCase() : 'PROFİL';
-      navAuth.innerHTML = `<a href="profil.html" class="btn-profile">👤 ${sanitize(name)}</a>`;
-      if (mobileAuth) mobileAuth.innerHTML = `<a href="profil.html" class="nav-link">→ PROFİL (${sanitize(user.email || '')})</a>`;
+      const adminLink = isAdmin(user.email)
+        ? `<a href="fatura.html" style="font-family:var(--font-mono);font-size:11px;color:#f5c542;border:1px solid rgba(245,197,66,0.3);padding:6px 12px;margin-right:8px;transition:all 0.3s" onmouseover="this.style.background='rgba(245,197,66,0.1)'" onmouseout="this.style.background='transparent'">⚡ FATURA</a>`
+        : '';
+      navAuth.innerHTML = `${adminLink}<a href="profil.html" class="btn-profile">👤 ${sanitize(name)}</a>`;
+      if (mobileAuth) {
+        const mobileAdminLink = isAdmin(user.email)
+          ? `<a href="fatura.html" class="nav-link" style="color:#f5c542">⚡ FATURA YÖNETİMİ</a>`
+          : '';
+        mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">→ PROFİL (${sanitize(user.email || '')})</a>`;
+      }
     } else {
       navAuth.innerHTML = `<a href="giris.html" class="btn-login">GİRİŞ</a>`;
       if (mobileAuth) mobileAuth.innerHTML = `<a href="giris.html" class="nav-link">→ GİRİŞ YAP</a>`;
@@ -260,13 +275,33 @@ async function updateTicketStatus(ticketId, status, adminReply) {
 
 // ===== FIRESTORE — Fatura =====
 
-// Admin fatura kaydeder
-async function saveFatura(fatura) {
+// Dekont fotoğrafı yükle → Storage'a kaydet, URL döndür
+async function uploadDekontFoto(faturaNo, file) {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
-  // Fatura no benzersiz olmalı
+  const ext = file.name.split('.').pop().toLowerCase();
+  const allowed = ['jpg', 'jpeg', 'png', 'webp', 'pdf'];
+  if (!allowed.includes(ext)) throw new Error('Sadece JPG, PNG, WEBP veya PDF yüklenebilir.');
+  if (file.size > 5 * 1024 * 1024) throw new Error('Dosya 5MB\'dan küçük olmalı.');
+  const path = `dekontlar/${faturaNo.toUpperCase()}.${ext}`;
+  const ref = storageRef(storage, path);
+  await uploadBytes(ref, file);
+  const url = await getDownloadURL(ref);
+  return url;
+}
+
+// Admin fatura kaydeder
+async function saveFatura(fatura, dekontFile) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
   const existing = await getFaturaByNo(fatura.faturaNo);
   if (existing) throw new Error('Bu fatura numarası zaten kullanımda.');
+
+  let dekontURL = null;
+  if (dekontFile) {
+    dekontURL = await uploadDekontFoto(fatura.faturaNo, dekontFile);
+  }
+
   const docRef = await addDoc(collection(db, 'faturalar'), {
     faturaNo: fatura.faturaNo.trim().toUpperCase(),
     email: fatura.email.trim().toLowerCase(),
@@ -275,6 +310,7 @@ async function saveFatura(fatura) {
     odemeYontemi: fatura.odemeYontemi,
     tutar: fatura.tutar || '',
     durum: 'aktif',
+    dekontURL: dekontURL,
     createdAt: serverTimestamp(),
     createdBy: user.email
   });
@@ -308,10 +344,10 @@ async function getAllFaturalar() {
 }
 
 export {
-  auth, db, isAdmin, sanitize, checkRateLimit,
+  auth, db, storage, isAdmin, sanitize, checkRateLimit,
   onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, GoogleAuthProvider, signInWithPopup, updateProfile, sendPasswordResetEmail,
   getTickets, saveTicket, updateTicketStatus,
-  saveFatura, getFaturaByNo, getAllFaturalar,
+  saveFatura, getFaturaByNo, getAllFaturalar, uploadDekontFoto,
   initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme
 };
