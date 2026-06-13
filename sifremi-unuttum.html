@@ -72,7 +72,8 @@
         await sendPasswordResetEmail(auth, email);
         okEl.style.display = 'block';
       } catch (e) {
-        errEl.textContent = e.code === 'auth/user-not-found' ? 'Bu e-posta kayıtlı değil.' : 'Bir hata oluştu.';
+        // [GÜVENLİK] Hesap varlığını sızdırmamak için aynı mesajı göster
+        errEl.textContent = 'Bir hata oluştu. Tekrar deneyin.';
         errEl.style.display = 'block';
       }
       btn.disabled = false;

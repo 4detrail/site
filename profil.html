@@ -138,8 +138,14 @@
       const initial = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
 
       const avatarWrap = document.getElementById('profile-avatar-wrap');
-      if (user.photoURL) {
-        avatarWrap.innerHTML = `<img src="${user.photoURL}" alt="Avatar" style="width:96px;height:96px;border-radius:50%;border:1px solid var(--border);margin:0 auto 20px;display:block">`;
+      const safeURL = safePhotoURL(user.photoURL);
+      if (safeURL) {
+        // [GÜVENLİK] innerHTML yerine DOM API — XSS önleme
+        const img = document.createElement('img');
+        img.src = safeURL;
+        img.alt = 'Avatar';
+        img.style.cssText = 'width:96px;height:96px;border-radius:50%;border:1px solid var(--border);margin:0 auto 20px;display:block';
+        avatarWrap.appendChild(img);
       } else {
         document.getElementById('profile-avatar').textContent = initial;
       }
