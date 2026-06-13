@@ -48,6 +48,8 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
+// [GÜVENLİK] Admin e-postaları artık sadece UI amacıyla kullanılır (menü gösterimi).
+// Gerçek yetki kontrolü Firestore Security Rules tarafında yapılır.
 const ADMIN_EMAILS = ['yigittr1922@gmail.com', 'admin@hexages.games'];
 
 function isAdmin(email) {
@@ -63,6 +65,18 @@ function sanitize(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#x27;')
     .replace(/\//g, '&#x2F;');
+}
+
+// [GÜVENLİK] photoURL'yi doğrula — sadece http/https ile başlayan URL'lere izin ver
+function safePhotoURL(url) {
+  if (typeof url !== 'string') return null;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return null;
+    return url;
+  } catch {
+    return null;
+  }
 }
 
 const _rateLimits = {};
@@ -221,8 +235,6 @@ async function getTickets() {
   const user = auth.currentUser;
   if (!user) return [];
   try {
-    // where + orderBy composite index gerektiriyor, bu yüzden sadece orderBy kullanıp
-    // filtrelemeyi client tarafında yapıyoruz
     const q = query(collection(db, 'launcher_tickets'), orderBy('createdAt', 'desc'));
     const snap = await getDocs(q);
     const all = snap.docs.map(d => ({
@@ -232,7 +244,6 @@ async function getTickets() {
       updatedAt: d.data().updatedAt?.toDate?.().toISOString() || null
     }));
     if (isAdmin(user.email)) return all;
-    // uid veya email ile eşleştir (eski JSONBin ticketlar uid içermiyor olabilir)
     return all.filter(t => t.uid === user.uid || t.email === user.email);
   } catch (err) {
     console.error('getTickets hatası:', err.code || err.message);
@@ -278,7 +289,6 @@ async function updateTicketStatus(ticketId, status, adminReply) {
 
 // ===== FIRESTORE — Fatura =====
 
-// Dekont fotoğrafı yükle → Storage'a kaydet, URL döndür
 async function uploadDekontFoto(faturaNo, file) {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
@@ -293,7 +303,6 @@ async function uploadDekontFoto(faturaNo, file) {
   return url;
 }
 
-// Admin fatura kaydeder
 async function saveFatura(fatura, dekontFile) {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
@@ -323,7 +332,6 @@ async function saveFatura(fatura, dekontFile) {
   return faturaNo;
 }
 
-// Fatura numarasına göre sorgula (kullanıcı)
 async function getFaturaByNo(faturaNo) {
   if (!faturaNo) return null;
   const user = auth.currentUser;
@@ -341,7 +349,6 @@ async function getFaturaByNo(faturaNo) {
   return { id: snap.id, ...data, createdAt: data.createdAt?.toDate?.().toISOString() || null };
 }
 
-// Admin — tüm faturalar
 async function getAllFaturalar() {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
@@ -354,7 +361,6 @@ async function getAllFaturalar() {
   }));
 }
 
-// Admin — fatura sil (dekont fotoğrafı varsa Storage'dan da siler)
 async function deleteFatura(faturaId, dekontURL) {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
@@ -370,7 +376,7 @@ async function deleteFatura(faturaId, dekontURL) {
 }
 
 export {
-  auth, db, storage, isAdmin, sanitize, checkRateLimit,
+  auth, db, storage, isAdmin, sanitize, safePhotoURL, checkRateLimit,
   onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, GoogleAuthProvider, signInWithPopup, updateProfile, sendPasswordResetEmail,
   getTickets, saveTicket, updateTicketStatus,
