@@ -36,6 +36,11 @@
       nav, footer, #layout-top, #layout-footer, .no-print { display:none !important; }
       body { background:white !important; color:black !important; }
       :root { --background:white; --foreground:black; --border:#ccc; --muted-foreground:#555; }
+      @page { margin: 12mm; }
+      main { padding-top:0 !important; padding-bottom:0 !important; }
+      section { padding:0 !important; min-height:0 !important; }
+      .dekont-wrap { page-break-inside: avoid; break-inside: avoid; max-width:100%; }
+      .dekont-row { page-break-inside: avoid; break-inside: avoid; }
     }
   </style>
 </head>
