@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEXAGES GAMES – Fatura Yönetimi</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+
+  <main>
+    <section style="min-height:100vh;padding-top:128px;padding-bottom:96px;padding-left:24px;padding-right:24px">
+      <div class="container" style="max-width:896px">
+
+        <div class="anim-in anim-in-delay-1" style="margin-bottom:64px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+              <span class="mono-label">// FATURA SİSTEMİ</span>
+              <span id="admin-badge" style="display:none;font-family:var(--font-mono);font-size:10px;border:1px solid rgba(245,197,66,0.3);color:#f5c542;padding:2px 8px">⚡ ADMIN TERMİNAL</span>
+            </div>
+            <h1 style="font-family:var(--font-heading);font-weight:900;font-size:clamp(2.5rem,6vw,5rem);line-height:1">FATURA</h1>
+          </div>
+          <button onclick="loadFaturalar()" style="margin-left:auto;background:transparent;border:1px solid var(--border);color:var(--muted-foreground);font-family:var(--font-mono);font-size:11px;padding:8px 16px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.3s" onmouseover="this.style.borderColor='white';this.style.color='white'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted-foreground)'">
+            ↺ YENİLE
+          </button>
+        </div>
+
+        <!-- Yetkisiz -->
+        <div id="not-authorized" style="display:none;text-align:center;padding:64px 24px;border:1px solid var(--border)">
+          <p style="font-family:var(--font-mono);font-size:13px;color:var(--muted-foreground);margin-bottom:24px">Bu sayfa yalnızca adminlere açıktır.</p>
+          <a href="index.html" class="btn-download" style="font-size:11px">ANA SAYFA</a>
+        </div>
+
+        <div id="fatura-content" style="display:none">
+
+          <!-- Fatura Oluşturma Formu -->
+          <div style="border:1px solid var(--border);padding:32px;margin-bottom:48px;position:relative;overflow:hidden" class="anim-in anim-in-delay-2">
+            <div class="shimmer" style="position:absolute;inset:0"></div>
+            <div style="position:relative;z-index:1">
+              <span class="mono-label" style="display:block;margin-bottom:24px">// YENİ FATURA OLUŞTUR</span>
+
+              <div id="f-success" class="success-msg" style="display:none">✓ Fatura başarıyla oluşturuldu!</div>
+              <div id="f-error" class="error-msg" style="display:none"></div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+                <div class="form-group">
+                  <label class="form-label">FATURA NO</label>
+                  <input type="text" id="f-no" class="form-input" placeholder="HEX-2025-001" style="text-transform:uppercase">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">MÜŞTERİ E-POSTA</label>
+                  <input type="email" id="f-email" class="form-input" placeholder="kullanici@ornek.com">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">FATURA TARİHİ</label>
+                  <input type="date" id="f-tarih" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">ÖDEME YÖNTEMİ</label>
+                  <select id="f-odeme" class="select-input">
+                    <option>Kredi Kartı</option>
+                    <option>Banka Havalesi</option>
+                    <option>PayPal</option>
+                    <option>Kripto Para</option>
+                    <option>Nakit</option>
+                    <option>Diğer</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">TUTAR (opsiyonel)</label>
+                  <input type="text" id="f-tutar" class="form-input" placeholder="₺0.00">
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top:4px">
+                <label class="form-label">AÇIKLAMA</label>
+                <textarea id="f-aciklama" class="textarea-input" placeholder="Fatura açıklaması, satın alınan ürün/hizmet detayları..." style="height:100px"></textarea>
+              </div>
+
+              <button onclick="createFatura()" id="btn-create" class="btn-submit" style="width:auto;padding:14px 32px;font-size:11px">
+                FATURA OLUŞTUR
+              </button>
+            </div>
+          </div>
+
+          <!-- Fatura Listesi -->
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+              <span class="mono-label">// TÜM FATURALAR</span>
+              <span id="fatura-count" style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground)"></span>
+            </div>
+
+            <div id="f-loading" style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px">YÜKLENİYOR...</div>
+            <div id="fatura-list"></div>
+            <div id="f-empty" style="display:none;font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px;border:1px solid var(--border)">Henüz fatura yok.</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import {
+      auth, isAdmin, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
+      onAuthStateChanged, saveFatura, getAllFaturalar, sanitize
+    } from './js/app.js';
+
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+
+    // Bugünün tarihini default yap
+    document.getElementById('f-tarih').value = new Date().toISOString().split('T')[0];
+
+    let adminUser = null;
+
+    onAuthStateChanged(auth, async user => {
+      if (!user || !isAdmin(user.email)) {
+        document.getElementById('not-authorized').style.display = 'block';
+        return;
+      }
+      adminUser = user;
+      document.getElementById('admin-badge').style.display = 'inline-flex';
+      document.getElementById('fatura-content').style.display = 'block';
+      await loadFaturalar();
+    });
+
+    window.loadFaturalar = async () => {
+      if (!adminUser) return;
+      document.getElementById('f-loading').style.display = 'block';
+      document.getElementById('fatura-list').innerHTML = '';
+      document.getElementById('f-empty').style.display = 'none';
+
+      try {
+        const faturalar = await getAllFaturalar();
+        document.getElementById('f-loading').style.display = 'none';
+        document.getElementById('fatura-count').textContent = faturalar.length + ' fatura';
+
+        if (faturalar.length === 0) {
+          document.getElementById('f-empty').style.display = 'block';
+          return;
+        }
+
+        const list = document.getElementById('fatura-list');
+        faturalar.forEach(f => {
+          const tarih = f.tarih || '—';
+          const createdAt = f.createdAt ? new Date(f.createdAt).toLocaleDateString('tr-TR') : '—';
+          const card = document.createElement('div');
+          card.className = 'ticket-card';
+          card.style.marginBottom = '12px';
+          card.innerHTML = `
+            <button class="ticket-header" onclick="toggleFatura('${f.id}')">
+              <div style="flex:1">
+                <div class="ticket-badges">
+                  <span class="ticket-badge resolved">AKTİF</span>
+                  <span class="ticket-badge" style="color:var(--muted-foreground);border-color:var(--border)">${sanitize(f.faturaNo)}</span>
+                  <span class="ticket-badge" style="color:var(--muted-foreground);border-color:var(--border)">${sanitize(f.odemeYontemi)}</span>
+                </div>
+                <p class="ticket-subject">${sanitize(f.email)}</p>
+                ${f.tutar ? `<p class="ticket-meta" style="margin-top:4px;color:#34d399">${sanitize(f.tutar)}</p>` : ''}
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+                <span class="ticket-meta">${tarih}</span>
+                <span id="fchev-${f.id}" style="font-size:12px;transition:transform 0.3s">▼</span>
+              </div>
+            </button>
+            <div class="ticket-body" id="fbody-${f.id}">
+              <p class="ticket-msg" style="white-space:pre-wrap">${sanitize(f.aciklama)}</p>
+              <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+                <p class="ticket-meta">Oluşturulma: ${createdAt} &nbsp;|&nbsp; Oluşturan: ${sanitize(f.createdBy || '—')}</p>
+              </div>
+              <div style="margin-top:12px">
+                <a href="dekont.html?no=${encodeURIComponent(f.faturaNo)}" class="btn-submit" style="display:inline-block;padding:8px 18px;font-size:11px;text-decoration:none">
+                  DEKONTu GÖRÜNTÜLE
+                </a>
+              </div>
+            </div>
+          `;
+          list.appendChild(card);
+        });
+      } catch (err) {
+        document.getElementById('f-loading').style.display = 'none';
+        document.getElementById('f-error').textContent = 'Faturalar yüklenemedi: ' + err.message;
+        document.getElementById('f-error').style.display = 'block';
+      }
+    };
+
+    window.toggleFatura = (id) => {
+      const body = document.getElementById('fbody-' + id);
+      const chev = document.getElementById('fchev-' + id);
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    };
+
+    window.createFatura = async () => {
+      const faturaNo = document.getElementById('f-no').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      const tarih = document.getElementById('f-tarih').value;
+      const aciklama = document.getElementById('f-aciklama').value.trim();
+      const odemeYontemi = document.getElementById('f-odeme').value;
+      const tutar = document.getElementById('f-tutar').value.trim();
+
+      const errEl = document.getElementById('f-error');
+      const okEl = document.getElementById('f-success');
+      errEl.style.display = 'none';
+      okEl.style.display = 'none';
+
+      if (!faturaNo || !email || !tarih || !aciklama) {
+        errEl.textContent = 'Fatura no, e-posta, tarih ve açıklama zorunludur.';
+        errEl.style.display = 'block';
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEl.textContent = 'Geçerli bir e-posta adresi girin.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      const btn = document.getElementById('btn-create');
+      btn.disabled = true;
+      btn.textContent = 'OLUŞTURULUYOR...';
+
+      try {
+        await saveFatura({ faturaNo, email, tarih, aciklama, odemeYontemi, tutar });
+        okEl.style.display = 'block';
+        document.getElementById('f-no').value = '';
+        document.getElementById('f-email').value = '';
+        document.getElementById('f-aciklama').value = '';
+        document.getElementById('f-tutar').value = '';
+        document.getElementById('f-tarih').value = new Date().toISOString().split('T')[0];
+        setTimeout(() => { okEl.style.display = 'none'; }, 5000);
+        await loadFaturalar();
+      } catch (err) {
+        errEl.textContent = err.message;
+        errEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'FATURA OLUŞTUR';
+      }
+    };
+  </script>
+</body>
+</html>
