@@ -198,9 +198,9 @@ function initAuthNav() {
     if (user) {
       const name = user.displayName ? user.displayName.split(' ')[0].toUpperCase() : 'PROFİL';
       const adminLink = isAdmin(user.email)
-        ? `<a href="fatura.html" style="font-family:var(--font-mono);font-size:11px;color:#f5c542;border:1px solid rgba(245,197,66,0.3);padding:6px 12px;margin-right:8px;transition:all 0.3s" onmouseover="this.style.background='rgba(245,197,66,0.1)'" onmouseout="this.style.background='transparent'">⚡ FATURA</a>`
+        ? `<a href="fatura.html" class="btn-profile" style="border-color:rgba(245,197,66,0.35);color:#f5c542">⚡ FATURA</a>`
         : '';
-      navAuth.innerHTML = `${adminLink}<a href="profil.html" class="btn-profile">👤 ${sanitize(name)}</a>`;
+      navAuth.innerHTML = `<div style="display:flex;align-items:center;gap:10px">${adminLink}<a href="profil.html" class="btn-profile">👤 ${sanitize(name)}</a></div>`;
       if (mobileAuth) {
         const mobileAdminLink = isAdmin(user.email)
           ? `<a href="fatura.html" class="nav-link" style="color:#f5c542">⚡ FATURA YÖNETİMİ</a>`
