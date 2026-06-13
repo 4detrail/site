@@ -20,7 +20,9 @@ import {
   updateDoc,
   serverTimestamp,
   query,
-  orderBy
+  orderBy,
+  where,
+  getDoc
 } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -256,10 +258,60 @@ async function updateTicketStatus(ticketId, status, adminReply) {
   await updateDoc(ref, updates);
 }
 
+// ===== FIRESTORE — Fatura =====
+
+// Admin fatura kaydeder
+async function saveFatura(fatura) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  // Fatura no benzersiz olmalı
+  const existing = await getFaturaByNo(fatura.faturaNo);
+  if (existing) throw new Error('Bu fatura numarası zaten kullanımda.');
+  const docRef = await addDoc(collection(db, 'faturalar'), {
+    faturaNo: fatura.faturaNo.trim().toUpperCase(),
+    email: fatura.email.trim().toLowerCase(),
+    tarih: fatura.tarih,
+    aciklama: fatura.aciklama.trim().slice(0, 500),
+    odemeYontemi: fatura.odemeYontemi,
+    tutar: fatura.tutar || '',
+    durum: 'aktif',
+    createdAt: serverTimestamp(),
+    createdBy: user.email
+  });
+  return docRef.id;
+}
+
+// Fatura numarasına göre sorgula (kullanıcı)
+async function getFaturaByNo(faturaNo) {
+  if (!faturaNo) return null;
+  const q = query(
+    collection(db, 'faturalar'),
+    where('faturaNo', '==', faturaNo.trim().toUpperCase())
+  );
+  const snap = await getDocs(q);
+  if (snap.empty) return null;
+  const d = snap.docs[0];
+  return { id: d.id, ...d.data(), createdAt: d.data().createdAt?.toDate?.().toISOString() || null };
+}
+
+// Admin — tüm faturalar
+async function getAllFaturalar() {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const q = query(collection(db, 'faturalar'), orderBy('createdAt', 'desc'));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({
+    id: d.id,
+    ...d.data(),
+    createdAt: d.data().createdAt?.toDate?.().toISOString() || null
+  }));
+}
+
 export {
   auth, db, isAdmin, sanitize, checkRateLimit,
   onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, GoogleAuthProvider, signInWithPopup, updateProfile, sendPasswordResetEmail,
   getTickets, saveTicket, updateTicketStatus,
+  saveFatura, getFaturaByNo, getAllFaturalar,
   initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme
 };
