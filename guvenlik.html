@@ -83,180 +83,115 @@
 
   <div id="layout-footer"></div>
 
-  <script type="module">
-    import { getNavHTML, getFooterHTML } from './js/layout.js';
-    import {
-      auth, isAdmin, sanitize, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
-      onAuthStateChanged, getThreatLogs, updateThreatLogStatus, getGuildConfigs
-    } from './js/app.js';
-
-    document.getElementById('layout-top').innerHTML = getNavHTML();
-    document.getElementById('layout-footer').innerHTML = getFooterHTML();
-    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
-
-    let allLogs = [];
-    let guildCount = 0;
-
-    const statusLabels = {
-      new: 'YENİ',
-      reviewed: 'İNCELENDİ',
-      reported_to_authorities: 'ŞİKAYET EDİLDİ',
-      dismissed: 'REDDEDİLDİ'
-    };
-    const statusClass = {
-      new: 'new',
-      reviewed: 'reviewed',
-      reported_to_authorities: 'reported_to_authorities',
-      dismissed: 'dismissed'
-    };
-    const typeLabels = {
-      DEATH_THREAT: 'ÖLÜM / ŞİDDET TEHDİDİ',
-      PII_LEAK: 'KİŞİSEL BİLGİ İFŞASI',
-      BOTH: 'TEHDİT + KİŞİSEL BİLGİ İFŞASI'
-    };
-    const typeClass = {
-      DEATH_THREAT: 'death-threat',
-      PII_LEAK: 'pii-leak',
-      BOTH: 'death-threat'
-    };
-
-    onAuthStateChanged(auth, async user => {
-      if (!user) {
-        document.getElementById('not-logged').style.display = 'block';
-        return;
-      }
-      if (!isAdmin(user.email)) {
-        document.getElementById('not-logged-text').textContent = 'Bu sayfayı görüntüleme yetkiniz yok. Bu alan sadece Hexages Games yöneticileri içindir.';
-        document.getElementById('not-logged-btn').style.display = 'none';
-        document.getElementById('not-logged').style.display = 'block';
-        return;
-      }
-      document.getElementById('panel-content').style.display = 'block';
-      await loadAll();
-    });
-
-    window.loadAll = async () => {
-      document.getElementById('log-loading').style.display = 'block';
-      document.getElementById('log-list').innerHTML = '';
-      document.getElementById('log-empty').style.display = 'none';
-
-      try {
-        const [logs, guilds] = await Promise.all([getThreatLogs(), getGuildConfigs()]);
-        allLogs = logs;
-        guildCount = guilds.length;
-      } catch (err) {
-        document.getElementById('log-loading').style.display = 'none';
-        document.getElementById('log-list').innerHTML = `<div class="error-msg" style="display:block">Kayıtlar yüklenemedi: ${sanitize(err.message || '')}</div>`;
-        return;
-      }
-
-      document.getElementById('log-loading').style.display = 'none';
-      updateStats();
-      renderList();
-    };
-
-    function updateStats() {
+      function updateStats() {
       document.getElementById('stat-total').textContent = allLogs.length;
       document.getElementById('stat-new').textContent = allLogs.filter(l => !l.status || l.status === 'new').length;
-      document.getElementById('stat-death').textContent = allLogs.filter(l => l.detectionType === 'DEATH_THREAT' || l.detectionType === 'BOTH').length;
-      document.getElementById('stat-pii').textContent = allLogs.filter(l => l.detectionType === 'PII_LEAK' || l.detectionType === 'BOTH').length;
+      document.getElementById('stat-death').textContent = allLogs.filter(l => l.detectionType === 'DEATH_THREAT').length;
+      document.getElementById('stat-pii').textContent = allLogs.filter(l => l.detectionType === 'PII_LEAK').length;
       document.getElementById('stat-guilds').textContent = guildCount;
     }
 
     window.renderList = () => {
-      const search = (document.getElementById('search-input').value || '').toLowerCase().trim();
+      const search = document.getElementById('search-input').value.toLowerCase().trim();
       const statusFilter = document.getElementById('filter-status').value;
       const typeFilter = document.getElementById('filter-type').value;
 
-      let filtered = allLogs.filter(l => {
-        if (statusFilter !== 'all' && (l.status || 'new') !== statusFilter) return false;
-        if (typeFilter !== 'all' && l.detectionType !== typeFilter) return false;
-        if (search) {
-          const hay = `${l.authorTag || ''} ${l.authorUsername || ''} ${l.authorId || ''} ${l.guildName || ''}`.toLowerCase();
-          if (!hay.includes(search)) return false;
-        }
-        return true;
+      const filtered = allLogs.filter(log => {
+        const matchesSearch = 
+          (log.authorUsername && log.authorUsername.toLowerCase().includes(search)) ||
+          (log.authorId && log.authorId.includes(search)) ||
+          (log.guildName && log.guildName.toLowerCase().includes(search)) ||
+          (log.messageContent && log.messageContent.toLowerCase().includes(search));
+
+        const currentStatus = log.status || 'new';
+        const matchesStatus = statusFilter === 'all' || currentStatus === statusFilter;
+        const matchesType = typeFilter === 'all' || log.detectionType === typeFilter;
+
+        return matchesSearch && matchesStatus && matchesType;
       });
 
-      document.getElementById('log-count').textContent = filtered.length + ' kayıt';
+      document.getElementById('log-count').textContent = `${filtered.length} KAYIT LİSTELENİYOR`;
 
       if (filtered.length === 0) {
-        document.getElementById('log-empty').style.display = 'block';
         document.getElementById('log-list').innerHTML = '';
+        document.getElementById('log-empty').style.display = 'block';
         return;
       }
+
       document.getElementById('log-empty').style.display = 'none';
 
-      const list = document.getElementById('log-list');
-      list.innerHTML = '';
-
-      filtered.forEach(log => {
-        const st = log.status || 'new';
-        const date = log.loggedAt ? new Date(log.loggedAt).toLocaleString('tr-TR') : (log.messageTimestamp ? new Date(log.messageTimestamp).toLocaleString('tr-TR') : '-');
-        const accountCreated = log.accountCreatedAt ? new Date(log.accountCreatedAt).toLocaleDateString('tr-TR') : '-';
-        const joined = log.joinedServerAt ? new Date(log.joinedServerAt).toLocaleDateString('tr-TR') : '-';
-
-        const card = document.createElement('div');
-        card.className = 'ticket-card';
-        card.innerHTML = `
-          <button class="ticket-header" onclick="toggleLog('${log.id}')">
-            <div style="flex:1">
-              <div class="ticket-badges">
-                <span class="ticket-badge ${statusClass[st] || 'new'}">${statusLabels[st] || 'YENİ'}</span>
-                <span class="ticket-badge ${typeClass[log.detectionType] || 'death-threat'}">${typeLabels[log.detectionType] || log.detectionType || '-'}</span>
-                <span class="ticket-badge" style="color:var(--muted-foreground);border-color:var(--border)">${sanitize(log.guildName || 'Bilinmeyen Sunucu')}</span>
+      // Tablo / Kart arayüzünün oluşturulması
+      document.getElementById('log-list').innerHTML = filtered.map(log => {
+        const currentStatus = log.status || 'new';
+        const dateStr = log.messageTimestamp ? new Date(log.messageTimestamp).toLocaleString('tr-TR') : 'Bilinmiyor';
+        
+        return `
+          <div class="threat-card" style="border: 1px solid var(--border); padding: 20px; margin-bottom: 16px; background: rgba(255,255,255,0.02); transition: all 0.3s">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+              <div>
+                <span class="status-badge ${statusClass[currentStatus]}" style="font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: 2px; font-weight: bold;">
+                  ${statusLabels[currentStatus]}
+                </span>
+                <span class="type-badge ${typeClass[log.detectionType || 'DEATH_THREAT']}" style="font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: 2px; margin-left: 8px; font-weight: bold;">
+                  ${typeLabels[log.detectionType] || 'BİLİNMEYEN İHLAL'}
+                </span>
               </div>
-              <p class="ticket-subject">${sanitize(log.authorTag || log.authorUsername || 'Bilinmeyen Kullanıcı')} <span style="color:var(--muted-foreground)">(${sanitize(log.authorId || '-')})</span></p>
-              <p class="ticket-meta mt-2">${date}</p>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-              <span id="chevron-${log.id}" style="font-size:12px;transition:transform 0.3s">▼</span>
-            </div>
-          </button>
-          <div class="ticket-body" id="body-${log.id}">
-            <p class="ticket-reply-label" style="margin-bottom:8px">// MESAJ İÇERİĞİ (SİLİNMEDEN ÖNCE ALINDI)</p>
-            <div class="threat-msg-box">${sanitize(log.messageContent || '-')}</div>
-
-            <p class="ticket-reply-label" style="margin-bottom:8px">// AI DEĞERLENDİRMESİ</p>
-            <p class="ticket-msg">${sanitize(log.detectionReasoning || '-')}</p>
-
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px;font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground)">
-              <div>KANAL: <span style="color:var(--foreground)">#${sanitize(log.channelName || '-')}</span></div>
-              <div>HESAP OLUŞTURMA: <span style="color:var(--foreground)">${accountCreated}</span></div>
-              <div>SUNUCUYA KATILMA: <span style="color:var(--foreground)">${joined}</span></div>
-              <div>SUNUCU ID: <span style="color:var(--foreground)">${sanitize(log.guildId || '-')}</span></div>
+              <div style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground)">
+                ⏱️ ${dateStr}
+              </div>
             </div>
 
-            <div style="display:flex;gap:12px;flex-wrap:wrap">
-              <button onclick="setStatus('${log.id}','reviewed')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px">İNCELENDİ OLARAK İŞARETLE</button>
-              <button onclick="setStatus('${log.id}','reported_to_authorities')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px;border-color:rgba(52,211,153,0.4);color:#34d399">ŞİKAYET EDİLDİ OLARAK İŞARETLE</button>
-              <button onclick="setStatus('${log.id}','dismissed')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground)">REDDET (YANLIŞ POZİTİF)</button>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 14px; font-size: 13px;">
+              <div>
+                <strong style="color: var(--muted-foreground); font-size: 11px; font-family: var(--font-mono)">⚠️ KULLANICI</strong><br>
+                ${sanitize(log.authorTag || log.authorUsername || 'Bilinmiyor')} <span style="color: var(--muted-foreground); font-size: 11px;">(${log.authorId})</span>
+              </div>
+              <div>
+                <strong style="color: var(--muted-foreground); font-size: 11px; font-family: var(--font-mono)">🌐 SUNUCU / KANAL</strong><br>
+                ${sanitize(log.guildName || 'Bilinmiyor')} <span style="color: var(--muted-foreground); font-size: 11px;">(#${sanitize(log.channelName || '')})</span>
+              </div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.2); padding: 12px; border-left: 3px solid #ff5c5c; margin-bottom: 14px; font-family: var(--font-mono); font-size: 13px; word-break: break-all;">
+              <strong style="color: #ff5c5c; font-size: 11px; display: block; margin-bottom: 4px;">ENGELLENEN MESAJ İÇERİĞİ:</strong>
+              "${sanitize(log.messageContent || '')}"
+            </div>
+
+            ${log.detectionReasoning ? `
+              <div style="font-size: 12px; color: var(--muted-foreground); margin-bottom: 16px; padding: 0 4px;">
+                <strong style="font-family: var(--font-mono); font-size: 11px;">🤖 AI Gerekçesi:</strong> ${sanitize(log.detectionReasoning)}
+              </div>
+            ` : ''}
+
+            <!-- Durum Değiştirme Butonları -->
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 14px;">
+              <span style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground); align-self: center; margin-right: 4px;">DURUMU GÜNCELLE:</span>
+              <button onclick="changeStatus('${log.id}', 'reviewed')" class="btn-action" style="background: #2563eb; color: white; border: none; padding: 4px 10px; font-size: 11px; font-family: var(--font-mono); cursor: pointer; border-radius: 2px;">İNCELENDİ</button>
+              <button onclick="changeStatus('${log.id}', 'reported_to_authorities')" class="btn-action" style="background: #16a34a; color: white; border: none; padding: 4px 10px; font-size: 11px; font-family: var(--font-mono); cursor: pointer; border-radius: 2px;">ŞİKAYET EDİLDİ</button>
+              <button onclick="changeStatus('${log.id}', 'dismissed')" class="btn-action" style="background: #4b5563; color: white; border: none; padding: 4px 10px; font-size: 11px; font-family: var(--font-mono); cursor: pointer; border-radius: 2px;">REDDET</button>
             </div>
           </div>
         `;
-        list.appendChild(card);
-      });
+      }).join('');
     };
 
-    window.toggleLog = (id) => {
-      const body = document.getElementById('body-' + id);
-      const chev = document.getElementById('chevron-' + id);
-      const isOpen = body.classList.contains('open');
-      body.classList.toggle('open', !isOpen);
-      chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
-    };
-
-    window.setStatus = async (logId, status) => {
+    window.changeStatus = async (logId, newStatus) => {
       try {
-        await updateThreatLogStatus(logId, status);
-        const log = allLogs.find(l => l.id === logId);
-        if (log) log.status = status;
+        await updateThreatLogStatus(logId, newStatus);
+        
+        // Yerel listedeki durumu anlık güncelle (Tekrar sunucudan çekip vakit kaybetmemek için)
+        const targetLog = allLogs.find(l => l.id === logId);
+        if (targetLog) targetLog.status = newStatus;
+        
         updateStats();
         renderList();
       } catch (err) {
-        alert('Durum güncellenemedi: ' + (err.message || ''));
+        alert('Durum güncellenirken hata oluştu: ' + err.message);
       }
     };
   </script>
+</body>
+</html>
+
 </body>
 </html>
