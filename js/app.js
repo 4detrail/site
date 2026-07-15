@@ -199,12 +199,12 @@ function initAuthNav() {
     if (user) {
       const name = user.displayName ? user.displayName.split(' ')[0].toUpperCase() : 'PROFİL';
       const adminLink = isAdmin(user.email)
-        ? `<a href="fatura.html" class="btn-profile" style="border-color:rgba(245,197,66,0.35);color:#f5c542">⚡ FATURALANDIRMA</a>`
+        ? `<a href="fatura.html" class="btn-profile" style="border-color:rgba(245,197,66,0.35);color:#f5c542">⚡ FATURALANDIRMA</a><a href="guvenlik.html" class="btn-profile" style="border-color:rgba(224,36,36,0.4);color:#ff6b6b">🛡️ GÜVENLİK</a>`
         : '';
       navAuth.innerHTML = `<div style="display:flex;align-items:center;gap:10px">${adminLink}<a href="profil.html" class="btn-profile">👤 ${sanitize(name)}</a></div>`;
       if (mobileAuth) {
         const mobileAdminLink = isAdmin(user.email)
-          ? `<a href="fatura.html" class="nav-link" style="color:#f5c542">⚡ FATURA YÖNETİMİ</a>`
+          ? `<a href="fatura.html" class="nav-link" style="color:#f5c542">⚡ FATURA YÖNETİMİ</a><a href="guvenlik.html" class="nav-link" style="color:#ff6b6b">🛡️ GÜVENLİK PANELİ</a>`
           : '';
         mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">→ PROFİL (${sanitize(user.email || '')})</a>`;
       }
@@ -368,11 +368,40 @@ async function deleteFatura(faturaId, dekontURL) {
   await deleteDoc(doc(db, 'faturalar', faturaId));
 }
 
+async function getThreatLogs() {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const q = query(collection(db, 'threat_logs'), orderBy('loggedAt', 'desc'));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({
+    id: d.id,
+    ...d.data(),
+    loggedAt: d.data().loggedAt?.toDate?.().toISOString() || null
+  }));
+}
+
+async function updateThreatLogStatus(logId, status) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const ALLOWED_STATUSES = ['new', 'reviewed', 'reported_to_authorities', 'dismissed'];
+  if (!ALLOWED_STATUSES.includes(status)) throw new Error('Geçersiz durum');
+  const ref = doc(db, 'threat_logs', logId);
+  await updateDoc(ref, { status, reviewedBy: user.email, reviewedAt: serverTimestamp() });
+}
+
+async function getGuildConfigs() {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const snap = await getDocs(collection(db, 'guild_configs'));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
 export {
   auth, db, storage, isAdmin, sanitize, checkRateLimit,
   onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, GoogleAuthProvider, signInWithPopup, updateProfile, sendPasswordResetEmail,
   getTickets, saveTicket, updateTicketStatus,
   saveFatura, getFaturaByNo, getAllFaturalar, uploadDekontFoto, deleteFatura,
+  getThreatLogs, updateThreatLogStatus, getGuildConfigs,
   initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme
 };
