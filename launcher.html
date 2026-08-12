@@ -24,17 +24,17 @@
         <div class="dl-cards anim-in anim-in-delay-2">
 
           <!-- PC -->
-          <div class="dl-card card-3d">
+          <div class="dl-card card-3d" style="position:relative;overflow:hidden">
             <div class="dl-card-top-line"></div>
             <div class="dl-card-header">
               <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
               <h2>PC VERSİYONU</h2>
             </div>
             <p class="dl-card-desc">Tüm HEXAGES oyunlarına tek bir noktadan erişin. Otomatik güncellemeler, topluluk özellikleri ve daha fazlası.</p>
-            <button class="dl-btn" id="dl-pc" onclick="startDownload('dl-pc','https://github.com/4detrail/hexagesgames-release/releases/download/v1.2.1/Hexagesgames_Setup_1.2.1.exe')">
+            <button class="dl-btn" id="dl-pc" disabled style="opacity:0.45;cursor:not-allowed">
               <span class="dl-btn-label">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                LAUNCHER'I ŞİMDİ İNDİR
+                İNDİRME GEÇİCİ OLARAK KAPALI
               </span>
             </button>
             <p class="dl-meta">Sürüm: 1.2.1 | Boyut: ~118 MB | Platform: Windows 10/11</p>
@@ -55,6 +55,14 @@
                 <div class="spec-item"><span class="spec-key">Ekran Kartı</span><span class="spec-val">GTX 1050 Ti</span></div>
                 <div class="spec-item"><span class="spec-key">Bağlantı</span><span class="spec-val">Geniş Bant</span></div>
               </div>
+            </div>
+            <!-- Kapalı Overlay -->
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border-radius:inherit;z-index:10;pointer-events:none">
+              <div style="width:64px;height:64px;border-radius:50%;background:rgba(239,68,68,0.2);border:2px solid rgba(239,68,68,0.6);display:flex;align-items:center;justify-content:center">
+                <svg width="32" height="32" fill="none" stroke="#ef4444" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+              <p style="color:#fff;font-weight:700;font-size:13px;margin:0;letter-spacing:0.05em">GEÇİCİ OLARAK DURDURULDU</p>
+              <p style="color:rgba(255,255,255,0.6);font-size:11px;margin:0;text-align:center;padding:0 24px">Bakım nedeniyle</p>
             </div>
           </div>
 
@@ -142,39 +150,5 @@
     initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
   </script>
 
-  <script>
-    function startDownload(btnId, href) {
-      const btn = document.getElementById(btnId);
-      if (btn.dataset.state === 'done') return;
-      btn.dataset.state = 'loading';
-      btn.disabled = true;
-
-      const prog = document.createElement('div');
-      prog.className = 'dl-btn-progress';
-      prog.style.width = '0%';
-      btn.style.position = 'relative';
-      btn.prepend(prog);
-
-      const label = btn.querySelector('.dl-btn-label');
-
-      let p = 0;
-      const iv = setInterval(() => {
-        p += Math.random() * 15;
-        if (p >= 100) {
-          p = 100;
-          prog.style.width = '100%';
-          label.textContent = '✓ İNDİRME BAŞLADI';
-          clearInterval(iv);
-          btn.dataset.state = 'done';
-          setTimeout(() => {
-            window.open(href, '_blank');
-          }, 500);
-        } else {
-          prog.style.width = p + '%';
-          label.textContent = Math.round(p) + '% — HAZIRLANIYOR...';
-        }
-      }, 100);
-    }
-  </script>
 </body>
 </html>
