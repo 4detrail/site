@@ -1,8 +1,8 @@
-version: 1.2.1
+version: 1.1.7
 files:
  - url: https://github.com/4detrail/hexagesgames-release/releases/download/v1.2.1/Hexagesgames_Setup_1.2.1.exe
-   sha512: DJU1zcyUv4DPKmiVJfKvRSu9/ySoOUHxHy/7OoorxbqPtIjVsOMP+reYPv6X8adp7FjeCBV1ZILr58/DxytG1Q==
-   size: 122083929
-path: Hexagesgames_Setup_1.2.1.exe
-sha512: DJU1zcyUv4DPKmiVJfKvRSu9/ySoOUHxHy/7OoorxbqPtIjVsOMP+reYPv6X8adp7FjeCBV1ZILr58/DxytG1Q==
-releaseDate: '2026-06-07T18:40:46.233Z'
+   sha512: UrqQsmSHXNXBmJCQaDVCpe7nXWfwt8Uwv3mN5ch1U+4viyFLpYV+xavDrohYkfiamjurC3v4VkR/VctC4j/uHg==
+   size: 114780967
+path: Aperon_Setup_1.1.7.exe
+sha512: UrqQsmSHXNXBmJCQaDVCpe7nXWfwt8Uwv3mN5ch1U+4viyFLpYV+xavDrohYkfiamjurC3v4VkR/VctC4j/uHg==
+releaseDate: '2026-08-27T10:04:46.992Z'
