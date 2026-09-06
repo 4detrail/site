@@ -21,16 +21,22 @@
         </div>
 
         <!-- Download Cards -->
-        <div class="dl-cards anim-in anim-in-delay-2">
+        <div class="dl-cards anim-in anim-in-delay-2" style="max-width:900px;margin:0 auto">
 
           <!-- Aperon Launcher PC -->
-          <div class="dl-card card-3d" style="position:relative;overflow:hidden">
+          <div class="dl-card card-3d" style="position:relative;overflow:hidden;background:linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(139,92,246,0.05) 100%);border:1px solid rgba(59,130,246,0.3)">
             <div class="dl-card-top-line"></div>
             <div class="dl-card-header">
               <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
               <h2>🚀 APERON LAUNCHER v1.1.7</h2>
             </div>
             <p class="dl-card-desc">Minecraft: Java Edition deneyimini yeniden tanımlayan modern launcher. Modrinth entegrasyonu, otomatik mod kurulumu, 3D Skin Viewer ve daha fazlası.</p>
+            
+            <!-- Performans Vurgulu Satır -->
+            <div style="margin-bottom:16px;padding:12px;background:rgba(34,197,94,0.1);border-left:3px solid #22c55e;border-radius:6px">
+              <p style="margin:0;color:#22c55e;font-weight:600;font-size:13px">⚡ <strong>%60+ Daha Fazla FPS</strong> — Eski launcher'lara kıyasla diğer başlatıcılardan daha verimli ve hızlı performans.</p>
+            </div>
+            
             <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
               <a href="https://github.com/4detrail/hexagesgames-release/releases/download/v1.1.7/Aperon_Setup_1.1.7.exe" class="dl-btn" style="text-decoration:none;flex:1;min-width:200px">
                 <span class="dl-btn-label">
@@ -56,7 +62,7 @@
                 <div class="spec-item"><span class="spec-key">Performans</span><span class="spec-val">Donanıma Özel Optimizasyon</span></div>
               </div>
               <div class="spec-box green">
-                <div class="spec-heading green">GÜVENLİK & DAHA FAZLASI</div>
+                <div class="spec-heading green">🔒 GÜVENLİK & DAHA FAZLASI</div>
                 <div class="spec-item"><span class="spec-key">Otomatik Güncelleme</span><span class="spec-val">Onay ile Güvenli</span></div>
                 <div class="spec-item"><span class="spec-key">Gizlilik</span><span class="spec-val">Veri Satışı Yok</span></div>
                 <div class="spec-item"><span class="spec-key">Dil Desteği</span><span class="spec-val">Türkçe, İngilizce, Rusça</span></div>
@@ -72,6 +78,75 @@
           </div>
 
         </div><!-- end dl-cards -->
+
+        <!-- AÇILIR KAPANIR GÜNCELLEME NOTLARI -->
+        <div class="reveal" style="margin-top:80px;max-width:900px;margin-left:auto;margin-right:auto">
+          <div style="background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.2);border-radius:12px;overflow:hidden">
+            <div id="accordion-toggle" style="padding:20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;transition:background 0.2s" onmouseover="this.style.background='rgba(59,130,246,0.1)'" onmouseout="this.style.background='rgba(59,130,246,0.05)'">
+              <h3 style="margin:0;font-family:var(--font-heading);font-weight:900;font-size:18px">📝 v1.1.7 Güncelleme Notları</h3>
+              <span id="accordion-icon" style="font-size:20px;transition:transform 0.3s">▼</span>
+            </div>
+            <div id="accordion-content" style="max-height:0;overflow:hidden;transition:max-height 0.3s ease;padding:0 20px">
+              <div style="padding-bottom:20px">
+                
+                <!-- Güncelleme Notu 1 -->
+                <div style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(59,130,246,0.2)">
+                  <h4 style="margin:0 0 8px 0;color:#3b82f6;font-weight:700;font-size:15px">📦 Modrinth Entegrasyonu — Binlerce Mod Tek Yerden</h4>
+                  <p style="margin:0;color:var(--muted-foreground);font-size:13px;line-height:1.6">Modrinth üzerindeki modlara doğrudan Aperon Launcher içerisinden ulaşabilirsiniz. Modları arayın, inceleyin ve kolayca indirin. Bağımlılık takip sistemi sayesinde indirdiğiniz modların ihtiyaç duyduğu diğer modlar da otomatik olarak tespit ediliyor ve indiriliyor.</p>
+                </div>
+
+                <!-- Güncelleme Notu 2 -->
+                <div style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(59,130,246,0.2)">
+                  <h4 style="margin:0 0 8px 0;color:#3b82f6;font-weight:700;font-size:15px">📖 Modları Kendi Dilinizde İnceleyin</h4>
+                  <p style="margin:0;color:var(--muted-foreground);font-size:13px;line-height:1.6">Modların açıklamalarını Türkçe, Rusça ve İngilizce seçenekleriyle görüntüleyebilirsiniz. Modları öğrenmek artık çok daha kolay ve anlaşılır.</p>
+                </div>
+
+                <!-- Güncelleme Notu 3 -->
+                <div style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(59,130,246,0.2)">
+                  <h4 style="margin:0 0 8px 0;color:#22c55e;font-weight:700;font-size:15px">🔄 Daha Güvenli Güncelleme Sistemi</h4>
+                  <p style="margin:0;color:var(--muted-foreground);font-size:13px;line-height:1.6">Eski otomatik güncelleme sistemi tamamen yenilendi. Artık yeni bir sürüm bulunduğunda Aperon size güncelleme seçeneği sunuyor. Karar tamamen size aittir. "Şimdi Değil" seçeneğini seçerseniz güncellemeyi kaçırmıyorsunuz. Ayarlar bölümündeki periyodik güncelleme kontrol sistemi sayesinde istediğiniz zaman sürümünüzün güncel olup olmadığını kontrol edebilirsiniz.</p>
+                </div>
+
+                <!-- Güncelleme Notu 4 -->
+                <div style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(59,130,246,0.2)">
+                  <h4 style="margin:0 0 8px 0;color:#fbbf24;font-weight:700;font-size:15px">⚡ FPS ve Verimlilik İyileştirmeleri — %60+ Daha Hızlı</h4>
+                  <p style="margin:0;color:var(--muted-foreground);font-size:13px;line-height:1.6"><strong style="color:#fbbf24">Aperon'un arka plan sistemleri tamamen optimize edildi.</strong> Verimliliği analiz ederek mümkün olduğunca verimli çalışacak şekilde düzenlendi. AFK durumlarında sistem kaynakları gereksiz yere tüketmemek için oyun verimliliği modunda 30 FPS ile sınırlandırılıyor. Böylece gereksiz güç tüketimi azaltılıyor ve daha verimli bir kullanım hedefleniyor. <strong>Sonuç: Eski launcher'lara kıyasla %60+ daha fazla FPS ve daha az CPU/RAM kullanımı.</strong></p>
+                </div>
+
+                <!-- Güncelleme Notu 5 -->
+                <div style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(59,130,246,0.2)">
+                  <h4 style="margin:0 0 8px 0;color:#3b82f6;font-weight:700;font-size:15px">🛠️ Çökme Günlüğü Sistemi (Crash Log)</h4>
+                  <p style="margin:0;color:var(--muted-foreground);font-size:13px;line-height:1.6">Oyun veya program beklenen şekilde çöktüğünde artık ne olduğu çok daha kolay öğrenilebilir. Ayarlar bölümündeki Crash Log sistemi sayesinde oluşan hata kayıtlarını takip edebilir ve sorun kaynağı hakkında daha fazla bilgi edinebilirsiniz.</p>
+                </div>
+
+                <!-- Güncelleme Notu 6 -->
+                <div style="margin-bottom:0">
+                  <h4 style="margin:0 0 8px 0;color:#3b82f6;font-weight:700;font-size:15px">☕ Geliştiriciler İçin Java Ayarları</h4>
+                  <p style="margin:0;color:var(--muted-foreground);font-size:13px;line-height:1.6">Geliştiricilerin ve ileri düzey kullanıcıların özellikleri de unutulmadı. Ayarlar bölümünde Java yolu ve Java bağlantıları sayesinde Java yapılandırmasını daha ayrıntılı şekilde yapılandırabilirsiniz. Eski sürümlerde yaşanan Java sorunlarının önüne geçmek için bu sistem baştan ele alındı.</p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          const toggle = document.getElementById('accordion-toggle');
+          const content = document.getElementById('accordion-content');
+          const icon = document.getElementById('accordion-icon');
+          let isOpen = false;
+
+          toggle.addEventListener('click', function() {
+            isOpen = !isOpen;
+            if (isOpen) {
+              content.style.maxHeight = content.scrollHeight + 'px';
+              icon.style.transform = 'rotate(180deg)';
+            } else {
+              content.style.maxHeight = '0';
+              icon.style.transform = 'rotate(0deg)';
+            }
+          });
+        </script>
 
         <!-- GERİ BİLDİRİM ÇAĞRISI -->
         <div class="reveal" style="margin-top:80px;padding:32px;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.2);border-radius:12px;text-align:center">
