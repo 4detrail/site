@@ -87,7 +87,7 @@
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import {
       auth, isAdmin, sanitize, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
-      onAuthStateChanged, getThreatLogs, updateThreatLogStatus, getGuildConfigs, fetchAdminList
+      onAuthStateChanged, getThreatLogs, updateThreatLogStatus, getGuildConfigs
     } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
@@ -96,7 +96,6 @@
 
     let allLogs = [];
     let guildCount = 0;
-    let adminEmailList = [];
 
     const statusLabels = {
       new: 'YENİ',
@@ -121,17 +120,17 @@
       BOTH: 'death-threat'
     };
 
+    // Admin listesini rules ile senkronize et
+    const ADMIN_EMAILS = ['yigittr1922@gmail.com', 'firecrostnetwork@gmail.com', 'wither3169999@gmail.com'];
+
     onAuthStateChanged(auth, async user => {
       if (!user) {
         document.getElementById('not-logged').style.display = 'block';
         return;
       }
       
-      // Firestore'dan admin listesini çek
-      adminEmailList = await fetchAdminList();
-      
-      // Admin kontrolü Firestore listesine göre
-      if (!adminEmailList.includes(user.email?.toLowerCase())) {
+      // Rules ile tam uyumlu admin kontrolü
+      if (!ADMIN_EMAILS.includes(user.email)) {
         document.getElementById('not-logged-text').textContent = 'Bu sayfayı görüntüleme yetkiniz yok. Bu alan sadece Hexages Games yöneticileri içindir.';
         document.getElementById('not-logged-btn').style.display = 'none';
         document.getElementById('not-logged').style.display = 'block';
@@ -148,6 +147,7 @@
       document.getElementById('log-empty').style.display = 'none';
 
       try {
+        // Rules'a uygun: threat_logs read ve guild_configs read
         const [logs, guilds] = await Promise.all([
           getThreatLogs(), 
           getGuildConfigs()
@@ -158,6 +158,7 @@
         console.error('Load error:', err);
         document.getElementById('log-loading').style.display = 'none';
         
+        // Rules kaynaklı hataları yakala
         let errorMsg = 'Kayıtlar yüklenemedi. ';
         if (err.code === 'permission-denied') {
           errorMsg += 'Bu işlem için yetkiniz yok. Lütfen admin olarak giriş yaptığınızdan emin olun.';
@@ -266,8 +267,11 @@
 
     window.setStatus = async (logId, status) => {
       try {
+        // Rules'a uygun: threat_logs update sadece adminler tarafından yapılabilir
+        // Şu anki kullanıcının admin olduğunu zaten kontrol ettik
         await updateThreatLogStatus(logId, status);
         
+        // Local state'i güncelle
         const log = allLogs.find(l => l.id === logId);
         if (log) {
           log.status = status;
