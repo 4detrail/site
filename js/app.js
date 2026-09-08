@@ -1,4 +1,3 @@
-
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
 import {
   getStorage,
@@ -31,7 +30,8 @@ import {
   query,
   orderBy,
   where,
-  getDoc
+  getDoc,
+  increment
 } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -48,7 +48,35 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-const ADMIN_EMAILS = ['yigittr1922@gmail.com', 'firecrostnetwork@gmail.com', 'hexagesgames@gmail.com', 'wither3169999@gmail.com'];
+// Firestore'dan admin listesi çekmek (Frontend'de sabit değil)
+let ADMIN_EMAILS = [];
+let adminCacheTime = 0;
+const ADMIN_CACHE_DURATION = 5 * 60 * 1000; // 5 dakika cache
+
+async function fetchAdminList() {
+  const now = Date.now();
+  
+  // Cache kontrolü
+  if (ADMIN_EMAILS.length > 0 && (now - adminCacheTime) < ADMIN_CACHE_DURATION) {
+    return ADMIN_EMAILS;
+  }
+
+  try {
+    const adminDoc = await getDoc(doc(db, 'admin_config', 'app_admins'));
+    if (adminDoc.exists() && adminDoc.data().emails) {
+      ADMIN_EMAILS = adminDoc.data().emails;
+      adminCacheTime = now;
+    } else {
+      // Fallback: Eğer Firestore'da yoksa backup listesi kullan
+      ADMIN_EMAILS = ['yigittr1922@gmail.com', 'firecrostnetwork@gmail.com', 'wither3169999@gmail.com'];
+    }
+  } catch (err) {
+    console.warn('Admin listesi çekimleri başarısız, fallback kullanılıyor:', err);
+    ADMIN_EMAILS = ['yigittr1922@gmail.com', 'firecrostnetwork@gmail.com', 'wither3169999@gmail.com'];
+  }
+
+  return ADMIN_EMAILS;
+}
 
 function isAdmin(email) {
   return email && ADMIN_EMAILS.includes(email.toLowerCase());
@@ -191,19 +219,22 @@ function initReveal() {
 }
 
 
-function initAuthNav() {
+async function initAuthNav() {
+  const adminList = await fetchAdminList();
+  
   onAuthStateChanged(auth, (user) => {
     const navAuth = document.getElementById('nav-auth');
     const mobileAuth = document.getElementById('mobile-auth');
     if (!navAuth) return;
     if (user) {
       const name = user.displayName ? user.displayName.split(' ')[0].toUpperCase() : 'PROFİL';
-      const adminLink = isAdmin(user.email)
+      const isUserAdmin = adminList.includes(user.email?.toLowerCase());
+      const adminLink = isUserAdmin
         ? `<a href="fatura.html" class="btn-profile" style="border-color:rgba(245,197,66,0.35);color:#f5c542">⚡ FATURALANDIRMA</a><a href="guvenlik.html" class="btn-profile" style="border-color:rgba(224,36,36,0.4);color:#ff6b6b">🛡️ GÜVENLİK</a>`
         : '';
       navAuth.innerHTML = `<div style="display:flex;align-items:center;gap:10px">${adminLink}<a href="profil.html" class="btn-profile">👤 ${sanitize(name)}</a></div>`;
       if (mobileAuth) {
-        const mobileAdminLink = isAdmin(user.email)
+        const mobileAdminLink = isUserAdmin
           ? `<a href="fatura.html" class="nav-link" style="color:#f5c542">⚡ FATURA YÖNETİMİ</a><a href="guvenlik.html" class="nav-link" style="color:#ff6b6b">🛡️ GÜVENLİK PANELİ</a>`
           : '';
         mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">→ PROFİL (${sanitize(user.email || '')})</a>`;
@@ -230,7 +261,8 @@ async function getTickets() {
       createdAt: d.data().createdAt?.toDate?.().toISOString() || new Date().toISOString(),
       updatedAt: d.data().updatedAt?.toDate?.().toISOString() || null
     }));
-    if (isAdmin(user.email)) return all;
+    const adminList = await fetchAdminList();
+    if (adminList.includes(user.email?.toLowerCase())) return all;
 
     return all.filter(t => t.uid === user.uid || t.email === user.email);
   } catch (err) {
@@ -264,7 +296,8 @@ async function saveTicket(ticket) {
 
 async function updateTicketStatus(ticketId, status, adminReply) {
   const user = auth.currentUser;
-  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const adminList = await fetchAdminList();
+  if (!user || !adminList.includes(user.email?.toLowerCase())) throw new Error('Yetki yok');
   const ALLOWED_STATUSES = ['open', 'in-progress', 'resolved', 'closed'];
   if (!ALLOWED_STATUSES.includes(status)) throw new Error('Geçersiz durum');
   const ref = doc(db, 'launcher_tickets', ticketId);
@@ -277,10 +310,61 @@ async function updateTicketStatus(ticketId, status, adminReply) {
 
 
 
+// YENİ: İndirme Sayacı Fonksiyonları
+async function getDownloadStats() {
+  try {
+    const snap = await getDoc(doc(db, 'download_stats', 'launcher'));
+    if (snap.exists()) {
+      return snap.data();
+    }
+    return { totalDownloads: 0, lastUpdated: new Date().toISOString() };
+  } catch (err) {
+    console.error('Download stats hatası:', err);
+    return { totalDownloads: 0, lastUpdated: new Date().toISOString() };
+  }
+}
+
+async function recordDownload() {
+  try {
+    const docRef = doc(db, 'download_stats', 'launcher');
+    
+    // Eğer dokument yoksa oluştur, varsa sayıcı arttır
+    const snap = await getDoc(docRef);
+    if (!snap.exists()) {
+      await setDoc(docRef, {
+        totalDownloads: 1,
+        lastUpdated: serverTimestamp(),
+        createdAt: serverTimestamp()
+      });
+    } else {
+      await updateDoc(docRef, {
+        totalDownloads: increment(1),
+        lastUpdated: serverTimestamp()
+      });
+    }
+    
+    return true;
+  } catch (err) {
+    console.error('İndirme kaydedilemedi:', err);
+    return false;
+  }
+}
+
+async function getDownloadCount() {
+  try {
+    const stats = await getDownloadStats();
+    return stats.totalDownloads || 0;
+  } catch (err) {
+    console.error('İndirme sayısı alınamadı:', err);
+    return 0;
+  }
+}
+
 
 async function uploadDekontFoto(faturaNo, file) {
   const user = auth.currentUser;
-  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const adminList = await fetchAdminList();
+  if (!user || !adminList.includes(user.email?.toLowerCase())) throw new Error('Yetki yok');
   const ext = file.name.split('.').pop().toLowerCase();
   const allowed = ['jpg', 'jpeg', 'png', 'webp', 'pdf'];
   if (!allowed.includes(ext)) throw new Error('Sadece JPG, PNG, WEBP veya PDF yüklenebilir.');
@@ -295,7 +379,8 @@ async function uploadDekontFoto(faturaNo, file) {
 
 async function saveFatura(fatura, dekontFile) {
   const user = auth.currentUser;
-  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const adminList = await fetchAdminList();
+  if (!user || !adminList.includes(user.email?.toLowerCase())) throw new Error('Yetki yok');
   const faturaNo = fatura.faturaNo.trim().toUpperCase();
   if (!/^[A-Z0-9\-]{3,40}$/.test(faturaNo)) throw new Error('Geçersiz fatura numarası formatı.');
 
@@ -333,7 +418,8 @@ async function getFaturaByNo(faturaNo) {
   if (!snap.exists()) return null;
   const data = snap.data();
 
-  if (!isAdmin(user.email) && user.email.toLowerCase() !== (data.email || '').toLowerCase()) {
+  const adminList = await fetchAdminList();
+  if (!adminList.includes(user.email?.toLowerCase()) && user.email.toLowerCase() !== (data.email || '').toLowerCase()) {
     return null;
   }
 
@@ -343,7 +429,8 @@ async function getFaturaByNo(faturaNo) {
 
 async function getAllFaturalar() {
   const user = auth.currentUser;
-  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const adminList = await fetchAdminList();
+  if (!user || !adminList.includes(user.email?.toLowerCase())) throw new Error('Yetki yok');
   const q = query(collection(db, 'faturalar'), orderBy('createdAt', 'desc'));
   const snap = await getDocs(q);
   return snap.docs.map(d => ({
@@ -356,7 +443,8 @@ async function getAllFaturalar() {
 
 async function deleteFatura(faturaId, dekontURL) {
   const user = auth.currentUser;
-  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const adminList = await fetchAdminList();
+  if (!user || !adminList.includes(user.email?.toLowerCase())) throw new Error('Yetki yok');
   if (dekontURL) {
     try {
       const path = decodeURIComponent(dekontURL.split('/o/')[1].split('?')[0]);
@@ -370,7 +458,8 @@ async function deleteFatura(faturaId, dekontURL) {
 
 async function getThreatLogs() {
   const user = auth.currentUser;
-  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const adminList = await fetchAdminList();
+  if (!user || !adminList.includes(user.email?.toLowerCase())) throw new Error('Yetki yok');
   const q = query(collection(db, 'threat_logs'), orderBy('loggedAt', 'desc'));
   const snap = await getDocs(q);
   return snap.docs.map(d => ({
@@ -382,7 +471,8 @@ async function getThreatLogs() {
 
 async function updateThreatLogStatus(logId, status) {
   const user = auth.currentUser;
-  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const adminList = await fetchAdminList();
+  if (!user || !adminList.includes(user.email?.toLowerCase())) throw new Error('Yetki yok');
   const ALLOWED_STATUSES = ['new', 'reviewed', 'reported_to_authorities', 'dismissed'];
   if (!ALLOWED_STATUSES.includes(status)) throw new Error('Geçersiz durum');
   const ref = doc(db, 'threat_logs', logId);
@@ -391,17 +481,19 @@ async function updateThreatLogStatus(logId, status) {
 
 async function getGuildConfigs() {
   const user = auth.currentUser;
-  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const adminList = await fetchAdminList();
+  if (!user || !adminList.includes(user.email?.toLowerCase())) throw new Error('Yetki yok');
   const snap = await getDocs(collection(db, 'guild_configs'));
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
 export {
-  auth, db, storage, isAdmin, sanitize, checkRateLimit,
+  auth, db, storage, isAdmin, sanitize, checkRateLimit, fetchAdminList,
   onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, GoogleAuthProvider, signInWithPopup, updateProfile, sendPasswordResetEmail,
   getTickets, saveTicket, updateTicketStatus,
   saveFatura, getFaturaByNo, getAllFaturalar, uploadDekontFoto, deleteFatura,
   getThreatLogs, updateThreatLogStatus, getGuildConfigs,
+  getDownloadStats, recordDownload, getDownloadCount,
   initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme
 };
