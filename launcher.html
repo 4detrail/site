@@ -18,6 +18,11 @@
           <span class="mono-label">// İNDİR</span>
           <h1 style="font-family:var(--font-heading);font-weight:900;font-size:clamp(2.5rem,7vw,6rem);line-height:1;margin-top:8px">LAUNCHER İNDİR</h1>
           <p style="color:var(--muted-foreground);margin-top:16px;font-family:var(--font-mono);font-size:13px;max-width:512px;margin-left:auto;margin-right:auto">Tüm HEXAGES oyunlarına tek noktadan erişin. Platform seçin ve indirin.</p>
+          
+          <!-- YENİ: İndirme İstatistiği -->
+          <div style="margin-top:24px;padding:12px 20px;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.2);border-radius:8px;display:inline-block;font-family:var(--font-mono);font-size:12px">
+            <span style="color:var(--muted-foreground)">📊 TOPLAM İNDİRME: </span><span id="download-count" style="color:#3b82f6;font-weight:700">0</span>
+          </div>
         </div>
 
         <!-- Download Cards -->
@@ -38,7 +43,7 @@
             </div>
             
             <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
-              <a href="https://github.com/4detrail/hexagesgames-release/releases/download/v1.1.7/Aperon_Setup_1.1.7.exe" class="dl-btn" style="text-decoration:none;flex:1;min-width:200px">
+              <a href="https://github.com/4detrail/hexagesgames-release/releases/download/v1.1.7/Aperon_Setup_1.1.7.exe" onclick="recordDownload(event)" class="dl-btn" style="text-decoration:none;flex:1;min-width:200px">
                 <span class="dl-btn-label">
                   <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                   İNDİR (120 MB)
@@ -194,12 +199,38 @@
 
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
-    import { initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav } from './js/app.js';
+    import { initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, getDownloadCount, recordDownload as recordDL } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
 
     initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+
+    // YENİ: Sayfa yüklendiğinde indirme sayısını göster
+    window.recordDownload = async (event) => {
+      try {
+        await recordDL();
+        await updateDownloadCount();
+      } catch (err) {
+        console.error('Download record error:', err);
+      }
+      // İndirme linkine devam et
+      setTimeout(() => {
+        window.location.href = event.currentTarget.href;
+      }, 100);
+    };
+
+    async function updateDownloadCount() {
+      try {
+        const count = await getDownloadCount();
+        document.getElementById('download-count').textContent = count.toLocaleString('tr-TR');
+      } catch (err) {
+        console.error('Download count error:', err);
+      }
+    }
+
+    // Sayfa yüklendiğinde sayıyı göster
+    updateDownloadCount();
   </script>
 
 </body>
