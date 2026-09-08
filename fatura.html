@@ -154,7 +154,7 @@
             </div>
             <div id="f-loading" style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px">YÜKLENİYOR...</div>
             <div id="fatura-list"></div>
-            <div id="f-empty" style="display:none;font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px;border:1px solid var(--border)">Fatura bulunamadı.</div>
+            <div id="f-empty" style="display:none;font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px;border:1px solid var(--border)">Henüz fatura yok.</div>
           </div>
 
         </div>
@@ -167,60 +167,49 @@
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import {
-      auth, sanitize, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
-      onAuthStateChanged, getAllFaturalar, saveFatura, uploadDekontFoto, deleteFatura, fetchAdminList
+      auth, isAdmin, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
+      onAuthStateChanged, saveFatura, getAllFaturalar, deleteFatura, sanitize
     } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
     initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
 
+    document.getElementById('f-tarih').value = new Date().toISOString().split('T')[0];
+
     let adminUser = null;
     let selectedFile = null;
-    let adminEmailList = [];
 
-    // Drag and drop
+    // Drag & drop
     const uploadArea = document.getElementById('upload-area');
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evt => {
-      uploadArea.addEventListener(evt, (e) => {
-        e.preventDefault(); e.stopPropagation();
-        if (evt === 'dragenter' || evt === 'dragover') uploadArea.classList.add('drag-over');
-        else if (evt === 'dragleave' || evt === 'drop') uploadArea.classList.remove('drag-over');
-        if (evt === 'drop') {
-          const files = e.dataTransfer.files;
-          if (files.length > 0) {
-            document.getElementById('f-dekont').files = files;
-            onFileChange({ target: { files } });
-          }
-        }
-      });
+    uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+    uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadArea.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) setFile(file);
     });
 
-    window.onFileChange = (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
-      selectedFile = file;
-      const preview = document.getElementById('upload-preview');
-      preview.textContent = '✓ ' + file.name;
-      preview.style.display = 'block';
-      document.getElementById('upload-placeholder').style.display = 'none';
+    window.onFileChange = (e) => {
+      const file = e.target.files[0];
+      if (file) setFile(file);
     };
 
+    function setFile(file) {
+      selectedFile = file;
+      const preview = document.getElementById('upload-preview');
+      const placeholder = document.getElementById('upload-placeholder');
+      preview.style.display = 'block';
+      preview.textContent = `✓ ${file.name} (${(file.size / 1024).toFixed(0)} KB)`;
+      placeholder.innerHTML = `<p style="font-family:var(--font-mono);font-size:11px;color:#34d399">✓ ${sanitize(file.name)}</p>`;
+    }
+
     onAuthStateChanged(auth, async user => {
-      if (!user) {
+      if (!user || !isAdmin(user.email)) {
         document.getElementById('not-authorized').style.display = 'block';
         return;
       }
-      
-      // Firestore'dan admin listesini çek
-      adminEmailList = await fetchAdminList();
-      
-      // Admin kontrolü Firestore listesine göre
-      if (!adminEmailList.includes(user.email?.toLowerCase())) {
-        document.getElementById('not-authorized').style.display = 'block';
-        return;
-      }
-      
       adminUser = user;
       document.getElementById('fatura-content').style.display = 'block';
       await loadFaturalar();
