@@ -1,5 +1,5 @@
 # HEXAGES GAMES - robots.txt
-# https://hexagesgames.com
+# https://hexagesgames.vercel.app
 
 User-agent: *
 Allow: /
@@ -12,5 +12,9 @@ Disallow: /sifremi-unuttum.html
 # Destek ticket sistemi (giriş gerektirir)
 Disallow: /ticket.html
 
-# Sitemap (yayınladıktan sonra güncelleyin)
-Sitemap: https://hexagesgames.com/sitemap.xml
+# Fatura / dekont / güvenlik gibi hesaba özel sayfalar
+Disallow: /fatura.html
+Disallow: /dekont.html
+Disallow: /guvenlik.html
+
+Sitemap: https://hexagesgames.vercel.app/sitemap.xml
