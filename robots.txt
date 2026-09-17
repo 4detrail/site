@@ -17,4 +17,14 @@ Disallow: /fatura.html
 Disallow: /dekont.html
 Disallow: /guvenlik.html
 
+# Veri / güncelleme dosyaları (sayfa değil, indekslenmesine gerek yok)
+Disallow: /launcher-data.json
+Disallow: /latest.yml
+
+# Googlebot görsel botu için logo ve görselleri açıkça izinli yap
+User-agent: Googlebot-Image
+Allow: /logo.png
+Allow: /logom1.png
+Allow: /
+
 Sitemap: https://hexagesgames.vercel.app/sitemap.xml
