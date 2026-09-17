@@ -9,7 +9,7 @@ export function getNavHTML() {
 <nav id="main-nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <img src="https://media.base44.com/images/public/6a230fb4447836a5b131d0c7/03b7964ff_Varlk20.png" alt="Hexages Games">
+      <img src="logom1.png" alt="HEXAGES GAMES logo" width="32" height="32">
       <span>HEXAGES GAMES</span>
     </a>
     <ul class="nav-links">
@@ -50,7 +50,7 @@ export function getFooterHTML() {
     <div class="footer-grid">
       <div>
         <div class="footer-logo">
-          <img src="https://media.base44.com/images/public/6a230fb4447836a5b131d0c7/03b7964ff_Varlk20.png" alt="Hexages">
+          <img src="logom1.png" alt="HEXAGES GAMES logo" width="32" height="32">
           <span>HEXAGES GAMES</span>
         </div>
         <p class="text-muted text-mono" style="font-size:13px;line-height:1.7">Yeni nesil oyun deneyimleri.<br>Geleceği şekillendiriyoruz.</p>
