@@ -200,12 +200,12 @@ function initAuthNav() {
     if (user) {
       const name = user.displayName ? user.displayName.split(' ')[0].toUpperCase() : 'PROFİL';
       const adminLink = isAdmin(user.email)
-        ? `<a href="fatura.html" class="btn-profile" style="border-color:rgba(245,197,66,0.35);color:#f5c542">⚡ FATURALANDIRMA</a><a href="guvenlik.html" class="btn-profile" style="border-color:rgba(224,36,36,0.4);color:#ff6b6b">🛡️ GÜVENLİK</a>`
+        ? `<a href="fatura.html" class="btn-profile" style="border-color:rgba(245,197,66,0.35);color:#f5c542">⚡ FATURALANDIRMA</a><a href="guvenlik.html" class="btn-profile" style="border-color:rgba(224,36,36,0.4);color:#ff6b6b">🛡️ GÜVENLİK</a><a href="discord-sorgu.html" class="btn-profile" style="border-color:rgba(88,101,242,0.4);color:#8891ff">🔎 DC SORGU</a>`
         : '';
       navAuth.innerHTML = `<div style="display:flex;align-items:center;gap:10px">${adminLink}<a href="profil.html" class="btn-profile">👤 ${sanitize(name)}</a></div>`;
       if (mobileAuth) {
         const mobileAdminLink = isAdmin(user.email)
-          ? `<a href="fatura.html" class="nav-link" style="color:#f5c542">⚡ FATURA YÖNETİMİ</a><a href="guvenlik.html" class="nav-link" style="color:#ff6b6b">🛡️ GÜVENLİK PANELİ</a>`
+          ? `<a href="fatura.html" class="nav-link" style="color:#f5c542">⚡ FATURA YÖNETİMİ</a><a href="guvenlik.html" class="nav-link" style="color:#ff6b6b">🛡️ GÜVENLİK PANELİ</a><a href="discord-sorgu.html" class="nav-link" style="color:#8891ff">🔎 DISCORD SORGULAMA</a>`
           : '';
         mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">→ PROFİL (${sanitize(user.email || '')})</a>`;
       }
@@ -397,6 +397,88 @@ async function getGuildConfigs() {
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
+// ===== DISCORD KULLANICI KARTLARI (discord_profiles) =====
+// Kartlar botun (Admin SDK) arka planda yazdığı GERÇEK Discord verisidir.
+// Konum/IP bilgisi TUTULMAZ. Erişimi olan her admin aynı gerçek veriyi görür,
+// hiçbir admine farklı ya da sahte bilgi gösterilmez.
+const DISCORD_ID_RE = /^[0-9]{15,25}$/;
+
+function discordIdToCreatedAt(discordId) {
+  // Discord snowflake ID'sinden hesap oluşturma zamanını hesaplar (client-side doğrulama/yedek).
+  try {
+    const DISCORD_EPOCH = 1420070400000n;
+    const ms = (BigInt(discordId) >> 22n) + DISCORD_EPOCH;
+    return new Date(Number(ms)).toISOString();
+  } catch {
+    return null;
+  }
+}
+
+async function getAllDiscordProfiles() {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const snap = await getDocs(collection(db, 'discord_profiles'));
+  return snap.docs.map(d => ({
+    id: d.id,
+    ...d.data(),
+    lastUpdatedAt: d.data().lastUpdatedAt?.toDate?.().toISOString() || null
+  }));
+}
+
+async function getDiscordProfile(discordId) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  if (!DISCORD_ID_RE.test(discordId)) throw new Error('Geçersiz Discord ID formatı.');
+  const snap = await getDoc(doc(db, 'discord_profiles', discordId));
+  if (!snap.exists()) return null;
+  const data = snap.data();
+  return { id: snap.id, ...data, lastUpdatedAt: data.lastUpdatedAt?.toDate?.().toISOString() || null };
+}
+
+async function getThreatLogsByAuthorId(discordId) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const q = query(collection(db, 'threat_logs'), where('authorId', '==', discordId));
+  const snap = await getDocs(q);
+  return snap.docs
+    .map(d => ({ id: d.id, ...d.data(), loggedAt: d.data().loggedAt?.toDate?.().toISOString() || null }))
+    .sort((a, b) => new Date(b.loggedAt || 0) - new Date(a.loggedAt || 0));
+}
+
+async function getUserNotes(discordId) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const q = query(collection(db, 'user_notes'), where('discordId', '==', discordId));
+  const snap = await getDocs(q);
+  return snap.docs
+    .map(d => ({ id: d.id, ...d.data(), createdAt: d.data().createdAt?.toDate?.().toISOString() || null }))
+    .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+}
+
+// Not: adminAdSoyad = notu yazan adminin kendi isim-soyismi (kim not düştüğünün kaydı için).
+// dangerous = true ise kullanıcı "tehlikeli" olarak işaretlenir. Tüm adminler bu notu aynen görür.
+async function addUserNote(discordId, noteText, dangerous, adminAdSoyad) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  if (!DISCORD_ID_RE.test(discordId)) throw new Error('Geçersiz Discord ID formatı.');
+  const note = (noteText || '').trim();
+  if (note.length < 3 || note.length > 1000) throw new Error('Not 3-1000 karakter arası olmalıdır.');
+  const adSoyad = (adminAdSoyad || '').trim();
+  if (adSoyad.length < 3 || adSoyad.length > 80) throw new Error('Lütfen kendi isim-soyisminizi girin.');
+  if (!checkRateLimit('addUserNote_' + user.uid, 10, 10 * 60 * 1000)) {
+    throw new Error('Çok fazla istek. Lütfen bekleyin.');
+  }
+  const docRef = await addDoc(collection(db, 'user_notes'), {
+    discordId,
+    note: note.slice(0, 1000),
+    dangerous: !!dangerous,
+    adminAdSoyad: adSoyad.slice(0, 80),
+    adminEmail: user.email,
+    createdAt: serverTimestamp()
+  });
+  return { id: docRef.id };
+}
+
 // ===== CANLI İNDİRME SAYACI (launcher_stats) =====
 // Her indirme butonuna tıklandığında sayaç +1 artar (Firestore increment ile atomik).
 // Aynı tarayıcıdan art arda tıklamalarda kısa süreli bir bekleme (debounce) uygulanır.
@@ -438,6 +520,8 @@ export {
   getTickets, saveTicket, updateTicketStatus,
   saveFatura, getFaturaByNo, getAllFaturalar, uploadDekontFoto, deleteFatura,
   getThreatLogs, updateThreatLogStatus, getGuildConfigs,
+  getAllDiscordProfiles, getDiscordProfile, getThreatLogsByAuthorId,
+  getUserNotes, addUserNote, discordIdToCreatedAt,
   trackLauncherDownload, subscribeLauncherDownloadCount,
   initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme
 };
