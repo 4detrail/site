@@ -1,8 +1,0 @@
-version: 1.1.7
-files:
- - url: https://github.com/4detrail/hexagesgames-release/releases/download/v1.1.7/Aperon_Setup_1.1.7.exe
-   sha512: UH1Wml2cuVPnal8J7+2jtGt/oEPGGAqiUjqJaggx8qJGpupKtrOS1ZFbpFMsxzyYWMowy9w13DZyBfW6kWd7xg==
-   size: 114787907
-path: Aperon_Setup_1.1.7.exe
-sha512: UH1Wml2cuVPnal8J7+2jtGt/oEPGGAqiUjqJaggx8qJGpupKtrOS1ZFbpFMsxzyYWMowy9w13DZyBfW6kWd7xg==
-releaseDate: '2026-09-06T13:26:55.435Z'
