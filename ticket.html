@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEXAGES GAMES – Ticket</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+
+  <main>
+    <section style="min-height:100vh;padding-top:128px;padding-bottom:96px;padding-left:24px;padding-right:24px">
+      <div class="container" style="max-width:896px">
+
+        <div class="anim-in anim-in-delay-1" style="margin-bottom:64px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+              <span class="mono-label">// DESTEK</span>
+              <span id="admin-badge" style="display:none;font-family:var(--font-mono);font-size:10px;border:1px solid rgba(245,197,66,0.3);color:#f5c542;padding:2px 8px">⚡ ADMIN TERMİNAL</span>
+            </div>
+            <h1 style="font-family:var(--font-heading);font-weight:900;font-size:clamp(2.5rem,6vw,5rem);line-height:1">TİCKET</h1>
+          </div>
+          <button onclick="loadTickets()" style="margin-left:auto;background:transparent;border:1px solid var(--border);color:var(--muted-foreground);font-family:var(--font-mono);font-size:11px;padding:8px 16px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.3s" onmouseover="this.style.borderColor='white';this.style.color='white'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted-foreground)'">
+            ↺ YENİLE
+          </button>
+        </div>
+
+        <!-- Not logged in -->
+        <div id="not-logged" style="display:none" class="not-logged">
+          <p>Ticket oluşturmak için giriş yapmalısınız.</p>
+          <a href="giris.html" class="btn-download" style="font-size:11px">GİRİŞ YAP</a>
+        </div>
+
+        <div id="ticket-content" style="display:none">
+
+          <!-- Submit Form -->
+          <div style="border:1px solid var(--border);padding:32px;margin-bottom:48px;position:relative;overflow:hidden" class="anim-in anim-in-delay-2">
+            <div class="shimmer" style="position:absolute;inset:0"></div>
+            <div style="position:relative;z-index:1">
+              <span class="mono-label" style="display:block;margin-bottom:24px">// YENİ TİCKET</span>
+
+              <div id="success-msg" class="success-msg" style="display:none">✓ Ticket başarıyla oluşturuldu! Ekibimiz en kısa sürede yanıt verecek.</div>
+              <div id="error-msg" class="error-msg" style="display:none"></div>
+
+              <div class="form-group">
+                <label class="form-label">KONU</label>
+                <input type="text" id="t-subject" class="form-input" placeholder="Sorunuzu kısaca özetleyin">
+              </div>
+              <div class="form-group">
+                <label class="form-label">KATEGORİ</label>
+                <select id="t-category" class="select-input">
+                  <option>Teknik Destek</option>
+                  <option>Öneri</option>
+                  <option>Hata Bildirimi</option>
+                  <option>Hesap</option>
+                  <option>Diğer</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">MESAJ</label>
+                <textarea id="t-message" class="textarea-input" placeholder="Sorunuzu veya önerinizi detaylıca açıklayın..."></textarea>
+              </div>
+
+              <button onclick="submitTicket()" id="btn-submit" class="btn-submit" style="width:auto;padding:14px 32px;font-size:11px">
+                TİCKET GÖNDER
+              </button>
+            </div>
+          </div>
+
+          <!-- Ticket List -->
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+              <span class="mono-label" id="ticket-list-label">// TİCKETLERİM</span>
+              <span id="ticket-count" style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground)"></span>
+            </div>
+            <div id="ticket-loading" style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px">YÜKLENİYOR...</div>
+            <div id="ticket-list"></div>
+            <div id="ticket-empty" style="display:none;font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px;border:1px solid var(--border)">Henüz ticket yok.</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import {
+      auth, isAdmin, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
+      onAuthStateChanged, getTickets, saveTicket, updateTicketStatus
+    } from './js/app.js';
+
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+
+    let currentUser = null;
+    let currentIsAdmin = false;
+
+    const statusColors = {
+      open: 'open',
+      'in-progress': 'in-progress',
+      resolved: 'resolved',
+      closed: 'closed'
+    };
+
+    const statusLabels = {
+      open: 'AÇIK',
+      'in-progress': 'İŞLEMDE',
+      resolved: 'ÇÖZÜLDÜ',
+      closed: 'KAPANDI'
+    };
+
+    onAuthStateChanged(auth, async user => {
+      if (!user) {
+        document.getElementById('not-logged').style.display = 'block';
+        return;
+      }
+      currentUser = user;
+      currentIsAdmin = isAdmin(user.email);
+      document.getElementById('ticket-content').style.display = 'block';
+
+      if (currentIsAdmin) {
+        document.getElementById('admin-badge').style.display = 'inline-flex';
+        document.getElementById('ticket-list-label').textContent = '// TÜM TİCKETLER';
+      }
+
+      await loadTickets();
+    });
+
+    window.loadTickets = async () => {
+      if (!currentUser) return;
+      document.getElementById('ticket-loading').style.display = 'block';
+      document.getElementById('ticket-list').innerHTML = '';
+      document.getElementById('ticket-empty').style.display = 'none';
+
+      const all = await getTickets();
+      const tickets = currentIsAdmin ? all : all.filter(t => t.email === currentUser.email);
+
+      document.getElementById('ticket-loading').style.display = 'none';
+      document.getElementById('ticket-count').textContent = tickets.length + ' ticket';
+
+      if (tickets.length === 0) {
+        document.getElementById('ticket-empty').style.display = 'block';
+        return;
+      }
+
+      const list = document.getElementById('ticket-list');
+      tickets.slice().reverse().forEach(ticket => {
+        const statusClass = statusColors[ticket.status] || 'open';
+        const statusLabel = statusLabels[ticket.status] || 'AÇIK';
+        const date = new Date(ticket.createdAt).toLocaleDateString('tr-TR');
+        const shortId = ticket.id?.slice(-6) || '------';
+
+        const card = document.createElement('div');
+        card.className = 'ticket-card';
+        card.innerHTML = `
+          <button class="ticket-header" onclick="toggleTicket('${ticket.id}')">
+            <div style="flex:1">
+              <div class="ticket-badges">
+                <span class="ticket-badge ${statusClass}">${statusLabel}</span>
+                <span class="ticket-badge" style="color:var(--muted-foreground);border-color:var(--border)">${ticket.category}</span>
+                <span class="ticket-badge" style="color:var(--muted-foreground);border-color:var(--border)">#${shortId}</span>
+              </div>
+              <p class="ticket-subject">${ticket.subject}</p>
+              ${currentIsAdmin ? `<p class="ticket-meta mt-2">${ticket.email}</p>` : ''}
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+              <span class="ticket-meta">${date}</span>
+              <span id="chevron-${ticket.id}" style="font-size:12px;transition:transform 0.3s">▼</span>
+            </div>
+          </button>
+          <div class="ticket-body" id="body-${ticket.id}">
+            <p class="ticket-msg">${ticket.message}</p>
+            ${ticket.adminReply ? `
+              <div class="ticket-reply-box">
+                <p class="ticket-reply-label">// ADMIN YANITI</p>
+                <p class="ticket-reply-text">${ticket.adminReply}</p>
+              </div>` : ''}
+            ${currentIsAdmin ? `
+              <textarea id="reply-${ticket.id}" class="textarea-input" placeholder="Admin yanıtı..." style="height:96px"></textarea>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+                <button onclick="adminUpdate('${ticket.id}','in-progress')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px">İŞLEMDE</button>
+                <button onclick="adminUpdate('${ticket.id}','resolved')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px">ÇÖZÜLDÜ</button>
+                <button onclick="adminUpdate('${ticket.id}','closed')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px">KAPAT</button>
+              </div>` : ''}
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    };
+
+    window.toggleTicket = (id) => {
+      const body = document.getElementById('body-' + id);
+      const chev = document.getElementById('chevron-' + id);
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    };
+
+    window.adminUpdate = async (ticketId, status) => {
+      const reply = document.getElementById('reply-' + ticketId)?.value;
+      await updateTicketStatus(ticketId, status, reply || null);
+      await loadTickets();
+    };
+
+    window.submitTicket = async () => {
+      const subject = document.getElementById('t-subject').value.trim();
+      const category = document.getElementById('t-category').value;
+      const message = document.getElementById('t-message').value.trim();
+      const errEl = document.getElementById('error-msg');
+      const okEl = document.getElementById('success-msg');
+      errEl.style.display = 'none';
+      okEl.style.display = 'none';
+
+      if (!subject || !message) {
+        errEl.textContent = 'Lütfen tüm alanları doldurun.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      const btn = document.getElementById('btn-submit');
+      btn.disabled = true;
+      btn.textContent = 'GÖNDERİLİYOR...';
+
+      try {
+        await saveTicket({
+          subject, category, message,
+          email: currentUser.email,
+          name: currentUser.displayName || currentUser.email
+        });
+
+        document.getElementById('t-subject').value = '';
+        document.getElementById('t-message').value = '';
+        okEl.style.display = 'block';
+        setTimeout(() => okEl.style.display = 'none', 5000);
+        await loadTickets();
+      } catch (err) {
+        errEl.textContent = err.message || 'Ticket gönderilemedi. Lütfen tekrar deneyin.';
+        errEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'TİCKET GÖNDER';
+      }
+    };
+  </script>
+</body>
+</html>
