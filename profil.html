@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEXAGES GAMES – Profil</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+
+  <main>
+    <section style="min-height:100vh;padding:calc(var(--nav-h) + 56px) 0 96px">
+      <div class="container" style="max-width:1100px">
+
+        <div class="anim-in anim-in-delay-1" style="margin-bottom:32px">
+          <span class="mono-label">Oyuncu Dosyası</span>
+          <h1 style="font-weight:900;font-size:clamp(2.6rem,6vw,5rem);line-height:.95;margin-top:14px;text-transform:uppercase">Profil</h1>
+        </div>
+
+        <!-- Giriş yapılmadı -->
+        <div id="not-logged" style="display:none;text-align:center;padding:72px 24px;border:1px solid var(--border);background:var(--surface)">
+          <p style="color:var(--muted-foreground);margin-bottom:28px;font-size:15px">Bu sayfayı görüntülemek için giriş yapmalısınız.</p>
+          <a href="giris.html" class="btn-download">Giriş Yap</a>
+        </div>
+
+        <div id="profile-content" style="display:none">
+
+          <!-- Kimlik başlığı -->
+          <div class="pf-banner">
+            <div class="pf-avatar" id="profile-avatar-wrap"><span id="profile-avatar">?</span></div>
+            <div class="pf-id">
+              <h2 id="pf-title">—</h2>
+              <p class="pf-mail" id="pf-mail">—</p>
+              <div class="pf-badges">
+                <span id="access-badge" class="pf-badge">Oyuncu</span>
+                <span id="pf-verified" class="pf-badge">—</span>
+                <span id="pf-provider" class="pf-badge">—</span>
+              </div>
+            </div>
+            <button onclick="handleLogout()" class="pf-logout" type="button">Çıkış Yap</button>
+          </div>
+
+          <!-- İstatistikler -->
+          <div class="pf-stats">
+            <div class="pf-stat"><b id="st-days">—</b><span>Üyelik (gün)</span></div>
+            <div class="pf-stat"><b id="st-tickets">—</b><span>Destek talebi</span></div>
+            <div class="pf-stat"><b id="st-open">—</b><span>Açık talep</span></div>
+            <div class="pf-stat"><b id="st-last">—</b><span>Son giriş</span></div>
+          </div>
+
+          <div class="pf-grid">
+            <!-- Hesap bilgileri -->
+            <div class="pf-panel">
+              <h3>Hesap Bilgileri</h3>
+
+              <div class="pf-row">
+                <span class="pf-label">Kullanıcı adı</span>
+                <div id="name-view" class="pf-val">
+                  <span class="profile-name" id="profile-name">—</span>
+                  <button onclick="startEdit()" class="btn-icon" type="button" aria-label="Adı düzenle">✎</button>
+                </div>
+                <div id="name-edit" style="display:none;gap:8px;align-items:center">
+                  <input type="text" id="edit-name" class="form-input" maxlength="40" style="flex:1">
+                  <button onclick="updateName()" class="btn-icon btn-icon-ok" type="button" aria-label="Kaydet">✓</button>
+                  <button onclick="cancelEdit()" class="btn-icon btn-icon-cancel" type="button" aria-label="İptal">✕</button>
+                </div>
+                <div id="edit-error" class="error-msg" style="display:none;margin-top:10px"></div>
+                <div id="edit-success" class="success-msg" style="display:none;margin-top:10px">Ad başarıyla güncellendi!</div>
+              </div>
+
+              <div class="pf-row">
+                <span class="pf-label">E-posta</span>
+                <div class="pf-val" id="profile-email">—</div>
+              </div>
+              <div class="pf-row">
+                <span class="pf-label">Kayıt tarihi</span>
+                <div class="pf-val" id="profile-joined">—</div>
+              </div>
+              <div class="pf-row">
+                <span class="pf-label">Oyuncu ID</span>
+                <div class="pf-val"><span id="profile-uid" style="font-family:var(--font-mono);font-size:12.5px">—</span><button class="pf-copy" type="button" onclick="copyUid()" id="copy-btn">KOPYALA</button></div>
+              </div>
+            </div>
+
+            <!-- Güvenlik -->
+            <div class="pf-panel">
+              <h3>Güvenlik</h3>
+              <div class="pf-sec-item">
+                <p>Şifre sıfırlama<small>E-posta ile şifreni yenile.</small></p>
+                <a href="sifremi-unuttum.html" class="pf-link-btn">Sıfırla</a>
+              </div>
+              <div class="pf-sec-item">
+                <p>Güvenlik politikası<small>Verilerin nasıl korunduğunu öğren.</small></p>
+                <a href="privacy.html" class="pf-link-btn">Oku</a>
+              </div>
+              <div class="pf-sec-item">
+                <p>Sorun mu var?<small>Destek ekibine ticket aç.</small></p>
+                <a href="ticket.html" class="pf-link-btn">Ticket</a>
+              </div>
+            </div>
+
+            <!-- Hızlı erişim -->
+            <div class="pf-panel full">
+              <h3>Hızlı Erişim</h3>
+              <div class="pf-quick" id="quick-links">
+                <a href="ticket.html"><b>Ticketlarım</b><span>Destek taleplerim</span></a>
+                <a href="launcher.html"><b>Launcher</b><span>İndir &amp; güncelle</span></a>
+                <a href="oyunlar.html"><b>Oyunlar</b><span>Chasing The Shlump</span></a>
+                <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener"><b>Discord</b><span>Topluluğa katıl</span></a>
+              </div>
+            </div>
+
+            <!-- Fatura sorgulama -->
+            <div class="pf-panel full">
+              <h3>Fatura Sorgula</h3>
+              <p class="pf-hint">Size iletilen fatura numarasını girerek dekontunuza ulaşabilirsiniz.</p>
+              <div class="pf-invoice">
+                <input type="text" id="fatura-no-input" class="form-input" placeholder="Örn: HEX-2025-001">
+                <button onclick="sorgulaFatura()" class="btn-submit" type="button">Sorgula</button>
+              </div>
+              <div id="fatura-sorgu-error" class="error-msg" style="display:none;margin-top:12px"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import {
+      auth, isAdmin, initTheme, initNavbar, initReveal, initAuthNav,
+      onAuthStateChanged, signOut, updateProfile, getFaturaByNo, getTickets
+    } from './js/app.js';
+
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+    initTheme(); initNavbar(); initReveal(); initAuthNav();
+
+    const $ = (id) => document.getElementById(id);
+    const fmtDate = (d) => d.toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { $('not-logged').style.display = 'block'; $('profile-content').style.display = 'none'; return; }
+      $('not-logged').style.display = 'none';
+      $('profile-content').style.display = 'block';
+
+      const name = user.displayName || 'İsimsiz Oyuncu';
+      const initial = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
+
+      // Avatar
+      const wrap = $('profile-avatar-wrap');
+      if (user.photoURL) {
+        const img = document.createElement('img');
+        img.src = user.photoURL; img.alt = 'Avatar'; img.referrerPolicy = 'no-referrer';
+        wrap.replaceChildren(img);
+      } else {
+        $('profile-avatar').textContent = initial;
+      }
+
+      $('pf-title').textContent = name;
+      $('pf-mail').textContent = user.email || '';
+      $('profile-name').textContent = name;
+      $('profile-email').textContent = user.email || '—';
+      $('edit-name').value = user.displayName || '';
+      $('profile-uid').textContent = user.uid;
+
+      const created = user.metadata?.creationTime ? new Date(user.metadata.creationTime) : null;
+      const last = user.metadata?.lastSignInTime ? new Date(user.metadata.lastSignInTime) : null;
+      $('profile-joined').textContent = created ? fmtDate(created) : 'Bilinmiyor';
+      $('st-days').textContent = created ? Math.max(0, Math.floor((Date.now() - created.getTime()) / 86400000)) : '—';
+      $('st-last').textContent = last ? last.toLocaleDateString('tr-TR', { day: '2-digit', month: 'short' }) : '—';
+
+      // Rozetler
+      const badge = $('access-badge');
+      if (isAdmin(user.email)) {
+        badge.textContent = '⚡ Admin'; badge.className = 'pf-badge admin';
+        const q = $('quick-links');
+        [['fatura.html', 'Faturalandırma', 'Fatura yönetimi'], ['guvenlik.html', 'Güvenlik', 'Tehdit logları']].forEach(([href, t, d]) => {
+          const a = document.createElement('a'); a.href = href; a.className = 'admin';
+          const b = document.createElement('b'); b.textContent = t;
+          const s = document.createElement('span'); s.textContent = d;
+          a.append(b, s); q.append(a);
+        });
+      }
+      const v = $('pf-verified');
+      if (user.emailVerified) { v.textContent = '✓ E-posta doğrulandı'; v.className = 'pf-badge ok'; }
+      else { v.textContent = 'E-posta doğrulanmadı'; v.className = 'pf-badge warn'; }
+      const pid = user.providerData?.[0]?.providerId || '';
+      $('pf-provider').textContent = pid === 'google.com' ? 'Google ile giriş' : 'E-posta ile giriş';
+
+      // Ticket istatistikleri (hata olursa sessizce geç)
+      try {
+        const tickets = await getTickets();
+        $('st-tickets').textContent = tickets.length;
+        $('st-open').textContent = tickets.filter((t) => t.status === 'open' || t.status === 'in-progress' || !t.status).length;
+      } catch { $('st-tickets').textContent = '—'; $('st-open').textContent = '—'; }
+    });
+
+    window.handleLogout = async () => { await signOut(auth); window.location.href = 'index.html'; };
+
+    window.copyUid = async () => {
+      try { await navigator.clipboard.writeText($('profile-uid').textContent); $('copy-btn').textContent = 'KOPYALANDI'; setTimeout(() => { $('copy-btn').textContent = 'KOPYALA'; }, 1800); } catch {}
+    };
+
+    window.startEdit = () => { $('name-view').style.display = 'none'; $('name-edit').style.display = 'flex'; $('edit-name').focus(); };
+    window.cancelEdit = () => {
+      $('name-edit').style.display = 'none'; $('name-view').style.display = 'flex';
+      $('edit-name').value = auth.currentUser?.displayName || ''; $('edit-error').style.display = 'none';
+    };
+    window.updateName = async () => {
+      const name = $('edit-name').value.trim();
+      const errEl = $('edit-error'), okEl = $('edit-success');
+      errEl.style.display = 'none'; okEl.style.display = 'none';
+      if (!name) { errEl.textContent = 'Ad boş olamaz.'; errEl.style.display = 'block'; return; }
+      try {
+        await updateProfile(auth.currentUser, { displayName: name });
+        $('profile-name').textContent = name; $('pf-title').textContent = name;
+        if (!auth.currentUser.photoURL) $('profile-avatar').textContent = name.charAt(0).toUpperCase();
+        okEl.style.display = 'block'; cancelEdit();
+        setTimeout(() => { okEl.style.display = 'none'; }, 3000);
+      } catch { errEl.textContent = 'Güncelleme başarısız.'; errEl.style.display = 'block'; }
+    };
+
+    window.sorgulaFatura = async () => {
+      const no = $('fatura-no-input').value.trim().toUpperCase();
+      const errEl = $('fatura-sorgu-error'); errEl.style.display = 'none';
+      if (!no) { errEl.textContent = 'Lütfen bir fatura numarası girin.'; errEl.style.display = 'block'; return; }
+      try {
+        const fatura = await getFaturaByNo(no);
+        if (!fatura) { errEl.textContent = 'Dekont bulunamadı. Fatura numarasını kontrol edin.'; errEl.style.display = 'block'; return; }
+        const user = auth.currentUser;
+        if (!isAdmin(user?.email) && user?.email?.toLowerCase() !== fatura.email.toLowerCase()) {
+          errEl.textContent = 'Bu fatura numarası hesabınıza ait değil.'; errEl.style.display = 'block'; return;
+        }
+        window.location.href = `dekont.html?no=${encodeURIComponent(no)}`;
+      } catch (err) { errEl.textContent = 'Sorgulama sırasında hata oluştu: ' + err.message; errEl.style.display = 'block'; }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = $('fatura-no-input');
+      if (input) input.addEventListener('keydown', (e) => { if (e.key === 'Enter') window.sorgulaFatura(); });
+    });
+  </script>
+</body>
+</html>

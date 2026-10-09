@@ -1,0 +1,35 @@
+# HEXAGES GAMES - robots.txt
+# https://hexagesgames.vercel.app
+
+User-agent: *
+Allow: /
+Allow: /css/
+Allow: /js/
+
+# Giriş ve hesap sayfaları
+Disallow: /giris.html
+Disallow: /profil.html
+Disallow: /sifremi-unuttum.html
+
+# Destek ticket sistemi (giriş gerektirir)
+Disallow: /ticket.html
+
+# Fatura / dekont / güvenlik gibi hesaba özel sayfalar
+Disallow: /fatura.html
+Disallow: /dekont.html
+Disallow: /guvenlik.html
+
+# Veri / güncelleme dosyaları (sayfa değil, indekslenmesine gerek yok)
+Disallow: /launcher-data.json
+Disallow: /latest.yml
+
+# Googlebot görsel botu için logo ve görselleri açıkça izinli yap
+User-agent: Googlebot-Image
+Allow: /logo.png
+Allow: /logom1.png
+Allow: /og-image.png
+Allow: /favicon.ico
+Allow: /img/
+Allow: /
+
+Sitemap: https://hexagesgames.vercel.app/sitemap.xml

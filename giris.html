@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEXAGES GAMES – Giriş</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+
+  <main>
+    <div class="auth-page">
+      <div class="auth-box anim-in anim-in-delay-1">
+
+        <div class="auth-logo">
+          <img src="logo.png" alt="Hexages" class="float-anim">
+          <h1 id="auth-title">GİRİŞ</h1>
+          <p class="sub">HEXAGES GAMES // PLAYER PORTAL</p>
+        </div>
+
+        <div class="auth-card">
+          <div class="shimmer" style="position:absolute;inset:0;pointer-events:none"></div>
+
+          <!-- Tab Toggle -->
+          <div class="auth-toggle" style="position:relative;z-index:1">
+            <button class="auth-tab active" id="tab-login" onclick="setMode('login')">GİRİŞ YAP</button>
+            <button class="auth-tab" id="tab-register" onclick="setMode('register')">KAYIT OL</button>
+          </div>
+
+          <!-- Error -->
+          <div class="error-msg" id="error-msg" style="display:none"></div>
+
+          <!-- Success -->
+          <div class="success-msg" id="success-msg" style="display:none"></div>
+
+          <!-- Form -->
+          <div style="position:relative;z-index:1">
+            <!-- Name (register only) -->
+            <div class="form-group" id="name-group" style="display:none">
+              <label class="form-label">KULLANICI ADI</label>
+              <div class="form-input-wrap">
+                <span class="input-icon">👤</span>
+                <input type="text" id="input-name" class="form-input form-input-icon" placeholder="Adın">
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label class="form-label">E-POSTA</label>
+              <div class="form-input-wrap">
+                <span class="input-icon">✉</span>
+                <input type="email" id="input-email" class="form-input form-input-icon" placeholder="ornek@email.com">
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label class="form-label">ŞİFRE</label>
+              <div class="form-input-wrap">
+                <span class="input-icon">🔒</span>
+                <input type="password" id="input-password" class="form-input form-input-icon" placeholder="••••••••" style="padding-right:48px">
+                <button class="form-eye" onclick="togglePass()" type="button" id="eye-btn">👁</button>
+              </div>
+            </div>
+
+            <!-- Forgot password (login only) -->
+            <div id="forgot-link" style="text-align:right;margin-bottom:12px">
+              <a href="sifremi-unuttum.html" style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground);transition:color 0.3s" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--muted-foreground)'">
+                Şifremi Unuttum →
+              </a>
+            </div>
+
+            <button class="btn-submit" id="btn-submit" onclick="handleSubmit()">GİRİŞ YAP</button>
+
+            <div class="divider">
+              <div class="divider-line"></div>
+              <span class="divider-text">VEYA</span>
+              <div class="divider-line"></div>
+            </div>
+
+            <button class="btn-google" onclick="handleGoogle()">
+              <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              GOOGLE İLE GİRİŞ YAP
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-footer-link" id="footer-switch">
+          Hesabın yok mu? <a href="#" onclick="setMode('register');return false">Kayıt ol</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { getNavHTML } from './js/layout.js';
+    import {
+      auth, initStarfield, initCursorGlow, initTheme, initNavbar,
+      onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+      signOut, GoogleAuthProvider, signInWithPopup, updateProfile
+    } from './js/app.js';
+
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar();
+
+    // Redirect if already logged in
+    onAuthStateChanged(auth, user => {
+      if (user) window.location.href = 'profil.html';
+    });
+
+    let currentMode = 'login';
+
+    window.setMode = (mode) => {
+      currentMode = mode;
+      document.getElementById('tab-login').classList.toggle('active', mode === 'login');
+      document.getElementById('tab-register').classList.toggle('active', mode === 'register');
+      document.getElementById('name-group').style.display = mode === 'register' ? 'block' : 'none';
+      document.getElementById('forgot-link').style.display = mode === 'login' ? 'block' : 'none';
+      document.getElementById('btn-submit').textContent = mode === 'login' ? 'GİRİŞ YAP' : 'KAYIT OL';
+      document.getElementById('auth-title').textContent = mode === 'login' ? 'GİRİŞ' : 'KAYIT OL';
+      document.getElementById('footer-switch').innerHTML = mode === 'login'
+        ? `Hesabın yok mu? <a href="#" onclick="setMode('register');return false">Kayıt ol</a>`
+        : `Zaten hesabın var mı? <a href="#" onclick="setMode('login');return false">Giriş yap</a>`;
+      hideError();
+    };
+
+    window.togglePass = () => {
+      const inp = document.getElementById('input-password');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    };
+
+    function showError(msg) {
+      const el = document.getElementById('error-msg');
+      el.textContent = msg;
+      el.style.display = 'block';
+      document.getElementById('success-msg').style.display = 'none';
+    }
+    function hideError() {
+      document.getElementById('error-msg').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'none';
+    }
+
+    const errorMap = {
+      'auth/user-not-found': 'Kullanıcı bulunamadı.',
+      'auth/wrong-password': 'Hatalı şifre.',
+      'auth/email-already-in-use': 'Bu e-posta zaten kullanımda.',
+      'auth/weak-password': 'Şifre en az 6 karakter olmalı.',
+      'auth/invalid-email': 'Geçersiz e-posta adresi.',
+      'auth/invalid-credential': 'Hatalı e-posta veya şifre.',
+    };
+
+    window.handleSubmit = async () => {
+      hideError();
+      const email = document.getElementById('input-email').value.trim();
+      const password = document.getElementById('input-password').value;
+      const name = document.getElementById('input-name').value.trim();
+      const btn = document.getElementById('btn-submit');
+      btn.disabled = true;
+      btn.textContent = 'YÜKLENİYOR...';
+      try {
+        if (currentMode === 'login') {
+          await signInWithEmailAndPassword(auth, email, password);
+        } else {
+          const cred = await createUserWithEmailAndPassword(auth, email, password);
+          if (name) await updateProfile(cred.user, { displayName: name });
+        }
+        window.location.href = 'profil.html';
+      } catch (err) {
+        showError(errorMap[err.code] || 'Bir hata oluştu. Tekrar deneyin.');
+        btn.disabled = false;
+        btn.textContent = currentMode === 'login' ? 'GİRİŞ YAP' : 'KAYIT OL';
+      }
+    };
+
+    window.handleGoogle = async () => {
+      hideError();
+      try {
+        await signInWithPopup(auth, new GoogleAuthProvider());
+        window.location.href = 'profil.html';
+      } catch (err) {
+        showError('Google girişi başarısız.');
+      }
+    };
+  </script>
+</body>
+</html>
