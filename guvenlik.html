@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>HEXAGES GAMES – Güvenlik Paneli</title>
+    <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#0a0b0f">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+
+  <main>
+    <section style="min-height:100vh;padding-top:128px;padding-bottom:96px;padding-left:24px;padding-right:24px">
+      <div class="container" style="max-width:1100px">
+
+        <div class="anim-in anim-in-delay-1" style="margin-bottom:40px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+              <span class="mono-label">// GÜVENLİK</span>
+              <span style="font-family:var(--font-mono);font-size:10px;border:1px solid rgba(255,92,92,0.35);color:#ff5c5c;padding:2px 8px">🛡️ SADECE ADMIN</span>
+            </div>
+            <h1 style="font-family:var(--font-heading);font-weight:900;font-size:clamp(2.2rem,5.5vw,4.2rem);line-height:1">HEXAGES GAMES GÜVENLİK SİSTEMİ</h1>
+            <p style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);margin-top:12px;max-width:640px">
+              Discord sunucularında AI tarafından tespit edilen ölüm tehditleri ve kişisel bilgi ifşalarının (TC kimlik no, adres vb.) kayıtları. Bu liste sadece yetkili adminlere görünür.
+            </p>
+          </div>
+          <button onclick="loadAll()" style="margin-left:auto;background:transparent;border:1px solid var(--border);color:var(--muted-foreground);font-family:var(--font-mono);font-size:11px;padding:8px 16px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.3s" onmouseover="this.style.borderColor='white';this.style.color='white'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted-foreground)'">
+            ↺ YENİLE
+          </button>
+        </div>
+
+        <!-- Not logged / not admin -->
+        <div id="not-logged" style="display:none" class="not-logged">
+          <p id="not-logged-text">Bu sayfayı görüntülemek için giriş yapmalısınız.</p>
+          <a href="giris.html" class="btn-download" style="font-size:11px" id="not-logged-btn">GİRİŞ YAP</a>
+        </div>
+
+        <div id="panel-content" style="display:none">
+
+          <!-- Stats -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:32px" class="anim-in anim-in-delay-2">
+            <div class="stat-box"><div class="stat-num" id="stat-total">0</div><div class="stat-label">TOPLAM KAYIT</div></div>
+            <div class="stat-box"><div class="stat-num" style="color:#ff5c5c" id="stat-new">0</div><div class="stat-label">YENİ / İNCELENMEDİ</div></div>
+            <div class="stat-box"><div class="stat-num" style="color:#ff5c5c" id="stat-death">0</div><div class="stat-label">ÖLÜM TEHDİDİ</div></div>
+            <div class="stat-box"><div class="stat-num" style="color:#f97316" id="stat-pii">0</div><div class="stat-label">KİŞİSEL BİLGİ İFŞASI</div></div>
+            <div class="stat-box"><div class="stat-num" id="stat-guilds">0</div><div class="stat-label">BAĞLI SUNUCU</div></div>
+          </div>
+
+          <!-- Filters -->
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px" class="anim-in anim-in-delay-3">
+            <input type="text" id="search-input" class="form-input" style="max-width:280px" placeholder="Kullanıcı adı / ID / sunucu ara..." oninput="renderList()">
+            <select id="filter-status" class="select-input" style="max-width:200px" onchange="renderList()">
+              <option value="all">TÜM DURUMLAR</option>
+              <option value="new">YENİ</option>
+              <option value="reviewed">İNCELENDİ</option>
+              <option value="reported_to_authorities">ŞİKAYET EDİLDİ</option>
+              <option value="dismissed">REDDEDİLDİ</option>
+            </select>
+            <select id="filter-type" class="select-input" style="max-width:220px" onchange="renderList()">
+              <option value="all">TÜM TÜRLER</option>
+              <option value="DEATH_THREAT">ÖLÜM / ŞİDDET TEHDİDİ</option>
+              <option value="PII_LEAK">KİŞİSEL BİLGİ İFŞASI</option>
+              <option value="BOTH">HER İKİSİ</option>
+            </select>
+          </div>
+
+          <!-- Threat list -->
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+              <span class="mono-label">// TESPİT KAYITLARI</span>
+              <span id="log-count" style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground)"></span>
+            </div>
+            <div id="log-loading" style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px">YÜKLENİYOR...</div>
+            <div id="log-list"></div>
+            <div id="log-empty" style="display:none;font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px;border:1px solid var(--border)">Kayıt bulunamadı.</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import {
+      auth, isAdmin, sanitize, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
+      onAuthStateChanged, getThreatLogs, updateThreatLogStatus, getGuildConfigs
+    } from './js/app.js';
+
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+
+    let allLogs = [];
+    let guildCount = 0;
+
+    const statusLabels = {
+      new: 'YENİ',
+      reviewed: 'İNCELENDİ',
+      reported_to_authorities: 'ŞİKAYET EDİLDİ',
+      dismissed: 'REDDEDİLDİ'
+    };
+    const statusClass = {
+      new: 'new',
+      reviewed: 'reviewed',
+      reported_to_authorities: 'reported_to_authorities',
+      dismissed: 'dismissed'
+    };
+    const typeLabels = {
+      DEATH_THREAT: 'ÖLÜM / ŞİDDET TEHDİDİ',
+      PII_LEAK: 'KİŞİSEL BİLGİ İFŞASI',
+      BOTH: 'TEHDİT + KİŞİSEL BİLGİ İFŞASI'
+    };
+    const typeClass = {
+      DEATH_THREAT: 'death-threat',
+      PII_LEAK: 'pii-leak',
+      BOTH: 'death-threat'
+    };
+
+    // Admin listesini rules ile senkronize et
+    const ADMIN_EMAILS = ['yigittr1922@gmail.com', 'firecrostnetwork@gmail.com', 'wither3169999@gmail.com'];
+
+    onAuthStateChanged(auth, async user => {
+      if (!user) {
+        document.getElementById('not-logged').style.display = 'block';
+        return;
+      }
+      
+      // Rules ile tam uyumlu admin kontrolü
+      if (!ADMIN_EMAILS.includes(user.email)) {
+        document.getElementById('not-logged-text').textContent = 'Bu sayfayı görüntüleme yetkiniz yok. Bu alan sadece Hexages Games yöneticileri içindir.';
+        document.getElementById('not-logged-btn').style.display = 'none';
+        document.getElementById('not-logged').style.display = 'block';
+        return;
+      }
+      
+      document.getElementById('panel-content').style.display = 'block';
+      await loadAll();
+    });
+
+    window.loadAll = async () => {
+      document.getElementById('log-loading').style.display = 'block';
+      document.getElementById('log-list').innerHTML = '';
+      document.getElementById('log-empty').style.display = 'none';
+
+      try {
+        // Rules'a uygun: threat_logs read ve guild_configs read
+        const [logs, guilds] = await Promise.all([
+          getThreatLogs(), 
+          getGuildConfigs()
+        ]);
+        allLogs = logs;
+        guildCount = guilds.length;
+      } catch (err) {
+        console.error('Load error:', err);
+        document.getElementById('log-loading').style.display = 'none';
+        
+        // Rules kaynaklı hataları yakala
+        let errorMsg = 'Kayıtlar yüklenemedi. ';
+        if (err.code === 'permission-denied') {
+          errorMsg += 'Bu işlem için yetkiniz yok. Lütfen admin olarak giriş yaptığınızdan emin olun.';
+        } else {
+          errorMsg += sanitize(err.message || '');
+        }
+        document.getElementById('log-list').innerHTML = `<div class="error-msg" style="display:block">${errorMsg}</div>`;
+        return;
+      }
+
+      document.getElementById('log-loading').style.display = 'none';
+      updateStats();
+      renderList();
+    };
+
+    function updateStats() {
+      document.getElementById('stat-total').textContent = allLogs.length;
+      document.getElementById('stat-new').textContent = allLogs.filter(l => !l.status || l.status === 'new').length;
+      document.getElementById('stat-death').textContent = allLogs.filter(l => l.detectionType === 'DEATH_THREAT' || l.detectionType === 'BOTH').length;
+      document.getElementById('stat-pii').textContent = allLogs.filter(l => l.detectionType === 'PII_LEAK' || l.detectionType === 'BOTH').length;
+      document.getElementById('stat-guilds').textContent = guildCount;
+    }
+
+    window.renderList = () => {
+      const search = (document.getElementById('search-input').value || '').toLowerCase().trim();
+      const statusFilter = document.getElementById('filter-status').value;
+      const typeFilter = document.getElementById('filter-type').value;
+
+      let filtered = allLogs.filter(l => {
+        if (statusFilter !== 'all' && (l.status || 'new') !== statusFilter) return false;
+        if (typeFilter !== 'all' && l.detectionType !== typeFilter) return false;
+        if (search) {
+          const hay = `${l.authorTag || ''} ${l.authorUsername || ''} ${l.authorId || ''} ${l.guildName || ''}`.toLowerCase();
+          if (!hay.includes(search)) return false;
+        }
+        return true;
+      });
+
+      document.getElementById('log-count').textContent = filtered.length + ' kayıt';
+
+      if (filtered.length === 0) {
+        document.getElementById('log-empty').style.display = 'block';
+        document.getElementById('log-list').innerHTML = '';
+        return;
+      }
+      document.getElementById('log-empty').style.display = 'none';
+
+      const list = document.getElementById('log-list');
+      list.innerHTML = '';
+
+      filtered.forEach(log => {
+        const st = log.status || 'new';
+        const date = log.loggedAt ? new Date(log.loggedAt).toLocaleString('tr-TR') : (log.messageTimestamp ? new Date(log.messageTimestamp).toLocaleString('tr-TR') : '-');
+        const accountCreated = log.accountCreatedAt ? new Date(log.accountCreatedAt).toLocaleDateString('tr-TR') : '-';
+        const joined = log.joinedServerAt ? new Date(log.joinedServerAt).toLocaleDateString('tr-TR') : '-';
+
+        const card = document.createElement('div');
+        card.className = 'ticket-card';
+        card.innerHTML = `
+          <button class="ticket-header" onclick="toggleLog('${log.id}')">
+            <div style="flex:1">
+              <div class="ticket-badges">
+                <span class="ticket-badge ${statusClass[st] || 'new'}">${statusLabels[st] || 'YENİ'}</span>
+                <span class="ticket-badge ${typeClass[log.detectionType] || 'death-threat'}">${typeLabels[log.detectionType] || log.detectionType || '-'}</span>
+                <span class="ticket-badge" style="color:var(--muted-foreground);border-color:var(--border)">${sanitize(log.guildName || 'Bilinmeyen Sunucu')}</span>
+              </div>
+              <p class="ticket-subject">${sanitize(log.authorTag || log.authorUsername || 'Bilinmeyen Kullanıcı')} <span style="color:var(--muted-foreground)">(${sanitize(log.authorId || '-')})</span></p>
+              <p class="ticket-meta mt-2">${date}</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+              <span id="chevron-${log.id}" style="font-size:12px;transition:transform 0.3s">▼</span>
+            </div>
+          </button>
+          <div class="ticket-body" id="body-${log.id}">
+            <p class="ticket-reply-label" style="margin-bottom:8px">// MESAJ İÇERİĞİ (SİLİNMEDEN ÖNCE ALINDI)</p>
+            <div class="threat-msg-box">${sanitize(log.messageContent || '-')}</div>
+
+            <p class="ticket-reply-label" style="margin-bottom:8px">// AI DEĞERLENDİRMESİ</p>
+            <p class="ticket-msg">${sanitize(log.detectionReasoning || '-')}</p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px;font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground)">
+              <div>KANAL: <span style="color:var(--foreground)">#${sanitize(log.channelName || '-')}</span></div>
+              <div>HESAP OLUŞTURMA: <span style="color:var(--foreground)">${accountCreated}</span></div>
+              <div>SUNUCUYA KATILMA: <span style="color:var(--foreground)">${joined}</span></div>
+              <div>SUNUCU ID: <span style="color:var(--foreground)">${sanitize(log.guildId || '-')}</span></div>
+            </div>
+
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button onclick="setStatus('${log.id}','reviewed')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px">İNCELENDİ OLARAK İŞARETLE</button>
+              <button onclick="setStatus('${log.id}','reported_to_authorities')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px;border-color:rgba(52,211,153,0.4);color:#34d399">ŞİKAYET EDİLDİ OLARAK İŞARETLE</button>
+              <button onclick="setStatus('${log.id}','dismissed')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground)">REDDET (YANLIŞ POZİTİF)</button>
+            </div>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    };
+
+    window.toggleLog = (id) => {
+      const body = document.getElementById('body-' + id);
+      const chev = document.getElementById('chevron-' + id);
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    };
+
+    window.setStatus = async (logId, status) => {
+      try {
+        // Rules'a uygun: threat_logs update sadece adminler tarafından yapılabilir
+        // Şu anki kullanıcının admin olduğunu zaten kontrol ettik
+        await updateThreatLogStatus(logId, status);
+        
+        // Local state'i güncelle
+        const log = allLogs.find(l => l.id === logId);
+        if (log) {
+          log.status = status;
+          updateStats();
+          renderList();
+        }
+      } catch (err) {
+        console.error('Status update error:', err);
+        let errorMsg = 'Durum güncellenemedi. ';
+        if (err.code === 'permission-denied') {
+          errorMsg += 'Bu işlem için yetkiniz yok. Lütfen admin olarak giriş yaptığınızdan emin olun.';
+        } else {
+          errorMsg += err.message || '';
+        }
+        alert(errorMsg);
+      }
+    };
+  </script>
+</body>
+</html>

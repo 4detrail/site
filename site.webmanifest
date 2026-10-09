@@ -1,0 +1,13 @@
+{
+  "name": "HEXAGES GAMES",
+  "short_name": "HEXAGES",
+  "description": "HEXAGES GAMES oyun stüdyosu – Chasing the Shlump ve Aperon Launcher.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0b0f",
+  "theme_color": "#0a0b0f",
+  "icons": [
+    { "src": "favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "logo-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

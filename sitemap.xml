@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://hexagesgames.vercel.app/</loc>
+    <lastmod>2026-10-09</lastmod>
+    <image:image>
+      <image:loc>https://hexagesgames.vercel.app/logo-512.png</image:loc>
+      <image:title>HEXAGES GAMES logo</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://hexagesgames.vercel.app/oyunlar.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://hexagesgames.vercel.app/chasing-the-shlump.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <image:image>
+      <image:loc>https://hexagesgames.vercel.app/og-image.png</image:loc>
+      <image:title>Chasing the Shlump - HEXAGES GAMES</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://hexagesgames.vercel.app/haber.html?id=yakinda-haberler</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://hexagesgames.vercel.app/launcher.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <image:image>
+      <image:loc>https://hexagesgames.vercel.app/logo-512.png</image:loc>
+      <image:title>Aperon Launcher - HEXAGES GAMES</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://hexagesgames.vercel.app/pluginlerimiz.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://hexagesgames.vercel.app/iletisim.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://hexagesgames.vercel.app/privacy.html</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+</urlset>

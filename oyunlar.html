@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oyunlar – HEXAGES GAMES | Chasing the Shlump</title>
+  <meta name="description" content="HEXAGES GAMES oyunları: Chasing the Shlump ve stüdyomuzun üzerinde çalıştığı yeni projeler. Haberler, duyurular ve geliştirici notları.">
+  <link rel="canonical" href="https://hexagesgames.vercel.app/oyunlar.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#0a0b0f">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HEXAGES GAMES">
+  <meta property="og:title" content="Oyunlar – HEXAGES GAMES">
+  <meta property="og:description" content="Chasing the Shlump ve HEXAGES GAMES projeleri.">
+  <meta property="og:url" content="https://hexagesgames.vercel.app/oyunlar.html">
+  <meta property="og:image" content="https://hexagesgames.vercel.app/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://hexagesgames.vercel.app/" },
+      { "@type": "ListItem", "position": 2, "name": "Oyunlar", "item": "https://hexagesgames.vercel.app/oyunlar.html" }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+
+  <main>
+    <section style="min-height:100vh;padding:140px 24px 0">
+      <div class="container">
+
+        <div class="anim-in anim-in-delay-1" style="margin-bottom:56px">
+          <span class="mono-label">Oyunlar</span>
+          <h1 style="font-weight:900;font-size:clamp(3.2rem,9vw,7.5rem);line-height:.92;margin-top:16px">Oyunlarımız</h1>
+          <p class="text-muted" style="margin-top:20px;max-width:56ch">Stüdyomuzun geliştirdiği oyunlar. Bir oyunun kartına tıklayarak o oyunun haberlerine ve duyurularına ulaşabilirsin.</p>
+        </div>
+
+        <!-- Öne çıkan oyun: tıklanabilir -->
+        <a href="chasing-the-shlump.html" class="showcase anim-in anim-in-delay-2" aria-label="Chasing the Shlump sayfasını aç">
+          <div class="showcase-art">
+            <div class="fcard-art art-shlump"><div class="art-pattern"></div></div>
+            <div class="news-thumb-logo"><img src="logo-hx.png" alt=""></div>
+          </div>
+          <div class="showcase-info">
+            <span class="chip"><i></i> Geliştiriliyor</span>
+            <h2>Chasing<br>the Shlump</h2>
+            <p>HEXAGES GAMES ekibinin yeni oyunu. Tüm haberler, geliştirici notları ve duyurular oyunun kendi sayfasında yayınlanır.</p>
+            <div class="info-grid">
+              <div class="info-cell"><span>Geliştirici</span><b>HEXAGES GAMES</b></div>
+              <div class="info-cell"><span>Çıkış tarihi</span><b>Yakında eklenecek</b></div>
+              <div class="info-cell"><span>Platform</span><b>Yakında eklenecek</b></div>
+              <div class="info-cell"><span>Haberler</span><b id="news-count">–</b></div>
+            </div>
+            <span class="fcard-go">Oyun sayfası ve haberler</span>
+          </div>
+        </a>
+
+        <!-- Diğer projeler -->
+        <div class="sec-head reveal" style="margin-top:96px;margin-bottom:28px">
+          <div><span class="mono-label">Sırada</span><h2 class="sec-title" style="font-size:clamp(2rem,4vw,3rem)">Yeni projeler</h2></div>
+        </div>
+        <div class="games-grid stagger-children">
+          <div class="empty-slot">Yeni proje<br>Yakında</div>
+          <div class="empty-slot">Yeni proje<br>Yakında</div>
+          <div class="empty-slot">Yeni proje<br>Yakında</div>
+        </div>
+
+        <div class="cta-band reveal" style="margin-top:96px">
+          <span class="mono-label">Güncellemeleri takip et</span>
+          <h2>Haberdar ol</h2>
+          <p>Oyunlar yayına girdiğinde ilk sen öğren. Discord'a katıl!</p>
+          <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="btn-download">Discord'a katıl</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import { NEWS } from './js/news.js';
+
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+    document.getElementById('news-count').textContent = NEWS.length + ' haber';
+
+    try {
+      const app = await import('./js/app.js');
+      app.initTheme(); app.initNavbar(); app.initReveal(); app.initAuthNav();
+    } catch (e) {
+      console.warn('app.js yüklenemedi:', e);
+      document.querySelectorAll('.reveal, .stagger-children').forEach((el) => el.classList.add('visible'));
+    }
+  </script>
+</body>
+</html>
