@@ -1691,3 +1691,19 @@ section[style*="padding-top:128px"] .mono-label { margin-bottom: 4px; }
 
 /* Google Fonts yüklenirken de düzgün görünsün */
 @media (prefers-color-scheme: dark) { }
+
+/* ===== V5 — Giriş / kayıt input ikonları ===== */
+.form-input-wrap { position: relative; }
+.form-input-wrap .form-input.form-input-icon { padding-left: 46px !important; }
+.form-input-wrap .form-input { padding-right: 48px !important; }
+.form-input-wrap .input-icon {
+  position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+  color: var(--muted-foreground); display: flex; align-items: center; pointer-events: none; z-index: 2;
+}
+.form-input-wrap .form-eye {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; padding: 6px; z-index: 2;
+  color: var(--muted-foreground); display: flex; align-items: center;
+}
+.form-input-wrap .form-eye:hover { color: var(--foreground); }
+.form-input-wrap .form-input:focus ~ .input-icon { color: var(--accent); }
