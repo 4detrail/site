@@ -12,12 +12,7 @@ const NAV_ITEMS = [
 
 export function getNavHTML() {
   const desktop = NAV_ITEMS.map(i => `<li><a href="${i.href}" class="nav-link">${i.label}</a></li>`).join('');
-  const MOBILE_EXTRA = [
-    { href: 'oyun.html?id=chasing-the-shlump', label: 'CHASING THE SHLUMP' },
-    { href: 'ayarlar.html', label: 'AYARLAR' },
-    { href: 'privacy.html', label: 'GİZLİLİK POLİTİKASI' }
-  ];
-  const mobile = [...NAV_ITEMS, ...MOBILE_EXTRA].map(i => `<a href="${i.href}" class="nav-link">→ ${i.label}</a>`).join('');
+  const mobile = NAV_ITEMS.map(i => `<a href="${i.href}" class="nav-link">→ ${i.label}</a>`).join('');
   return `
 <canvas id="starfield"></canvas>
 <div class="grid-overlay"></div>
