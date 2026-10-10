@@ -7,6 +7,22 @@
   <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Giriş / kayıt input ikonları: stil dosyasından bağımsız, kesin çözüm */
+    .form-input-wrap { position: relative !important; }
+    .form-input-wrap > input.form-input { padding-left: 46px !important; padding-right: 48px !important; }
+    .form-input-wrap > .input-icon {
+      position: absolute !important; left: 16px !important; top: 50% !important; transform: translateY(-50%) !important;
+      display: flex !important; align-items: center !important; color: var(--muted-foreground) !important;
+      pointer-events: none !important; z-index: 2 !important; width: 18px; height: 18px;
+    }
+    .form-input-wrap > .input-icon svg { width: 18px !important; height: 18px !important; }
+    .form-input-wrap > .form-eye {
+      position: absolute !important; right: 12px !important; top: 50% !important; transform: translateY(-50%) !important;
+      background: none !important; border: none !important; padding: 6px !important; cursor: pointer; z-index: 2 !important;
+      color: var(--muted-foreground) !important; display: flex !important; align-items: center !important;
+    }
+  </style>
 </head>
 <body>
   <div id="layout-top"></div>
