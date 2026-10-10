@@ -3,167 +3,256 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HEXAGES GAMES – Chasing the Shlump ve Aperon Launcher</title>
-  <meta name="description" content="HEXAGES GAMES bağımsız oyun stüdyosu: Unreal Engine 5.5 ile geliştirilen çok oyunculu Chasing the Shlump, geliştirme günlüğü ve Minecraft için Aperon Launcher.">
-  <meta name="robots" content="index,follow, max-image-preview:large">
-  <meta name="theme-color" content="#000000">
-  <link rel="canonical" href="https://hexagesgames.vercel.app/">
-  <meta name="google-site-verification" content="n_Kz17Dp_6cmzEpOoYiDsU-FqtREEpeJ2VXtJ24hC1I">
+  <title>HEXAGES GAMES – Aperon Launcher ile Minecraft Modlarını Keşfet</title>
+  <meta name="description" content="HEXAGES GAMES: Minecraft: Java Edition için Aperon Launcher&#x27;ı indirin. Modrinth mod entegrasyonu, otomatik bağımlılık kurulumu, %60+ FPS artışı ve VirusTotal onaylı güvenlik. Yeni oyunumuz Chasing the Shlump&#x27;ı Dev Log&#x27;dan takip edin." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="application-name" content="HEXAGES GAMES" />
+  <meta name="apple-mobile-web-app-title" content="HEXAGES GAMES" />
+  <meta name="google-site-verification" content="n_Kz17Dp_6cmzEpOoYiDsU-FqtREEpeJ2VXtJ24hC1I" />
+  <link rel="canonical" href="https://hexagesgames.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="HEXAGES GAMES" />
+  <meta property="og:locale" content="tr_TR" />
+  <meta property="og:title" content="HEXAGES GAMES – Aperon Launcher ile Minecraft Modlarını Keşfet" />
+  <meta property="og:description" content="HEXAGES GAMES: Minecraft: Java Edition için Aperon Launcher&#x27;ı indirin. Modrinth mod entegrasyonu, otomatik bağımlılık kurulumu, %60+ FPS artışı ve VirusTotal onaylı güvenlik. Yeni oyunumuz Chasing the Shlump&#x27;ı Dev Log&#x27;dan takip edin." />
+  <meta property="og:url" content="https://hexagesgames.vercel.app/" />
+  <meta property="og:image" content="https://hexagesgames.vercel.app/img/og-cover.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="HEXAGES GAMES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@hexages_games" />
+  <meta name="twitter:title" content="HEXAGES GAMES – Aperon Launcher ile Minecraft Modlarını Keşfet" />
+  <meta name="twitter:description" content="HEXAGES GAMES: Minecraft: Java Edition için Aperon Launcher&#x27;ı indirin. Modrinth mod entegrasyonu, otomatik bağımlılık kurulumu, %60+ FPS artışı ve VirusTotal onaylı güvenlik. Yeni oyunumuz Chasing the Shlump&#x27;ı Dev Log&#x27;dan takip edin." />
+  <meta name="twitter:image" content="https://hexagesgames.vercel.app/img/og-cover.png" />
 
-  <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
-  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <!-- Favicon / logo (Google için 48px'in katları) -->
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/img/icons/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/favicon-96x96.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
 
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="tr_TR">
-  <meta property="og:site_name" content="HEXAGES GAMES">
-  <meta property="og:title" content="HEXAGES GAMES – Chasing the Shlump ve Aperon Launcher">
-  <meta property="og:description" content="HEXAGES GAMES bağımsız oyun stüdyosu: Unreal Engine 5.5 ile geliştirilen çok oyunculu Chasing the Shlump, geliştirme günlüğü ve Minecraft için Aperon Launcher.">
-  <meta property="og:url" content="https://hexagesgames.vercel.app/">
-  <meta property="og:image" content="https://hexagesgames.vercel.app/img/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="HEXAGES GAMES – Chasing the Shlump ve Aperon Launcher">
-  <meta name="twitter:description" content="HEXAGES GAMES bağımsız oyun stüdyosu: Unreal Engine 5.5 ile geliştirilen çok oyunculu Chasing the Shlump, geliştirme günlüğü ve Minecraft için Aperon Launcher.">
-  <meta name="twitter:image" content="https://hexagesgames.vercel.app/img/og-image.png">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://hexagesgames.vercel.app/#org", "name": "HEXAGES GAMES", "alternateName": ["Hexages Games", "HEXAGES"], "url": "https://hexagesgames.vercel.app/", "logo": {"@type": "ImageObject", "url": "https://hexagesgames.vercel.app/logom1.png", "width": 800, "height": 800}, "image": "https://hexagesgames.vercel.app/img/og-image.png", "sameAs": ["https://x.com/hexages_games", "https://discord.gg/ETe46SWQtC", "https://www.instagram.com/hexagesgames"]}</script>
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "@id": "https://hexagesgames.vercel.app/#website", "name": "HEXAGES GAMES", "alternateName": "Hexages Games", "url": "https://hexagesgames.vercel.app/", "inLanguage": "tr", "publisher": {"@id": "https://hexagesgames.vercel.app/#org"}}</script>
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Chasing the Shlump", "url": "https://hexagesgames.vercel.app/devlog.html", "image": "https://hexagesgames.vercel.app/img/shlump-hero.png", "description": "HEXAGES GAMES tarafından Unreal Engine 5.5 ile geliştirilen çok oyunculu oyun.", "genre": "Çok oyunculu", "gamePlatform": "PC", "applicationCategory": "Game", "author": {"@id": "https://hexagesgames.vercel.app/#org"}, "publisher": {"@id": "https://hexagesgames.vercel.app/#org"}}</script>
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Aperon Launcher", "applicationCategory": "GameApplication", "operatingSystem": "Windows 10/11 (64-bit)", "softwareVersion": "1.1.7", "url": "https://hexagesgames.vercel.app/launcher.html", "image": "https://hexagesgames.vercel.app/logom1.png", "author": {"@id": "https://hexagesgames.vercel.app/#org"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Minecraft: Java Edition için Modrinth mod entegrasyonlu, otomatik bağımlılık kurulumlu ve 3D skin viewer'lı launcher."}</script>
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "HEXAGES GAMES nedir?", "acceptedAnswer": {"@type": "Answer", "text": "HEXAGES GAMES; Chasing the Shlump oyununu ve Minecraft: Java Edition için Aperon Launcher'ı geliştiren bağımsız bir oyun stüdyosudur."}}, {"@type": "Question", "name": "Chasing the Shlump nedir?", "acceptedAnswer": {"@type": "Answer", "text": "HEXAGES GAMES'in Unreal Engine 5.5 ile geliştirdiği çok oyunculu oyundur. Geliştirme sürecini Dev Log sayfasından takip edebilirsiniz."}}, {"@type": "Question", "name": "Aperon Launcher'ı nereden indirebilirim?", "acceptedAnswer": {"@type": "Answer", "text": "Aperon Launcher'ı resmi olarak yalnızca hexagesgames.vercel.app üzerindeki launcher sayfasından ücretsiz indirebilirsiniz."}}, {"@type": "Question", "name": "HEXAGES GAMES'e nasıl ulaşabilirim?", "acceptedAnswer": {"@type": "Answer", "text": "Discord, Instagram ve X hesaplarımızdan veya İletişim sayfamızdan bize ulaşabilirsiniz."}}]}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://hexagesgames.vercel.app/#organization",
+  "name": "HEXAGES GAMES",
+  "alternateName": [
+    "Hexages Games",
+    "HEXAGES"
+  ],
+  "url": "https://hexagesgames.vercel.app/",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://hexagesgames.vercel.app/logom1.png",
+    "width": 800,
+    "height": 800
+  },
+  "image": "https://hexagesgames.vercel.app/img/og-cover.png",
+  "sameAs": [
+    "https://x.com/hexages_games",
+    "https://discord.gg/ETe46SWQtC",
+    "https://www.instagram.com/hexagesgames"
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://hexagesgames.vercel.app/#website",
+  "url": "https://hexagesgames.vercel.app/",
+  "name": "HEXAGES GAMES",
+  "alternateName": [
+    "Hexages Games",
+    "HEXAGES"
+  ],
+  "inLanguage": "tr",
+  "publisher": {
+    "@id": "https://hexagesgames.vercel.app/#organization"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Aperon Launcher",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Windows 10/11 (64-bit)",
+  "softwareVersion": "1.1.7",
+  "url": "https://hexagesgames.vercel.app/launcher.html",
+  "author": {
+    "@type": "Organization",
+    "name": "HEXAGES GAMES"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Minecraft: Java Edition için Modrinth mod entegrasyonlu, otomatik bağımlılık kurulumlu ve 3D skin viewer'lı launcher."
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "HEXAGES GAMES nedir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HEXAGES GAMES, Minecraft: Java Edition oyuncuları için Aperon Launcher'ı geliştiren bir oyun stüdyosudur."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Aperon Launcher'ı nereden indirebilirim?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Aperon Launcher'ı resmi olarak sadece hexagesgames.vercel.app üzerindeki launcher sayfasından ücretsiz indirebilirsiniz."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "HEXAGES GAMES ile Aperon Launcher aynı şey mi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Aperon Launcher, HEXAGES GAMES tarafından geliştirilen resmi Minecraft mod launcher'ıdır."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <div id="layout-top"></div>
-  <main id="main">
-    <section class="hero" aria-label="Chasing the Shlump">
-      <div class="hero-media"><img src="img/shlump-hero.png" alt="" width="1920" height="1080" fetchpriority="high"></div>
+  <noscript><p style="padding:96px 24px 24px;font-size:14px"><a href="index.html">Ana sayfa</a> · <a href="oyunlar.html">Oyunlar</a> · <a href="devlog.html">Dev Log</a> · <a href="pluginlerimiz.html">Pluginler</a> · <a href="launcher.html">Launcher</a> · <a href="iletisim.html">İletişim</a></p></noscript>
+  <main>
+
+    <section class="hero" id="hero">
       <div class="hero-inner">
-        <div class="hero-load">
-          <p class="hero-kicker">HEXAGES GAMES sunar</p>
-          <h1>Chasing<br>the Shlump</h1>
-          <p class="hero-sub">Unreal Engine 5.5 ile geliştirilen çok oyunculu oyun. Geliştirme süreci Dev Log'da herkese açık.</p>
+        <div class="hero-copy anim-in anim-in-delay-1">
+          <span class="eyebrow">Oyun stüdyosu · 2026</span>
+          <h1 class="display hero-title">Hexages Games<br><span class="text-muted">Hassasiyetle tasarlanmış oyunlar.</span></h1>
+          <p class="hero-sub">Güçlü motorumuz ve tutkulu ekibimizle, her ayrıntısı düşünülmüş oyun deneyimleri geliştiriyoruz. Yeni oyunumuzun yolculuğunu Dev Log'da paylaşıyoruz.</p>
           <div class="hero-buttons">
-            <a href="devlog.html" class="btn">Dev Log'u oku</a>
-            <a href="oyunlar.html" class="btn-outline">Tüm oyunlar</a>
+            <a href="devlog.html" class="btn">Chasing the Shlump Dev Log</a>
+            <a href="launcher.html" class="btn ghost">Launcher'ı indir</a>
           </div>
         </div>
-        <dl class="hero-facts hero-load">
-          <div><dt>Motor</dt><dd>Unreal Engine 5.5</dd></div>
-          <div><dt>Mod</dt><dd>Çok oyunculu</dd></div>
-          <div><dt>Platform</dt><dd>PC</dd></div>
-          <div><dt>Durum</dt><dd>Geliştiriliyor</dd></div>
-        </dl>
-      </div>
-    </section>
-
-    <section class="section" style="border-top:0">
-      <div class="container">
-        <div class="stats-grid">
-          <div class="stat-item"><div class="stat-num">UE 5.5</div><div class="stat-label">Oyun motoru</div></div>
-          <div class="stat-item"><div class="stat-num">v1.1.7</div><div class="stat-label">Aperon Launcher</div></div>
-          <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Aktif plugin</div></div>
-          <div class="stat-item"><div class="stat-num">PC</div><div class="stat-label">Platform</div></div>
+        <div class="hero-mark anim-in anim-in-delay-3" aria-hidden="true">
+          <img src="logom1.png" alt="" width="400" height="400">
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section-sm rule-b" style="padding-top:72px;padding-bottom:72px">
       <div class="container">
-        <div class="section-head">
-          <h2>Oyunlar</h2>
-          <a href="oyunlar.html" class="link-arrow">Tümünü gör</a>
+        <div class="stats-grid stagger-children">
+          <div class="stat-item"><div class="stat-num">1.1.7</div><div class="stat-label">Launcher sürümü</div></div>
+          <div class="stat-item"><div class="stat-num">3+</div><div class="stat-label">Aktif proje</div></div>
+          <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Modrinth plugini</div></div>
+          <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Platform</div></div>
         </div>
-        <div class="games-grid">
-          <a class="game-tile is-wide" href="devlog.html" aria-label="Chasing the Shlump – Dev Log">
-            <div class="tile-media"><img src="img/shlump-card.png" alt="Chasing the Shlump" width="1280" height="720" loading="lazy"></div>
-            <div class="tile-body">
-              <div class="tile-meta"><span>Çok oyunculu · Unreal Engine 5.5</span><span>Geliştiriliyor</span></div>
-              <h3 class="tile-title">Chasing the Shlump</h3>
-              <p class="tile-desc">Geliştirme günlüğünü ve son güncellemeleri oku.</p>
-              <span class="tile-cta">Dev Log'a git</span>
+      </div>
+    </section>
+
+    <section class="section rule-b">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow"><span class="idx">01</span>Öne çıkan oyun</span>
+        </div>
+        <a href="devlog.html" class="game-card is-hot reveal" style="display:grid;grid-template-columns:1.1fr 1fr" id="featured-game">
+          <div class="game-card-media" style="aspect-ratio:auto;min-height:340px;border-bottom:0;border-right:1px solid var(--line)">
+            <img src="img/games/chasing-the-shlump-card.png" alt="Chasing the Shlump oyun görseli" width="1200" height="900" loading="lazy">
+          </div>
+          <div class="game-card-body" style="padding:40px;justify-content:center;gap:14px">
+            <span class="pill"><i></i>Geliştiriliyor</span>
+            <h2 class="h-xl" style="margin-top:8px">Chasing the Shlump</h2>
+            <p class="game-sub" style="max-width:44ch">Hexages Games'in yeni oyunu. Geliştirme sürecini, kararları ve yeni görselleri Dev Log'da adım adım paylaşıyoruz.</p>
+            <span class="game-card-cta" style="margin-top:20px">Dev Log'u oku →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <style>@media (max-width:800px){#featured-game{grid-template-columns:1fr!important}#featured-game .game-card-media{border-right:0!important;border-bottom:1px solid var(--line)!important;min-height:0!important;aspect-ratio:4/3!important}#featured-game .game-card-body{padding:28px!important}}</style>
+
+    <section class="section rule-b">
+      <div class="container">
+        <div class="about-grid">
+          <div class="reveal">
+            <span class="eyebrow"><span class="idx">02</span>Hakkımızda</span>
+            <h2 class="h-xl" style="margin:20px 0 24px">Geleceğin oyun stüdyosu.</h2>
+            <p class="lead">HEXAGES GAMES olarak geleneksel oyun sınırlarını yeniden çiziyor ve oyuncular için unutulmaz deneyimler tasarlıyoruz. Her piksel, her ses, her mekanik — mükemmellik için tasarlandı.</p>
+            <div class="social-links">
+              <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="social-link">Discord →</a>
+              <a href="https://www.instagram.com/hexagesgames" target="_blank" rel="noopener" class="social-link">Instagram →</a>
+              <a href="https://x.com/hexages_games" target="_blank" rel="noopener" class="social-link">X →</a>
             </div>
-          </a>
-          <a class="game-tile" href="launcher.html" aria-label="Aperon Launcher">
-            <div class="tile-media"><img src="logom1.png" alt="Aperon Launcher" width="800" height="800" loading="lazy" style="object-fit:contain;padding:12%"></div>
-            <div class="tile-body">
-              <div class="tile-meta"><span>Windows · Minecraft: Java</span><span>v1.1.7</span></div>
-              <h3 class="tile-title">Aperon Launcher</h3>
-              <p class="tile-desc">Modrinth entegrasyonlu mod launcher'ı.</p>
-              <span class="tile-cta">İndir</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Dev Log</h2>
-          <a href="devlog.html" class="link-arrow">Tüm girdiler</a>
-        </div>
-        <div class="log-list">
-        <a class="log-row" href="devlog.html#av-tufegi-ve-nisan">
-          <time datetime="2026-10-09">9 Ekim 2026</time>
-          <h3>Av tüfeği ve nişan</h3>
-          <span class="log-tag">Silah</span>
-        </a>
-        <a class="log-row" href="devlog.html#izleyici-modu">
-          <time datetime="2026-10-06">6 Ekim 2026</time>
-          <h3>İzleyici modu</h3>
-          <span class="log-tag">Oynanış</span>
-        </a>
-        <a class="log-row" href="devlog.html#can-ve-hasar-sistemi">
-          <time datetime="2026-10-02">2 Ekim 2026</time>
-          <h3>Can ve hasar sistemi</h3>
-          <span class="log-tag">Oynanış</span>
-        </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container split">
-        <h2>Küçük ekip.<br>Net hedef.</h2>
-        <div class="copy">
-          <p>HEXAGES GAMES, oyun ve oyunculara yönelik araçlar geliştiren bağımsız bir stüdyo. Chasing the Shlump'ı Unreal Engine 5.5 ile yapıyoruz; Aperon Launcher ve Minecraft pluginleri de aynı çatı altında.</p>
-          <p>Gelişmeleri saklamıyoruz: yapılan her iş Dev Log'a düşüyor.</p>
-          <div class="social-links">
-            <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="btn-outline">Discord</a>
-            <a href="https://www.instagram.com/hexagesgames" target="_blank" rel="noopener" class="btn-outline">Instagram</a>
-            <a href="https://x.com/hexages_games" target="_blank" rel="noopener" class="btn-outline">X</a>
+          </div>
+          <div class="feature-cards reveal">
+            <div class="feature-card"><div class="feature-num">01</div><div class="feature-label">Oyun geliştirme</div></div>
+            <div class="feature-card"><div class="feature-num">02</div><div class="feature-label">Topluluk</div></div>
+            <div class="feature-card"><div class="feature-num">03</div><div class="feature-label">Mobil</div></div>
+            <div class="feature-card"><div class="feature-num">04</div><div class="feature-label">PC platform</div></div>
           </div>
         </div>
       </div>
     </section>
 
+    <section class="section rule-b">
+      <div class="container">
+        <div class="cta-band reveal">
+          <span class="eyebrow">Launcher</span>
+          <h2 class="h-xl" style="margin:20px 0 16px">Performans, akıcı oyun.</h2>
+          <p class="text-muted" style="margin-bottom:36px">Aperon Launcher ile yeni nesil, performans odaklı Minecraft deneyiminin tadını çıkarın.</p>
+          <a href="launcher.html" class="btn">Launcher'ı şimdi indir</a>
+        </div>
+      </div>
+    </section>
+
     <section class="section">
       <div class="container">
-        <div class="section-head"><h2>Sık sorulan sorular</h2></div>
+        <div class="reveal"><span class="eyebrow"><span class="idx">03</span>Sık sorulan sorular</span></div>
         <div class="faq-grid">
-          <div class="faq-item"><p class="faq-q">HEXAGES GAMES nedir?</p><p class="faq-a">HEXAGES GAMES; Chasing the Shlump oyununu ve Minecraft: Java Edition için Aperon Launcher'ı geliştiren bağımsız bir oyun stüdyosudur.</p></div>
-          <div class="faq-item"><p class="faq-q">Chasing the Shlump nedir?</p><p class="faq-a">HEXAGES GAMES'in Unreal Engine 5.5 ile geliştirdiği çok oyunculu oyundur. Geliştirme sürecini Dev Log sayfasından takip edebilirsiniz.</p></div>
-          <div class="faq-item"><p class="faq-q">Aperon Launcher'ı nereden indirebilirim?</p><p class="faq-a">Aperon Launcher'ı resmi olarak yalnızca hexagesgames.vercel.app üzerindeki launcher sayfasından ücretsiz indirebilirsiniz.</p></div>
-          <div class="faq-item"><p class="faq-q">HEXAGES GAMES'e nasıl ulaşabilirim?</p><p class="faq-a">Discord, Instagram ve X hesaplarımızdan veya İletişim sayfamızdan bize ulaşabilirsiniz.</p></div>
+          <div class="faq-item">
+            <h3 class="faq-q">HEXAGES GAMES nedir?</h3>
+            <p class="faq-a">HEXAGES GAMES, Minecraft: Java Edition oyuncuları için Aperon Launcher'ı geliştiren bir oyun stüdyosudur.</p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-q">Aperon Launcher'ı nereden indirebilirim?</h3>
+            <p class="faq-a">Aperon Launcher'ı resmi olarak sadece hexagesgames.vercel.app üzerindeki launcher sayfamızdan ücretsiz indirebilirsiniz.</p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-q">HEXAGES GAMES ile Aperon Launcher aynı şey mi?</h3>
+            <p class="faq-a">Aperon Launcher, HEXAGES GAMES tarafından geliştirilen resmi Minecraft mod launcher'ıdır.</p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-q">HEXAGES GAMES'e nasıl ulaşabilirim?</h3>
+            <p class="faq-a">Discord, Instagram ve X (Twitter) hesaplarımızdan veya İletişim sayfamızdan bize ulaşabilirsiniz.</p>
+          </div>
         </div>
-      </div>
-    </section>
-
-    <section class="cta-band">
-      <div class="container">
-        <h2>Gelişmeleri<br>kaçırma</h2>
-        <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="btn">Discord'a katıl</a>
       </div>
     </section>
   </main>
   <div id="layout-footer"></div>
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
-    import { initNavbar, initReveal, initAuthNav } from './js/app.js';
+    import { initTheme, initNavbar, initReveal, initAuthNav } from './js/app.js';
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
-    initNavbar(); initReveal(); initAuthNav();
+    initTheme(); initNavbar(); initReveal(); initAuthNav();
   </script>
 </body>
 </html>

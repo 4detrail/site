@@ -3,13 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HEXAGES GAMES – Ticket</title>
-  <meta name="robots" content="noindex,nofollow">
-  <meta name="theme-color" content="#000000">
-  <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
-  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <title>Destek Ticket – HEXAGES GAMES</title>
+  <meta name="description" content="Destek talebi oluşturun ve takip edin." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="application-name" content="HEXAGES GAMES" />
+  <meta name="apple-mobile-web-app-title" content="HEXAGES GAMES" />
+
+  <!-- Favicon / logo (Google için 48px'in katları) -->
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/img/icons/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/favicon-96x96.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -22,10 +33,10 @@
         <div class="anim-in anim-in-delay-1" style="margin-bottom:64px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
           <div>
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-              <span class="mono-label">// DESTEK</span>
-              <span id="admin-badge" style="display:none;font-family:var(--font-mono);font-size:10px;border:1px solid rgba(245,197,66,0.3);color:#f5c542;padding:2px 8px">ADMİN PANELİ</span>
+              <span class="eyebrow">Destek</span>
+              <span id="admin-badge" style="display:none;font-family:var(--font-mono);font-size:10px;border:1px solid #3A3A3C;color:var(--platinum);padding:2px 8px">Admın terminal</span>
             </div>
-            <h1 style="font-family:var(--font-heading);font-weight:900;font-size:clamp(2.5rem,6vw,5rem);line-height:1">TİCKET</h1>
+            <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1">Ticket</h1>
           </div>
           <button onclick="loadTickets()" style="margin-left:auto;background:transparent;border:1px solid var(--border);color:var(--muted-foreground);font-family:var(--font-mono);font-size:11px;padding:8px 16px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.3s" onmouseover="this.style.borderColor='white';this.style.color='white'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted-foreground)'">
             ↺ YENİLE
@@ -35,16 +46,15 @@
         <!-- Not logged in -->
         <div id="not-logged" style="display:none" class="not-logged">
           <p>Ticket oluşturmak için giriş yapmalısınız.</p>
-          <a href="giris.html" class="btn-download" style="font-size:11px">GİRİŞ YAP</a>
+          <a href="giris.html" class="btn-download" style="font-size:11px">Giriş YAP</a>
         </div>
 
         <div id="ticket-content" style="display:none">
 
           <!-- Submit Form -->
           <div style="border:1px solid var(--border);padding:32px;margin-bottom:48px;position:relative;overflow:hidden" class="anim-in anim-in-delay-2">
-            <div class="shimmer" style="position:absolute;inset:0"></div>
             <div style="position:relative;z-index:1">
-              <span class="mono-label" style="display:block;margin-bottom:24px">// YENİ TİCKET</span>
+              <span class="eyebrow" style="display:block;margin-bottom:24px">Yeni ticket</span>
 
               <div id="success-msg" class="success-msg" style="display:none">✓ Ticket başarıyla oluşturuldu! Ekibimiz en kısa sürede yanıt verecek.</div>
               <div id="error-msg" class="error-msg" style="display:none"></div>
@@ -54,7 +64,7 @@
                 <input type="text" id="t-subject" class="form-input" placeholder="Sorunuzu kısaca özetleyin">
               </div>
               <div class="form-group">
-                <label class="form-label">KATEGORİ</label>
+                <label class="form-label">Kategori</label>
                 <select id="t-category" class="select-input">
                   <option>Teknik Destek</option>
                   <option>Öneri</option>
@@ -64,7 +74,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label">MESAJ</label>
+                <label class="form-label">Mesaj</label>
                 <textarea id="t-message" class="textarea-input" placeholder="Sorunuzu veya önerinizi detaylıca açıklayın..."></textarea>
               </div>
 
@@ -77,10 +87,10 @@
           <!-- Ticket List -->
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
-              <span class="mono-label" id="ticket-list-label">// TİCKETLERİM</span>
+              <span class="eyebrow" id="ticket-list-label">Ticketlerim</span>
               <span id="ticket-count" style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground)"></span>
             </div>
-            <div id="ticket-loading" style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px">YÜKLENİYOR...</div>
+            <div id="ticket-loading" style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px">Yükleniyor...</div>
             <div id="ticket-list"></div>
             <div id="ticket-empty" style="display:none;font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px;border:1px solid var(--border)">Henüz ticket yok.</div>
           </div>
@@ -95,14 +105,14 @@
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import {
-      auth, isAdmin, initNavbar, initReveal, initAuthNav,
+      auth, isAdmin, initTheme, initNavbar, initReveal, initAuthNav,
       onAuthStateChanged, getTickets, saveTicket, updateTicketStatus
     } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
 
-    initNavbar(); initReveal(); initAuthNav();
+    initTheme(); initNavbar(); initReveal(); initAuthNav();
 
     let currentUser = null;
     let currentIsAdmin = false;
@@ -115,10 +125,10 @@
     };
 
     const statusLabels = {
-      open: 'AÇIK',
-      'in-progress': 'İŞLEMDE',
-      resolved: 'ÇÖZÜLDÜ',
-      closed: 'KAPANDI'
+      open: 'Açık',
+      'in-progress': 'İşlemde',
+      resolved: 'Çözüldü',
+      closed: 'Kapandı'
     };
 
     onAuthStateChanged(auth, async user => {
@@ -132,7 +142,7 @@
 
       if (currentIsAdmin) {
         document.getElementById('admin-badge').style.display = 'inline-flex';
-        document.getElementById('ticket-list-label').textContent = '// TÜM TİCKETLER';
+        document.getElementById('ticket-list-label').textContent = 'Tüm ticketler';
       }
 
       await loadTickets();
@@ -158,7 +168,7 @@
       const list = document.getElementById('ticket-list');
       tickets.slice().reverse().forEach(ticket => {
         const statusClass = statusColors[ticket.status] || 'open';
-        const statusLabel = statusLabels[ticket.status] || 'AÇIK';
+        const statusLabel = statusLabels[ticket.status] || 'Açık';
         const date = new Date(ticket.createdAt).toLocaleDateString('tr-TR');
         const shortId = ticket.id?.slice(-6) || '------';
 
@@ -184,15 +194,15 @@
             <p class="ticket-msg">${ticket.message}</p>
             ${ticket.adminReply ? `
               <div class="ticket-reply-box">
-                <p class="ticket-reply-label">// ADMIN YANITI</p>
+                <p class="ticket-reply-label">Admın yanıtı</p>
                 <p class="ticket-reply-text">${ticket.adminReply}</p>
               </div>` : ''}
             ${currentIsAdmin ? `
               <textarea id="reply-${ticket.id}" class="textarea-input" placeholder="Admin yanıtı..." style="height:96px"></textarea>
               <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
-                <button onclick="adminUpdate('${ticket.id}','in-progress')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px">İŞLEMDE</button>
-                <button onclick="adminUpdate('${ticket.id}','resolved')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px">ÇÖZÜLDÜ</button>
-                <button onclick="adminUpdate('${ticket.id}','closed')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px">KAPAT</button>
+                <button onclick="adminUpdate('${ticket.id}','in-progress')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px">İşlemde</button>
+                <button onclick="adminUpdate('${ticket.id}','resolved')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px">Çözüldü</button>
+                <button onclick="adminUpdate('${ticket.id}','closed')" class="btn-theme" style="padding:8px 16px;font-family:var(--font-mono);font-size:11px">Kapat</button>
               </div>` : ''}
           </div>
         `;
@@ -231,7 +241,7 @@
 
       const btn = document.getElementById('btn-submit');
       btn.disabled = true;
-      btn.textContent = 'GÖNDERİLİYOR...';
+      btn.textContent = 'Gönderiliyor...';
 
       try {
         await saveTicket({
@@ -250,7 +260,7 @@
         errEl.style.display = 'block';
       } finally {
         btn.disabled = false;
-        btn.textContent = 'TİCKET GÖNDER';
+        btn.textContent = 'Ticket gönder';
       }
     };
   </script>

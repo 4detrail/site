@@ -1,5 +1,12 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
 import {
+  getStorage,
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject
+} from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js';
+import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -40,6 +47,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 const ADMIN_EMAILS = ['yigittr1922@gmail.com', 'firecrostnetwork@gmail.com', 'hexagesgames@gmail.com', 'wither3169999@gmail.com'];
 
@@ -77,57 +85,48 @@ function validateTicketInput(subject, message, category) {
 }
 
 
-// Eski görsel efektler kaldırıldı. Sayfalar bu isimleri hâlâ çağırdığı için boş bırakıldı.
+// Dekoratif efektler (yıldız alanı, imleç ışığı, tema değiştirme) tasarım v2 ile kaldırıldı.
+// Sayfalar bu fonksiyonları hâlâ import ettiği için boş fonksiyon olarak bırakıldı.
 function initStarfield() {}
 function initCursorGlow() {}
+function initTheme() { document.documentElement.classList.remove('light'); }
 function toggleTheme() {}
-function initTheme() {
-  // Site tek temalı (siyah). Eski açık tema kaydı varsa temizle.
-  document.documentElement.classList.remove('light');
-  try { localStorage.removeItem('hx-theme'); } catch (e) {}
-}
+
 
 function initNavbar() {
-  const nav = document.querySelector('nav');
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
 
-  if (nav) {
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
+  const setMenu = (open) => {
+    if (!hamburger || !mobileMenu) return;
+    mobileMenu.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', String(open));
+    hamburger.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
+    mobileMenu.setAttribute('aria-hidden', String(!open));
+    document.body.classList.toggle('menu-open', open);
+  };
 
   if (hamburger && mobileMenu) {
-    const setOpen = (open) => {
-      hamburger.classList.toggle('is-active', open);
-      mobileMenu.classList.toggle('open', open);
-      hamburger.setAttribute('aria-expanded', String(open));
-      hamburger.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
-      mobileMenu.setAttribute('aria-hidden', String(!open));
-      document.body.classList.toggle('menu-open', open);
-    };
-    hamburger.addEventListener('click', () => setOpen(!mobileMenu.classList.contains('open')));
-    mobileMenu.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 900) setOpen(false); });
+    hamburger.addEventListener('click', () => setMenu(hamburger.getAttribute('aria-expanded') !== 'true'));
+    mobileMenu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 860) setMenu(false); });
   }
 
   const page = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link').forEach((link) => {
     const href = link.getAttribute('href');
-    if (href === page) { link.classList.add('active'); link.setAttribute('aria-current', 'page'); }
+    if (href === page || (page === '' && href === 'index.html')) link.classList.add('active');
   });
 }
 
+
 function initReveal() {
-  const els = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('visible')); return; }
   const observer = new IntersectionObserver(
-    (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
-    { threshold: 0.08 }
+    (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
+    { threshold: 0.1 }
   );
-  els.forEach((el) => observer.observe(el));
+  document.querySelectorAll('.reveal, .stagger-children').forEach((el) => observer.observe(el));
 }
 
 
@@ -137,19 +136,20 @@ function initAuthNav() {
     const mobileAuth = document.getElementById('mobile-auth');
     if (!navAuth) return;
     if (user) {
-      const name = user.displayName ? user.displayName.split(' ')[0].toUpperCase() : 'PROFİL';
-      const admin = isAdmin(user.email);
-      navAuth.innerHTML =
-        (admin ? `<a href="guvenlik.html" class="btn-login btn-ghost">GÜVENLİK</a>` : '') +
-        `<a href="profil.html" class="btn-login">${sanitize(name)}</a>`;
+      const name = user.displayName ? user.displayName.split(' ')[0] : 'Profil';
+      const adminLink = isAdmin(user.email)
+        ? `<a href="guvenlik.html" class="btn-profile">Güvenlik</a>`
+        : '';
+      navAuth.innerHTML = `<div style="display:flex;align-items:center;gap:10px">${adminLink}<a href="profil.html" class="btn-profile">${sanitize(name)}</a></div>`;
       if (mobileAuth) {
-        mobileAuth.innerHTML =
-          (admin ? `<a href="guvenlik.html" class="nav-link">Güvenlik</a>` : '') +
-          `<a href="profil.html" class="nav-link">Profil</a>`;
+        const mobileAdminLink = isAdmin(user.email)
+          ? `<a href="guvenlik.html" class="nav-link">Güvenlik paneli</a>`
+          : '';
+        mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">Profil — ${sanitize(user.email || '')}</a>`;
       }
     } else {
-      navAuth.innerHTML = `<a href="giris.html" class="btn-login">GİRİŞ YAP</a>`;
-      if (mobileAuth) mobileAuth.innerHTML = `<a href="giris.html" class="nav-link">Giriş Yap</a>`;
+      navAuth.innerHTML = `<a href="giris.html" class="btn-login">Giriş</a>`;
+      if (mobileAuth) mobileAuth.innerHTML = `<a href="giris.html" class="nav-link">Giriş yap</a>`;
     }
   });
 }
@@ -217,6 +217,96 @@ async function updateTicketStatus(ticketId, status, adminReply) {
 
 
 
+async function uploadDekontFoto(faturaNo, file) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const ext = file.name.split('.').pop().toLowerCase();
+  const allowed = ['jpg', 'jpeg', 'png', 'webp', 'pdf'];
+  if (!allowed.includes(ext)) throw new Error('Sadece JPG, PNG, WEBP veya PDF yüklenebilir.');
+  if (file.size > 5 * 1024 * 1024) throw new Error('Dosya 5MB\'dan küçük olmalı.');
+  const path = `dekontlar/${faturaNo.toUpperCase()}.${ext}`;
+  const ref = storageRef(storage, path);
+  await uploadBytes(ref, file);
+  const url = await getDownloadURL(ref);
+  return url;
+}
+
+
+async function saveFatura(fatura, dekontFile) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const faturaNo = fatura.faturaNo.trim().toUpperCase();
+  if (!/^[A-Z0-9\-]{3,40}$/.test(faturaNo)) throw new Error('Geçersiz fatura numarası formatı.');
+
+  const existing = await getDoc(doc(db, 'faturalar', faturaNo));
+  if (existing.exists()) throw new Error('Bu fatura numarası zaten kullanımda.');
+
+  let dekontURL = null;
+  if (dekontFile) {
+    dekontURL = await uploadDekontFoto(faturaNo, dekontFile);
+  }
+
+  await setDoc(doc(db, 'faturalar', faturaNo), {
+    faturaNo: faturaNo,
+    email: fatura.email.trim().toLowerCase(),
+    tarih: fatura.tarih,
+    aciklama: fatura.aciklama.trim(),
+    odemeYontemi: fatura.odemeYontemi,
+    tutar: fatura.tutar || '',
+    durum: 'aktif',
+    dekontURL: dekontURL,
+    createdAt: serverTimestamp(),
+    createdBy: user.email
+  });
+  return faturaNo;
+}
+
+
+async function getFaturaByNo(faturaNo) {
+  if (!faturaNo) return null;
+  const user = auth.currentUser;
+  if (!user) return null;
+  const no = faturaNo.trim().toUpperCase();
+
+  const snap = await getDoc(doc(db, 'faturalar', no));
+  if (!snap.exists()) return null;
+  const data = snap.data();
+
+  if (!isAdmin(user.email) && user.email.toLowerCase() !== (data.email || '').toLowerCase()) {
+    return null;
+  }
+
+  return { id: snap.id, ...data, createdAt: data.createdAt?.toDate?.().toISOString() || null };
+}
+
+
+async function getAllFaturalar() {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const q = query(collection(db, 'faturalar'), orderBy('createdAt', 'desc'));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({
+    id: d.id,
+    ...d.data(),
+    createdAt: d.data().createdAt?.toDate?.().toISOString() || null
+  }));
+}
+
+
+async function deleteFatura(faturaId, dekontURL) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  if (dekontURL) {
+    try {
+      const path = decodeURIComponent(dekontURL.split('/o/')[1].split('?')[0]);
+      await deleteObject(storageRef(storage, path));
+    } catch (err) {
+      console.warn('Dekont dosyası silinemedi:', err.code || err.message);
+    }
+  }
+  await deleteDoc(doc(db, 'faturalar', faturaId));
+}
+
 async function getThreatLogs() {
   const user = auth.currentUser;
   if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
@@ -280,10 +370,11 @@ function subscribeLauncherDownloadCount(statId, callback) {
 }
 
 export {
-  auth, db, isAdmin, sanitize, checkRateLimit,
+  auth, db, storage, isAdmin, sanitize, checkRateLimit,
   onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, GoogleAuthProvider, signInWithPopup, updateProfile, sendPasswordResetEmail,
   getTickets, saveTicket, updateTicketStatus,
+  saveFatura, getFaturaByNo, getAllFaturalar, uploadDekontFoto, deleteFatura,
   getThreatLogs, updateThreatLogStatus, getGuildConfigs,
   trackLauncherDownload, subscribeLauncherDownloadCount,
   initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme
