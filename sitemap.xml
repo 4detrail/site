@@ -42,10 +42,10 @@
     </image:image>
   </url>
   <url>
-    <loc>https://hexagesgames.vercel.app/hakkimizda.html</loc>
+    <loc>https://hexagesgames.vercel.app/pluginlerimiz.html</loc>
     <lastmod>2026-10-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://hexagesgames.vercel.app/iletisim.html</loc>

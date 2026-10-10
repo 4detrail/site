@@ -64,10 +64,6 @@
             </div>
           </div>
           <div class="v2-row">
-            <div><div class="label">Açık temada metin rengi</div><div class="sub">Açık temadayken yazıları tam siyah yaparak okunabilirliği artırır.</div></div>
-            <label class="v2-switch"><input type="checkbox" id="s-textblack"><span></span></label>
-          </div>
-          <div class="v2-row">
             <div><div class="label">Hareketi azalt</div><div class="sub">Yıldız alanı ve animasyonları kapatır.</div></div>
             <label class="v2-switch"><input type="checkbox" id="s-motion"><span></span></label>
           </div>
@@ -103,7 +99,7 @@
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import {
       auth, isAdmin, onAuthStateChanged, signOut, updateProfile, sendPasswordResetEmail,
-      initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, applyTheme, applyTextColor
+      initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, applyTheme
     } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
@@ -130,10 +126,6 @@
     });
     paintTheme();
 
-    const tb = $('s-textblack');
-    tb.checked = localStorage.getItem('hx-text-black') === '1';
-    tb.addEventListener('change', () => applyTextColor(tb.checked));
-
     const motion = $('s-motion');
     motion.checked = localStorage.getItem('hx-reduce-motion') === '1';
     motion.addEventListener('change', () => {
@@ -144,7 +136,6 @@
     $('s-reset-prefs').addEventListener('click', () => {
       localStorage.removeItem('hx-theme');
       localStorage.removeItem('hx-reduce-motion');
-      applyTextColor(false); tb.checked = false;
       applyTheme('dark');
       motion.checked = false;
       document.documentElement.classList.remove('reduce-motion');

@@ -138,14 +138,6 @@ function initTheme() {
   const saved = localStorage.getItem('hx-theme') || 'dark';
   applyTheme(saved);
   if (localStorage.getItem('hx-reduce-motion') === '1') document.documentElement.classList.add('reduce-motion');
-  applyTextColor(localStorage.getItem('hx-text-black') === '1');
-}
-// Açık temada metinleri tam siyah yapma tercihi
-function applyTextColor(black) {
-  document.documentElement.classList.toggle('text-black', !!black);
-  localStorage.setItem('hx-text-black', black ? '1' : '0');
-  const b = document.getElementById('textcolor-btn');
-  if (b) b.setAttribute('aria-pressed', String(!!black));
 }
 function applyTheme(theme) {
   if (theme === 'light') document.documentElement.classList.add('light');
@@ -166,29 +158,24 @@ function initNavbar() {
   const mobileMenu = document.getElementById('mobile-menu');
   const themeBtn = document.getElementById('theme-btn');
   if (nav) {
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
   }
   if (hamburger && mobileMenu) {
-    const setMenu = (open) => {
-      mobileMenu.classList.toggle('open', open);
-      hamburger.classList.toggle('open', open);
-      hamburger.setAttribute('aria-expanded', String(open));
-      hamburger.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
-      mobileMenu.setAttribute('aria-hidden', String(!open));
-    };
-    hamburger.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
-    mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 768) setMenu(false); });
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      hamburger.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+    });
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.textContent = '☰';
+      });
+    });
   }
   if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
-  const tcBtn = document.getElementById('textcolor-btn');
-  if (tcBtn) {
-    tcBtn.setAttribute('aria-pressed', String(localStorage.getItem('hx-text-black') === '1'));
-    tcBtn.addEventListener('click', () => applyTextColor(localStorage.getItem('hx-text-black') !== '1'));
-  }
   const page = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link').forEach((link) => {
     const href = link.getAttribute('href');
@@ -198,71 +185,11 @@ function initNavbar() {
 
 
 function initReveal() {
-  const reduce = document.documentElement.classList.contains('reduce-motion') ||
-    matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Sayfa genelinde ortak öğelere otomatik giriş animasyonu (yalnızca JS çalışırsa gizlenir)
-  const AUTO = '.page-title, .page-sub, .v2-section .v2-h2, .v2-page-card, .ct-card, .pl-card, .faq-item, .side-box, .ln-perk, .ln-note, .ln-card, .ln-spec, .pillar, .news-card, .gd-shots img, .tile, .about-block, .footer-cta-inner';
-  const targets = [];
-  document.querySelectorAll(AUTO).forEach((el) => {
-    if (el.closest('.reveal, .stagger-children, .hero')) return;
-    if (el.classList.contains('anim-item')) return;
-    el.classList.add('anim-item');
-    const sibs = el.parentElement ? Array.from(el.parentElement.children).filter(c => c.classList.contains('anim-item')) : [];
-    el.style.setProperty('--d', Math.min(Math.max(sibs.indexOf(el), 0), 5) * 70 + 'ms');
-    targets.push(el);
-  });
-
   const observer = new IntersectionObserver(
-    (entries) => entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add('visible', 'in'); observer.unobserve(e.target); }
-    }),
-    { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }
+    (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
+    { threshold: 0.1 }
   );
-  document.querySelectorAll('.reveal, .stagger-children, .reveal-left, .reveal-right').forEach((el) => observer.observe(el));
-  targets.forEach((el) => observer.observe(el));
-
-  // Sayfa kaydırma ilerleme çubuğu
-  const bar = document.getElementById('scroll-progress');
-  if (bar) {
-    const upd = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.transform = `scaleX(${h > 0 ? Math.min(window.scrollY / h, 1) : 0})`;
-    };
-    window.addEventListener('scroll', upd, { passive: true }); upd();
-  }
-
-  if (reduce) return;
-
-  // Hero dekoru: çok hafif parallax
-  const heroArt = document.querySelector('[data-parallax]');
-  if (heroArt) {
-    window.addEventListener('scroll', () => {
-      const y = Math.min(window.scrollY, 700);
-      heroArt.style.transform = `translate3d(0, ${y * 0.12}px, 0)`;
-    }, { passive: true });
-  }
-
-  // Büyük kartlar: imleç yönünde ince ışık
-  document.querySelectorAll('.big-card').forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-    });
-  });
-
-  // Sayaç animasyonu: [data-count]
-  document.querySelectorAll('[data-count]').forEach((el) => {
-    const end = parseInt(el.dataset.count, 10); if (isNaN(end)) return;
-    const io = new IntersectionObserver((es) => es.forEach((e) => {
-      if (!e.isIntersecting) return; io.disconnect();
-      const t0 = performance.now();
-      const tick = (t) => { const p = Math.min((t - t0) / 1200, 1); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); };
-      requestAnimationFrame(tick);
-    }), { threshold: 0.6 });
-    io.observe(el);
-  });
+  document.querySelectorAll('.reveal, .stagger-children').forEach((el) => observer.observe(el));
 }
 
 
@@ -296,8 +223,8 @@ const SITE_PAGES = [
   { href: 'index.html', label: 'ANA SAYFA' },
   { href: 'oyunlar.html', label: 'OYUNLAR' },
   { href: 'oyun.html?id=chasing-the-shlump', label: 'CHASING THE SHLUMP' },
+  { href: 'pluginlerimiz.html', label: 'PLUGİNLER' },
   { href: 'launcher.html', label: 'LAUNCHER' },
-  { href: 'hakkimizda.html', label: 'HAKKIMIZDA' },
   { href: 'iletisim.html', label: 'İLETİŞİM' },
   { href: 'ticket.html', label: 'DESTEK' }
 ];
@@ -659,5 +586,5 @@ export {
   getThreatLogs, updateThreatLogStatus, getGuildConfigs,
   trackLauncherDownload, subscribeLauncherDownloadCount,
   getGameNews, uploadNewsImage, createGameNews, updateGameNews, deleteGameNews, NEWS_CATEGORIES,
-  initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme, applyTheme, applyTextColor
+  initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme, applyTheme
 };

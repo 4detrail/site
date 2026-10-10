@@ -17,7 +17,7 @@ HEXAGES GAMES - GÖRSEL DOSYALARI VE KURULUM NOTLARI
 
 2) İKONLAR — assets/icons/
    favicon-32.png, apple-touch-icon.png, icon-192.png, icon-512.png
-   (Yeni HX tilki logosundan üretildi. Logo dosyaları: assets/brand/hx-white.png (koyu tema) ve hx-black.png (açık tema).)
+   (logom1.png'den üretildi; logonu değiştirirsen bu dosyaları yeniden üret.)
 
 3) YENİ OYUN EKLEMEK — js/games.js
    GAMES dizisine yeni bir kayıt ekle. Oyunlar listesi, oyun sayfası ve
@@ -41,15 +41,3 @@ HEXAGES GAMES - GÖRSEL DOSYALARI VE KURULUM NOTLARI
 7) SEARCH CONSOLE
    sitemap.xml ve robots.txt güncellendi. Google Search Console'da
    https://hexagesgames.vercel.app/sitemap.xml adresini yeniden gönder.
-
-8) ANA SAYFA KARTLARI
-   Üç büyük kart tek bir görselin üç parçasıdır: assets/home/triptych.jpg
-   (2400x1067). Görseli değiştirirsen kartlar otomatik olarak yeni görseli tamamlayıcı şekilde böler.
-
-9) PLUGİNLER
-   Ayrı sayfa kaldırıldı. Pluginler launcher.html içinde #pluginler bölümündedir.
-   Plugin eklemek için launcher.html içindeki "plugins" dizisine kayıt ekle.
-   pluginlerimiz.html eski bağlantılar için yalnızca yönlendirme yapar.
-
-10) AÇIK TEMADA SİYAH METİN
-   Navbar'daki "A" düğmesi (yalnızca açık temada görünür) veya Ayarlar > Görünüm.
