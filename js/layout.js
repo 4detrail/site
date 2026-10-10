@@ -13,6 +13,7 @@ const NAV_ITEMS = [
 export function getNavHTML() {
   const desktop = NAV_ITEMS.map(i => `<li><a href="${i.href}" class="nav-link">${i.label}</a></li>`).join('');
   const MOBILE_EXTRA = [
+    { href: 'oyun.html?id=chasing-the-shlump', label: 'CHASING THE SHLUMP' },
     { href: 'ayarlar.html', label: 'AYARLAR' },
     { href: 'privacy.html', label: 'GİZLİLİK POLİTİKASI' }
   ];
@@ -70,6 +71,9 @@ export function getFooterHTML() {
           <a href="launcher.html">→ LAUNCHER</a>
           <a href="iletisim.html">→ İLETİŞİM</a>
           <a href="ticket.html">→ DESTEK</a>
+          <a href="oyun.html?id=chasing-the-shlump">→ CHASING THE SHLUMP</a>
+          <a href="ayarlar.html">→ AYARLAR</a>
+          <a href="privacy.html">→ GİZLİLİK POLİTİKASI</a>
         </div>
       </div>
       <div>
