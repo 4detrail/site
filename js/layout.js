@@ -1,28 +1,28 @@
-// Shared navbar & layout HTML generator
-export function getNavHTML() {
-  return `
-<canvas id="starfield"></canvas>
-<div class="grid-overlay"></div>
-<div class="scanline"></div>
-<div id="cursor-glow"></div>
+// Ortak üst menü ve footer
+const LINKS = [
+  ['index.html', 'Ana Sayfa'],
+  ['oyunlar.html', 'Oyunlar'],
+  ['devlog.html', 'Dev Log'],
+  ['launcher.html', 'Launcher'],
+  ['pluginlerimiz.html', 'Pluginler'],
+  ['iletisim.html', 'İletişim'],
+  ['ticket.html', 'Destek']
+];
 
-<nav id="main-nav">
+export function getNavHTML() {
+  const desktop = LINKS.map(([href, label]) => `<li><a href="${href}" class="nav-link">${label}</a></li>`).join('');
+  const mobile = LINKS.map(([href, label]) => `<a href="${href}" class="nav-link">${label}</a>`).join('');
+  return `
+<a href="#main" class="skip-link">İçeriğe geç</a>
+<nav id="main-nav" aria-label="Ana menü">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img src="logom1.png" alt="HEXAGES GAMES logo" width="32" height="32">
+    <a href="index.html" class="nav-logo" aria-label="HEXAGES GAMES ana sayfa">
+      <img src="logom1.png" alt="" width="28" height="28">
       <span>HEXAGES GAMES</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="index.html" class="nav-link">ANA SAYFA</a></li>
-      <li><a href="oyunlar.html" class="nav-link">OYUNLAR</a></li>
-      <li><a href="pluginlerimiz.html" class="nav-link">PLUGINLER</a></li>
-      <li><a href="launcher.html" class="nav-link">LAUNCHER</a></li>
-      <li><a href="iletisim.html" class="nav-link">İLETİŞİM</a></li>
-      <li><a href="ticket.html" class="nav-link">TİCKET</a></li>
-    </ul>
+    <ul class="nav-links">${desktop}</ul>
     <div class="nav-actions">
-      <button class="btn-theme" id="theme-btn" aria-label="Tema değiştir"><span id="theme-icon">☀</span></button>
-      <div id="nav-auth"><a href="giris.html" class="btn-login">GİRİŞ</a></div>
+      <div id="nav-auth"><a href="giris.html" class="btn-login">GİRİŞ YAP</a></div>
       <button class="btn-hamburger" id="hamburger" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobile-menu">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
@@ -30,16 +30,13 @@ export function getNavHTML() {
       </button>
     </div>
   </div>
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <a href="index.html" class="nav-link">→ ANA SAYFA</a>
-    <a href="oyunlar.html" class="nav-link">→ OYUNLAR</a>
-    <a href="pluginlerimiz.html" class="nav-link">→ PLUGINLER</a>
-    <a href="launcher.html" class="nav-link">→ LAUNCHER</a>
-    <a href="iletisim.html" class="nav-link">→ İLETİŞİM</a>
-    <a href="ticket.html" class="nav-link">→ TİCKET</a>
+</nav>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <div class="mobile-menu-list">
+    ${mobile}
     <div id="mobile-auth" class="mobile-menu-auth"></div>
   </div>
-</nav>
+</div>
 `;
 }
 
@@ -48,35 +45,42 @@ export function getFooterHTML() {
 <footer>
   <div class="footer-inner">
     <div class="footer-grid">
-      <div>
+      <div class="footer-brand">
         <div class="footer-logo">
-          <img src="logom1.png" alt="HEXAGES GAMES logo" width="32" height="32">
+          <img src="logom1.png" alt="" width="28" height="28">
           <span>HEXAGES GAMES</span>
         </div>
-        <p class="text-muted text-mono" style="font-size:13px;line-height:1.7">Yeni nesil oyun deneyimleri.<br>Geleceği şekillendiriyoruz.</p>
+        <p>Bağımsız oyun stüdyosu. Chasing the Shlump geliştirme aşamasında.</p>
       </div>
       <div>
-        <p class="footer-heading">NAVİGASYON</p>
+        <p class="footer-heading">Keşfet</p>
         <div class="footer-links">
-          <a href="index.html">→ ANA SAYFA</a>
-          <a href="oyunlar.html">→ OYUNLAR</a>
-          <a href="pluginlerimiz.html">→ PLUGINLER</a>
-          <a href="launcher.html">→ LAUNCHER</a>
-          <a href="iletisim.html">→ İLETİŞİM</a>
+          <a href="oyunlar.html">Oyunlar</a>
+          <a href="devlog.html">Dev Log</a>
+          <a href="launcher.html">Aperon Launcher</a>
+          <a href="pluginlerimiz.html">Pluginler</a>
         </div>
       </div>
       <div>
-        <p class="footer-heading">SOSYAL MEDYA</p>
+        <p class="footer-heading">Destek</p>
         <div class="footer-links">
-          <a href="https://discord.gg/ETe46SWQtC" target="_blank">◆ Discord</a>
-          <a href="https://www.instagram.com/hexagesgames" target="_blank">◆ Instagram</a>
-          <a href="https://x.com/hexages_games" target="_blank">◆ X (Twitter)</a>
+          <a href="iletisim.html">İletişim</a>
+          <a href="ticket.html">Destek talebi</a>
+          <a href="privacy.html">Gizlilik</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-heading">Topluluk</p>
+        <div class="footer-links">
+          <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener">Discord</a>
+          <a href="https://www.instagram.com/hexagesgames" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://x.com/hexages_games" target="_blank" rel="noopener">X</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="text-muted text-mono" style="font-size:11px">© 2026 HEXAGES GAMES. TÜM HAKLARI SAKLIDIR.</p>
-      <p class="text-muted text-mono" style="font-size:11px">VERSION 1.1.9 // KINETIC VOID</p>
+      <p>© 2026 HEXAGES GAMES. Tüm hakları saklıdır.</p>
+      <p>hexagesgames.vercel.app</p>
     </div>
   </div>
 </footer>

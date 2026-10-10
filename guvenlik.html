@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>HEXAGES GAMES – Güvenlik Paneli</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -18,7 +24,7 @@
           <div>
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
               <span class="mono-label">// GÜVENLİK</span>
-              <span style="font-family:var(--font-mono);font-size:10px;border:1px solid rgba(255,92,92,0.35);color:#ff5c5c;padding:2px 8px">🛡️ SADECE ADMIN</span>
+              <span style="font-family:var(--font-mono);font-size:10px;border:1px solid rgba(255,92,92,0.35);color:#ff5c5c;padding:2px 8px">SADECE ADMİN</span>
             </div>
             <h1 style="font-family:var(--font-heading);font-weight:900;font-size:clamp(2.2rem,5.5vw,4.2rem);line-height:1">HEXAGES GAMES GÜVENLİK SİSTEMİ</h1>
             <p style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);margin-top:12px;max-width:640px">
@@ -86,13 +92,13 @@
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import {
-      auth, isAdmin, sanitize, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
+      auth, isAdmin, sanitize, initNavbar, initReveal, initAuthNav,
       onAuthStateChanged, getThreatLogs, updateThreatLogStatus, getGuildConfigs
     } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
-    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+    initNavbar(); initReveal(); initAuthNav();
 
     let allLogs = [];
     let guildCount = 0;

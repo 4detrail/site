@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chasing the Shlump Dev Log – HEXAGES GAMES</title>
+  <meta name="description" content="Chasing the Shlump geliştirme günlüğü: çok oyunculu altyapı, can sistemi, izleyici modu ve daha fazlası.">
+  <meta name="robots" content="index,follow, max-image-preview:large">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="https://hexagesgames.vercel.app/devlog.html">
+  <meta name="google-site-verification" content="n_Kz17Dp_6cmzEpOoYiDsU-FqtREEpeJ2VXtJ24hC1I">
+
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:site_name" content="HEXAGES GAMES">
+  <meta property="og:title" content="Chasing the Shlump Dev Log – HEXAGES GAMES">
+  <meta property="og:description" content="Chasing the Shlump geliştirme günlüğü: çok oyunculu altyapı, can sistemi, izleyici modu ve daha fazlası.">
+  <meta property="og:url" content="https://hexagesgames.vercel.app/devlog.html">
+  <meta property="og:image" content="https://hexagesgames.vercel.app/img/shlump-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Chasing the Shlump Dev Log – HEXAGES GAMES">
+  <meta name="twitter:description" content="Chasing the Shlump geliştirme günlüğü: çok oyunculu altyapı, can sistemi, izleyici modu ve daha fazlası.">
+  <meta name="twitter:image" content="https://hexagesgames.vercel.app/img/shlump-hero.png">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://hexagesgames.vercel.app/#org", "name": "HEXAGES GAMES", "alternateName": ["Hexages Games", "HEXAGES"], "url": "https://hexagesgames.vercel.app/", "logo": {"@type": "ImageObject", "url": "https://hexagesgames.vercel.app/logom1.png", "width": 800, "height": 800}, "image": "https://hexagesgames.vercel.app/img/og-image.png", "sameAs": ["https://x.com/hexages_games", "https://discord.gg/ETe46SWQtC", "https://www.instagram.com/hexagesgames"]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Chasing the Shlump", "url": "https://hexagesgames.vercel.app/devlog.html", "image": "https://hexagesgames.vercel.app/img/shlump-hero.png", "description": "HEXAGES GAMES tarafından Unreal Engine 5.5 ile geliştirilen çok oyunculu oyun.", "genre": "Çok oyunculu", "gamePlatform": "PC", "applicationCategory": "Game", "author": {"@id": "https://hexagesgames.vercel.app/#org"}, "publisher": {"@id": "https://hexagesgames.vercel.app/#org"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://hexagesgames.vercel.app/"}, {"@type": "ListItem", "position": 2, "name": "Oyunlar", "item": "https://hexagesgames.vercel.app/oyunlar.html"}, {"@type": "ListItem", "position": 3, "name": "Dev Log", "item": "https://hexagesgames.vercel.app/devlog.html"}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Av tüfeği ve nişan", "datePublished": "2026-10-09", "image": "https://hexagesgames.vercel.app/img/devlog-04.png", "url": "https://hexagesgames.vercel.app/devlog.html#av-tufegi-ve-nisan", "author": {"@id": "https://hexagesgames.vercel.app/#org"}, "publisher": {"@id": "https://hexagesgames.vercel.app/#org"}, "about": {"@type": "VideoGame", "name": "Chasing the Shlump"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "İzleyici modu", "datePublished": "2026-10-06", "image": "https://hexagesgames.vercel.app/img/devlog-03.png", "url": "https://hexagesgames.vercel.app/devlog.html#izleyici-modu", "author": {"@id": "https://hexagesgames.vercel.app/#org"}, "publisher": {"@id": "https://hexagesgames.vercel.app/#org"}, "about": {"@type": "VideoGame", "name": "Chasing the Shlump"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Can ve hasar sistemi", "datePublished": "2026-10-02", "image": "https://hexagesgames.vercel.app/img/devlog-02.png", "url": "https://hexagesgames.vercel.app/devlog.html#can-ve-hasar-sistemi", "author": {"@id": "https://hexagesgames.vercel.app/#org"}, "publisher": {"@id": "https://hexagesgames.vercel.app/#org"}, "about": {"@type": "VideoGame", "name": "Chasing the Shlump"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Çok oyunculu altyapı", "datePublished": "2026-09-28", "image": "https://hexagesgames.vercel.app/img/devlog-01.png", "url": "https://hexagesgames.vercel.app/devlog.html#cok-oyunculu-altyapi", "author": {"@id": "https://hexagesgames.vercel.app/#org"}, "publisher": {"@id": "https://hexagesgames.vercel.app/#org"}, "about": {"@type": "VideoGame", "name": "Chasing the Shlump"}}</script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+  <main id="main">
+    <header class="hero game-hero">
+      <div class="hero-media"><img src="img/shlump-hero.png" alt="" width="1920" height="1080"></div>
+      <div class="hero-inner">
+        <div class="hero-load">
+          <p class="breadcrumb"><a href="oyunlar.html">Oyunlar</a> / Chasing the Shlump</p>
+          <h1>Dev Log</h1>
+          <p class="hero-sub">Chasing the Shlump'ın geliştirme günlüğü. En yeni girdi en üstte.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="container dev-layout">
+      <nav class="dev-index" aria-label="Girdiler">
+        <a href="#av-tufegi-ve-nisan">Av tüfeği ve nişan<small>9 Ekim 2026</small></a>
+        <a href="#izleyici-modu">İzleyici modu<small>6 Ekim 2026</small></a>
+        <a href="#can-ve-hasar-sistemi">Can ve hasar sistemi<small>2 Ekim 2026</small></a>
+        <a href="#cok-oyunculu-altyapi">Çok oyunculu altyapı<small>28 Eylül 2026</small></a>
+      </nav>
+      <div>
+<!-- YENİ GİRDİ EKLEMEK İÇİN: aşağıdaki <article> bloklarından birini kopyala, bu yorumun hemen altına yapıştır,
+     id / tarih / başlık / metni değiştir; görseli img/ klasöründe aynı isimle değiştir. -->
+      <article class="dev-entry" id="av-tufegi-ve-nisan">
+        <div class="dev-entry-meta"><time datetime="2026-10-09">9 Ekim 2026</time><span class="log-tag">Silah</span></div>
+        <h2>Av tüfeği ve nişan</h2>
+        <figure><img src="img/devlog-04.png" alt="Av tüfeği ateş animasyonu" width="1280" height="720" loading="lazy"><figcaption>Ateş animasyonu üst gövde katmanında oynuyor.</figcaption></figure>
+        <div class="body">
+          <p>Av tüfeği için ateş animasyonu üst gövde katmanına bağlandı; karakter yürürken veya dururken üst gövde ayrı animasyon oynatabiliyor.</p>
+          <p>Sıradaki iş: nişangâhın kameranın baktığı yere göre hizalanması ve basılı tutunca belirli aralıklarla ateş edilmesi.</p>
+          <ul class="changes">
+            <li>Ateş animasyonu üst gövde slotunda çalışıyor</li>
+            <li>Silahın kamerayı takip etmesi üzerinde çalışılıyor</li>
+            <li>Nişangâh (crosshair) planlandı</li>
+          </ul>
+        </div>
+      </article>
+      <article class="dev-entry" id="izleyici-modu">
+        <div class="dev-entry-meta"><time datetime="2026-10-06">6 Ekim 2026</time><span class="log-tag">Oynanış</span></div>
+        <h2>İzleyici modu</h2>
+        <figure><img src="img/devlog-03.png" alt="İzleyici modu arayüzü" width="1280" height="720" loading="lazy"><figcaption>Ölen oyuncu izleyici arayüzünü görüyor, can çubuğu gizleniyor.</figcaption></figure>
+        <div class="body">
+          <p>Ölen oyuncular artık oyundan düşmek yerine izleyici moduna geçiyor. Bu modda can çubuğu gizleniyor ve yaşayan oyuncular arasında geçiş yapmayı anlatan bir arayüz gösteriliyor.</p>
+          <p>Sağ ve sol fare tuşu ile oyuncular arası geçiş girdileri hazır; kamera geçişi bir sonraki adım.</p>
+          <ul class="changes">
+            <li>Ölen oyuncuya izleyici arayüzü gösteriliyor</li>
+            <li>İzleyici modunda can çubuğu gizleniyor</li>
+            <li>Sonraki oyuncu / önceki oyuncu girdileri bağlandı</li>
+          </ul>
+        </div>
+      </article>
+      <article class="dev-entry" id="can-ve-hasar-sistemi">
+        <div class="dev-entry-meta"><time datetime="2026-10-02">2 Ekim 2026</time><span class="log-tag">Oynanış</span></div>
+        <h2>Can ve hasar sistemi</h2>
+        <figure><img src="img/devlog-02.png" alt="Can çubuğu arayüzü" width="1280" height="720" loading="lazy"><figcaption>Can değeri sunucuda tutulup tüm oyunculara çoğaltılıyor.</figcaption></figure>
+        <div class="body">
+          <p>Can sistemi sunucu tarafında çalışıyor: hasarı sunucu uyguluyor, değişim ise oyunculara çoğaltılıyor. Böylece iki oyunculu Listen Server testlerinde hem sunucuda hem istemcide aynı sonuç görülüyor.</p>
+          <p>Can çubuğu arayüzü üzerinde çalışılıyor.</p>
+          <ul class="changes">
+            <li>Sunucu yetkili can ve hasar</li>
+            <li>İstemcide can değişimi çoğaltılıyor</li>
+            <li>Can çubuğu arayüzü yapım aşamasında</li>
+          </ul>
+        </div>
+      </article>
+      <article class="dev-entry" id="cok-oyunculu-altyapi">
+        <div class="dev-entry-meta"><time datetime="2026-09-28">28 Eylül 2026</time><span class="log-tag">Altyapı</span></div>
+        <h2>Çok oyunculu altyapı</h2>
+        <figure><img src="img/devlog-01.png" alt="Ana menü: sunucu kur ve sunucu bul" width="1280" height="720" loading="lazy"><figcaption>Ana menüde Sunucu Kur ve Sunucu Bul seçenekleri.</figcaption></figure>
+        <div class="body">
+          <p>Chasing the Shlump, Unreal Engine 5.5 üzerinde çok oyunculu olarak geliştiriliyor. Oturum altyapısı için Epic Online Services kuruldu ve oyun içi overlay entegrasyonu yapıldı.</p>
+          <p>Ana menüde sunucu kurma ve sunucu bulma akışı çalışıyor.</p>
+          <ul class="changes">
+            <li>Epic Online Services entegrasyonu</li>
+            <li>Shift+Tab overlay</li>
+            <li>Ana menü: Sunucu Kur / Sunucu Bul</li>
+          </ul>
+        </div>
+      </article>
+      </div>
+    </div>
+
+    <section class="cta-band">
+      <div class="container">
+        <h2>Test etmek<br>ister misin?</h2>
+        <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="btn">Discord'a katıl</a>
+      </div>
+    </section>
+  </main>
+  <div id="layout-footer"></div>
+  <script type="module">
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import { initNavbar, initReveal, initAuthNav } from './js/app.js';
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+    initNavbar(); initReveal(); initAuthNav();
+    const links = [...document.querySelectorAll('.dev-index a')];
+    const mark = () => {
+      const y = window.scrollY + 140; let cur = links[0];
+      links.forEach(a => { const el = document.querySelector(a.getAttribute('href')); if (el && el.offsetTop <= y) cur = a; });
+      links.forEach(a => a.classList.toggle('active', a === cur));
+    };
+    window.addEventListener('scroll', mark, { passive: true }); mark();
+  </script>
+</body>
+</html>

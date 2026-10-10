@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HEXAGES GAMES – İletişim</title>
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="canonical" href="https://hexagesgames.vercel.app/iletisim.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HEXAGES GAMES">
+  <meta property="og:title" content="HEXAGES GAMES – İletişim">
+  <meta property="og:url" content="https://hexagesgames.vercel.app/iletisim.html">
+  <meta property="og:image" content="https://hexagesgames.vercel.app/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -111,12 +124,12 @@
 
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
-    import { initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav } from './js/app.js';
+    import { initNavbar, initReveal, initAuthNav } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
 
-    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+    initNavbar(); initReveal(); initAuthNav();
   </script>
 </body>
 </html>

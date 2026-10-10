@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HEXAGES GAMES – Profil</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -91,21 +97,6 @@
                 </a>
               </div>
             </div>
-
-            <!-- Fatura Sorgulama -->
-            <div class="profile-card" style="grid-column:1/-1">
-              <span class="mono-label" style="display:block;margin-bottom:20px">// FATURA SORGULA</span>
-              <p style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground);margin-bottom:16px;line-height:1.7">
-                Size iletilen fatura numarasını girerek dekontunuza ulaşabilirsiniz.
-              </p>
-              <div style="display:flex;gap:12px;flex-wrap:wrap">
-                <input type="text" id="fatura-no-input" class="form-input" placeholder="Örn: HEX-2025-001" style="flex:1;min-width:200px;text-transform:uppercase">
-                <button onclick="sorgulaFatura()" class="btn-submit" style="width:auto;padding:14px 24px;font-size:11px;flex-shrink:0">
-                  SORGULA
-                </button>
-              </div>
-              <div id="fatura-sorgu-error" class="error-msg" style="display:none;margin-top:12px"></div>
-            </div>
           </div>
         </div>
 
@@ -118,14 +109,14 @@
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import {
-      auth, isAdmin, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
-      onAuthStateChanged, signOut, updateProfile, getFaturaByNo
+      auth, isAdmin, initNavbar, initReveal, initAuthNav,
+      onAuthStateChanged, signOut, updateProfile
     } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
 
-    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+    initNavbar(); initReveal(); initAuthNav();
 
     onAuthStateChanged(auth, user => {
       if (!user) {
@@ -156,7 +147,7 @@
 
       const badge = document.getElementById('access-badge');
       if (isAdmin(user.email)) {
-        badge.textContent = '⚡ ADMIN ACCESS';
+        badge.textContent = 'ADMİN ERİŞİMİ';
         badge.classList.add('admin');
       }
     });
@@ -203,44 +194,6 @@
         errEl.style.display = 'block';
       }
     };
-
-    window.sorgulaFatura = async () => {
-      const no = document.getElementById('fatura-no-input').value.trim().toUpperCase();
-      const errEl = document.getElementById('fatura-sorgu-error');
-      errEl.style.display = 'none';
-
-      if (!no) {
-        errEl.textContent = 'Lütfen bir fatura numarası girin.';
-        errEl.style.display = 'block';
-        return;
-      }
-
-      try {
-        const fatura = await getFaturaByNo(no);
-        if (!fatura) {
-          errEl.textContent = 'Dekont bulunamadı. Fatura numarasını kontrol edin.';
-          errEl.style.display = 'block';
-          return;
-        }
-        // Sahiplik kontrolü
-        const user = auth.currentUser;
-        if (!isAdmin(user?.email) && user?.email?.toLowerCase() !== fatura.email.toLowerCase()) {
-          errEl.textContent = 'Bu fatura numarası hesabınıza ait değil.';
-          errEl.style.display = 'block';
-          return;
-        }
-        window.location.href = `dekont.html?no=${encodeURIComponent(no)}`;
-      } catch (err) {
-        errEl.textContent = 'Sorgulama sırasında hata oluştu: ' + err.message;
-        errEl.style.display = 'block';
-      }
-    };
-
-    // Enter tuşuyla sorgulama
-    document.addEventListener('DOMContentLoaded', () => {
-      const input = document.getElementById('fatura-no-input');
-      if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') window.sorgulaFatura(); });
-    });
   </script>
 </body>
 </html>
