@@ -219,6 +219,52 @@ function bindUserMenu() {
   panel.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
 }
 
+const SITE_PAGES = [
+  { href: 'index.html', label: 'ANA SAYFA' },
+  { href: 'oyunlar.html', label: 'OYUNLAR' },
+  { href: 'oyun.html?id=chasing-the-shlump', label: 'CHASING THE SHLUMP' },
+  { href: 'pluginlerimiz.html', label: 'PLUGİNLER' },
+  { href: 'launcher.html', label: 'LAUNCHER' },
+  { href: 'iletisim.html', label: 'İLETİŞİM' },
+  { href: 'ticket.html', label: 'DESTEK' }
+];
+
+function pagesHTML() {
+  return `<div class="um-group-label">SAYFALAR</div>` +
+    SITE_PAGES.map(p => `<a href="${p.href}" role="menuitem" class="um-link">${p.label}</a>`).join('');
+}
+
+// Açılır menü (masaüstü): giriş yapan ve yapmayan herkes için
+function renderUserMenu(navAuth, user) {
+  const loggedIn = !!user;
+  const label = loggedIn ? sanitize(user.displayName ? user.displayName.split(' ')[0].toUpperCase() : 'PROFİL') : 'MENÜ';
+  const head = loggedIn
+    ? `<div class="um-head"><span class="um-head-name">${sanitize(user.displayName || 'Oyuncu')}</span><span class="um-head-mail">${sanitize(user.email || '')}</span></div>`
+    : `<div class="um-head"><span class="um-head-name">Hoş geldin</span><span class="um-head-mail">Giriş yaparak profil ve destek özelliklerini kullan</span></div>`;
+  const accountItems = loggedIn
+    ? `<div class="um-group-label">HESAP</div>
+       <a href="profil.html" role="menuitem" class="um-item"><span>Profil</span><small>Hesap ve destek talepleri</small></a>
+       <a href="ayarlar.html" role="menuitem" class="um-item"><span>Ayarlar</span><small>Görünüm ve hesap tercihleri</small></a>
+       <a href="privacy.html" role="menuitem" class="um-item"><span>Gizlilik Politikası</span><small>Verilerinizin nasıl korunduğu</small></a>
+       <button type="button" role="menuitem" class="um-item um-logout" id="um-logout"><span>Çıkış Yap</span><small>Bu cihazdaki oturumu kapat</small></button>`
+    : `<div class="um-group-label">HESAP</div>
+       <a href="giris.html" role="menuitem" class="um-item"><span>Giriş Yap</span><small>Hesabınla giriş yap ya da kayıt ol</small></a>
+       <a href="privacy.html" role="menuitem" class="um-item"><span>Gizlilik Politikası</span><small>Verilerinizin nasıl korunduğu</small></a>`;
+  navAuth.innerHTML = `
+    <div class="user-menu" id="user-menu">
+      <button class="btn-profile user-menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="user-menu-panel">
+        <span class="um-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="um-name">${label}</span>
+      </button>
+      <div class="user-menu-panel" id="user-menu-panel" role="menu">
+        ${head}
+        ${pagesHTML()}
+        ${accountItems}
+      </div>
+    </div>`;
+  bindUserMenu();
+}
+
 function initAuthNav() {
   onAuthStateChanged(auth, (user) => {
     const navAuth = document.getElementById('nav-auth');
@@ -227,33 +273,13 @@ function initAuthNav() {
     if (user) {
       const name = user.displayName ? user.displayName.split(' ')[0].toUpperCase() : 'PROFİL';
       const adminLink = '';
-      const initials = sanitize(name);
-      navAuth.innerHTML = `
-        <div class="user-menu" id="user-menu">
-          <button class="btn-profile user-menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="user-menu-panel">
-            <span class="um-icon" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span class="um-name">${initials}</span>
-          </button>
-          <div class="user-menu-panel" id="user-menu-panel" role="menu">
-            <div class="um-head">
-              <span class="um-head-name">${sanitize(user.displayName || 'Oyuncu')}</span>
-              <span class="um-head-mail">${sanitize(user.email || '')}</span>
-            </div>
-            <a href="profil.html" role="menuitem" class="um-item"><span>Profil</span><small>Hesap ve destek talepleri</small></a>
-            <a href="ayarlar.html" role="menuitem" class="um-item"><span>Ayarlar</span><small>Görünüm ve hesap tercihleri</small></a>
-            <a href="privacy.html" role="menuitem" class="um-item"><span>Gizlilik Politikası</span><small>Verilerinizin nasıl korunduğu</small></a>
-            <button type="button" role="menuitem" class="um-item um-logout" id="um-logout"><span>Çıkış Yap</span><small>Bu cihazdaki oturumu kapat</small></button>
-          </div>
-        </div>`;
-      bindUserMenu();
+      renderUserMenu(navAuth, user);
       if (mobileAuth) {
-        const mobileAdminLink = isAdmin(user.email)
-          ? `<a href="admin-haberler.html" class="nav-link" style="color:var(--accent)">→ OYUN HABERLERİ (YÖNETİM)</a><a href="guvenlik.html" class="nav-link" style="color:var(--accent)">→ GÜVENLİK PANELİ</a>`
-          : '';
+        const mobileAdminLink = '';
         mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">→ PROFİL (${sanitize(user.email || '')})</a>`;
       }
     } else {
-      navAuth.innerHTML = `<a href="giris.html" class="btn-login">GİRİŞ</a>`;
+      renderUserMenu(navAuth, null);
       if (mobileAuth) mobileAuth.innerHTML = `<a href="giris.html" class="nav-link">→ GİRİŞ YAP</a>`;
     }
   });
