@@ -3,37 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fatura Yönetimi – HEXAGES GAMES</title>
-  <meta name="description" content="Yönetici paneli." />
-  <meta name="robots" content="noindex, nofollow" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="color-scheme" content="dark" />
-  <meta name="application-name" content="HEXAGES GAMES" />
-  <meta name="apple-mobile-web-app-title" content="HEXAGES GAMES" />
-
-  <!-- Favicon / logo (Google için 48px'in katları) -->
-  <link rel="icon" href="/favicon.ico" sizes="48x48" />
-  <link rel="icon" type="image/png" sizes="48x48" href="/img/icons/favicon-48x48.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/favicon-96x96.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/icon-192.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-
+  <title>Fatura Paneli | HEXAGES GAMES</title>
+  <meta name="description" content="HEXAGES GAMES – Fatura Paneli.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta name="application-name" content="HEXAGES GAMES">
+  <meta name="apple-mobile-web-app-title" content="HEXAGES">
+  <!-- İkonlar: Google arama sonuçlarındaki favicon için 48x48 katı + .ico -->
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
-<style>
+  <style>
     .upload-area {
-      border: 2px dashed var(--border);
+      border: 1px dashed var(--border-strong);
       padding: 32px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s;
+      
       position: relative;
     }
     .upload-area:hover, .upload-area.drag-over {
-      border-color: rgba(255,255,255,0.4);
-      background: rgba(255,255,255,0.03);
+      border-color: var(--red);
+      background: var(--surface-1);
     }
     .upload-area input[type="file"] {
       position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
@@ -42,7 +40,7 @@
       margin-top: 12px;
       font-family: var(--font-mono);
       font-size: 11px;
-      color: #34d399;
+      color: #FFFFFF;
       display: none;
     }
     .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -52,7 +50,7 @@
       margin-bottom: 12px;
       transition: border-color 0.3s;
     }
-    .fatura-card:hover { border-color: rgba(255,255,255,0.2); }
+    .fatura-card:hover { border-color: var(--red); }
     .fatura-card-header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 16px 20px; cursor: pointer; width: 100%;
@@ -60,7 +58,7 @@
     }
     .fatura-card-body { display: none; padding: 16px 20px; border-top: 1px solid var(--border); }
     .fatura-card-body.open { display: block; }
-    .badge-aktif { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border: 1px solid rgba(52,211,153,0.4); color: #34d399; }
+    .badge-aktif { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border: 1px solid #222224; color: #FFFFFF; }
     .badge-no { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border: 1px solid var(--border); color: var(--muted-foreground); }
   </style>
 </head>
@@ -74,10 +72,10 @@
         <div class="anim-in anim-in-delay-1" style="margin-bottom:56px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
           <div>
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-              <span class="eyebrow">ADMİN PANELİ</span>
-              <span style="font-family:var(--font-mono);font-size:10px;border:1px solid #3A3A3C;color:var(--platinum);padding:2px 8px">Admın terminal</span>
+              <span class="mono-label">// ADMİN PANELİ</span>
+              <span style="font-family:var(--font-mono);font-size:10px;border:1px solid #222224;color:#FF4655;padding:2px 8px"> ADMIN TERMİNAL</span>
             </div>
-            <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1">FATURA</h1>
+            <h1 style="font-weight:600;font-size:clamp(2.5rem,6vw,5rem);line-height:1">FATURA</h1>
           </div>
           <button onclick="loadFaturalar()" style="margin-left:auto;background:transparent;border:1px solid var(--border);color:var(--muted-foreground);font-family:var(--font-mono);font-size:11px;padding:8px 16px;cursor:pointer;transition:all 0.3s" onmouseover="this.style.borderColor='white';this.style.color='white'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted-foreground)'">
             ↺ YENİLE
@@ -94,10 +92,11 @@
 
           <!-- ===== FATURA OLUŞTURMA FORMU ===== -->
           <div style="border:1px solid var(--border);padding:36px;margin-bottom:56px;position:relative;overflow:hidden" class="anim-in anim-in-delay-2">
+            <div class="shimmer" style="position:absolute;inset:0;pointer-events:none"></div>
             <div style="position:relative;z-index:1">
-              <span class="eyebrow" style="display:block;margin-bottom:28px">YENİ FATURA OLUŞTUR</span>
+              <span class="mono-label" style="display:block;margin-bottom:28px">// YENİ FATURA OLUŞTUR</span>
 
-              <div id="f-success" class="success-msg" style="display:none">✓ Fatura başarıyla oluşturuldu!</div>
+              <div id="f-success" class="success-msg" style="display:none"> Fatura başarıyla oluşturuldu!</div>
               <div id="f-error" class="error-msg" style="display:none"></div>
 
               <div class="form-grid-2">
@@ -131,7 +130,7 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label">AçıkLAMA *</label>
+                <label class="form-label">AÇIKLAMA *</label>
                 <textarea id="f-aciklama" class="textarea-input" placeholder="Satın alınan ürün/hizmet detayları..." style="height:96px"></textarea>
               </div>
 
@@ -141,7 +140,7 @@
                 <div class="upload-area" id="upload-area">
                   <input type="file" id="f-dekont" accept=".jpg,.jpeg,.png,.webp,.pdf" onchange="onFileChange(event)">
                   <div id="upload-placeholder">
-                    <div style="font-size:2rem;margin-bottom:8px">📎</div>
+                    <div style="font-size:2rem;margin-bottom:8px;color:var(--red)">+</div>
                     <p style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground)">Dosyayı buraya sürükle veya tıkla</p>
                   </div>
                 </div>
@@ -152,7 +151,7 @@
               <div id="upload-progress" style="display:none;margin-bottom:16px">
                 <div style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground);margin-bottom:6px">YÜKLENIYOR...</div>
                 <div style="height:2px;background:var(--border);overflow:hidden">
-                  <div id="progress-bar" style="height:100%;background:var(--platinum);width:0%;transition:width 0.3s"></div>
+                  <div id="progress-bar" style="height:100%;background:#FFFFFF;width:0%;transition:width 0.3s"></div>
                 </div>
               </div>
 
@@ -165,10 +164,10 @@
           <!-- ===== FATURA LİSTESİ ===== -->
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
-              <span class="eyebrow">TÜM FATURALAR</span>
+              <span class="mono-label">// TÜM FATURALAR</span>
               <span id="fatura-count" style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground)"></span>
             </div>
-            <div id="f-loading" style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px">Yükleniyor...</div>
+            <div id="f-loading" style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px">YÜKLENİYOR...</div>
             <div id="fatura-list"></div>
             <div id="f-empty" style="display:none;font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground);text-align:center;padding:32px;border:1px solid var(--border)">Henüz fatura yok.</div>
           </div>
@@ -183,13 +182,13 @@
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import {
-      auth, isAdmin, initTheme, initNavbar, initReveal, initAuthNav,
+      auth, isAdmin, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
       onAuthStateChanged, saveFatura, getAllFaturalar, deleteFatura, sanitize
     } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
-    initTheme(); initNavbar(); initReveal(); initAuthNav();
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
 
     document.getElementById('f-tarih').value = new Date().toISOString().split('T')[0];
 
@@ -217,8 +216,8 @@
       const preview = document.getElementById('upload-preview');
       const placeholder = document.getElementById('upload-placeholder');
       preview.style.display = 'block';
-      preview.textContent = `✓ ${file.name} (${(file.size / 1024).toFixed(0)} KB)`;
-      placeholder.innerHTML = `<p style="font-family:var(--font-mono);font-size:11px;color:var(--platinum)">✓ ${sanitize(file.name)}</p>`;
+      preview.textContent = ` ${file.name} (${(file.size / 1024).toFixed(0)} KB)`;
+      placeholder.innerHTML = `<p style="font-family:var(--font-mono);font-size:11px;color:#FFFFFF"> ${sanitize(file.name)}</p>`;
     }
 
     onAuthStateChanged(auth, async user => {
@@ -255,10 +254,10 @@
                   <span class="badge-aktif">● AKTİF</span>
                   <span class="badge-no">${sanitize(f.faturaNo)}</span>
                   <span class="badge-no">${sanitize(f.odemeYontemi)}</span>
-                  ${f.dekontURL ? '<span class="badge-no" style="color:#60a5fa;border-color:rgba(96,165,250,0.3)">📎 DEKONT</span>' : ''}
+                  ${f.dekontURL ? '<span class="badge-no" style="color:#FF4655;border-color:#222224"> DEKONT</span>' : ''}
                 </div>
                 <p style="font-family:var(--font-mono);font-size:13px">${sanitize(f.email)}</p>
-                ${f.tutar ? `<p style="font-family:var(--font-mono);font-size:11px;color:var(--platinum);margin-top:4px">${sanitize(f.tutar)}</p>` : ''}
+                ${f.tutar ? `<p style="font-family:var(--font-mono);font-size:11px;color:#FFFFFF;margin-top:4px">${sanitize(f.tutar)}</p>` : ''}
               </div>
               <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
                 <span style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground)">${tarih}</span>
@@ -272,8 +271,8 @@
                 <a href="dekont.html?no=${encodeURIComponent(f.faturaNo)}" class="btn-submit" style="display:inline-block;padding:8px 18px;font-size:11px;text-decoration:none">
                   DEKONTu GÖRÜNTÜLE
                 </a>
-                <button onclick="window.deleteFaturaCard('${f.id}','${encodeURIComponent(f.dekontURL || '')}','${sanitize(f.faturaNo)}')" class="btn-submit" style="display:inline-block;padding:8px 18px;font-size:11px;background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.4);color:#E58B8B">
-                  🗑 SİL
+                <button onclick="window.deleteFaturaCard('${f.id}','${encodeURIComponent(f.dekontURL || '')}','${sanitize(f.faturaNo)}')" class="btn-submit" style="display:inline-block;padding:8px 18px;font-size:11px;background:#222224;border-color:#222224;color:#FF4655">
+                   SİL
                 </button>
               </div>
             </div>
@@ -364,7 +363,7 @@
       document.getElementById('f-tutar').value = '';
       document.getElementById('f-tarih').value = new Date().toISOString().split('T')[0];
       document.getElementById('f-dekont').value = '';
-      document.getElementById('upload-placeholder').innerHTML = '<div style="font-size:2rem;margin-bottom:8px">📎</div><p style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground)">Dosyayı buraya sürükle veya tıkla</p>';
+      document.getElementById('upload-placeholder').innerHTML = '<div style="font-size:2rem;margin-bottom:8px;color:var(--red)">+</div><p style="font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground)">Dosyayı buraya sürükle veya tıkla</p>';
       document.getElementById('upload-preview').style.display = 'none';
       selectedFile = null;
       okEl.style.display = 'block';

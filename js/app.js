@@ -85,11 +85,15 @@ function validateTicketInput(subject, message, category) {
 }
 
 
-// Dekoratif efektler (yıldız alanı, imleç ışığı, tema değiştirme) tasarım v2 ile kaldırıldı.
-// Sayfalar bu fonksiyonları hâlâ import ettiği için boş fonksiyon olarak bırakıldı.
+// Dekoratif katmanlar (yıldız alanı, imleç ışığı) yeni tasarımda kaldırıldı.
+// Sayfalar bu fonksiyonları çağırdığı için boş bırakıldı.
 function initStarfield() {}
 function initCursorGlow() {}
-function initTheme() { document.documentElement.classList.remove('light'); }
+
+// Tema: site artık tek bir sert siyah temaya sahip (açık tema kaldırıldı).
+function initTheme() {
+  document.documentElement.classList.remove('light');
+}
 function toggleTheme() {}
 
 
@@ -97,20 +101,20 @@ function initNavbar() {
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
 
-  const setMenu = (open) => {
+  function setMenu(open) {
     if (!hamburger || !mobileMenu) return;
     mobileMenu.classList.toggle('open', open);
+    mobileMenu.setAttribute('aria-hidden', String(!open));
     hamburger.setAttribute('aria-expanded', String(open));
     hamburger.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
-    mobileMenu.setAttribute('aria-hidden', String(!open));
     document.body.classList.toggle('menu-open', open);
-  };
+  }
 
   if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => setMenu(hamburger.getAttribute('aria-expanded') !== 'true'));
+    hamburger.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
     mobileMenu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 860) setMenu(false); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 900) setMenu(false); });
   }
 
   const page = window.location.pathname.split('/').pop() || 'index.html';
@@ -136,20 +140,20 @@ function initAuthNav() {
     const mobileAuth = document.getElementById('mobile-auth');
     if (!navAuth) return;
     if (user) {
-      const name = user.displayName ? user.displayName.split(' ')[0] : 'Profil';
+      const name = user.displayName ? user.displayName.split(' ')[0].toUpperCase() : 'PROFİL';
       const adminLink = isAdmin(user.email)
-        ? `<a href="guvenlik.html" class="btn-profile">Güvenlik</a>`
+        ? `<a href="guvenlik.html" class="btn-profile admin">GÜVENLİK</a>`
         : '';
-      navAuth.innerHTML = `<div style="display:flex;align-items:center;gap:10px">${adminLink}<a href="profil.html" class="btn-profile">${sanitize(name)}</a></div>`;
+      navAuth.innerHTML = `<div style="display:flex;align-items:center;gap:8px">${adminLink}<a href="profil.html" class="btn-profile">${sanitize(name)}</a></div>`;
       if (mobileAuth) {
         const mobileAdminLink = isAdmin(user.email)
-          ? `<a href="guvenlik.html" class="nav-link">Güvenlik paneli</a>`
+          ? `<a href="guvenlik.html" class="nav-link">GÜVENLİK PANELİ</a>`
           : '';
-        mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">Profil — ${sanitize(user.email || '')}</a>`;
+        mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">PROFİL (${sanitize(user.email || '')})</a>`;
       }
     } else {
-      navAuth.innerHTML = `<a href="giris.html" class="btn-login">Giriş</a>`;
-      if (mobileAuth) mobileAuth.innerHTML = `<a href="giris.html" class="nav-link">Giriş yap</a>`;
+      navAuth.innerHTML = `<a href="giris.html" class="btn-login">GİRİŞ</a>`;
+      if (mobileAuth) mobileAuth.innerHTML = `<a href="giris.html" class="nav-link">GİRİŞ YAP</a>`;
     }
   });
 }

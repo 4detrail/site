@@ -4,24 +4,19 @@
 User-agent: *
 Allow: /
 
-# Giriş ve hesap sayfaları
-Disallow: /giris.html
-Disallow: /profil.html
-Disallow: /sifremi-unuttum.html
-
-# Destek ticket sistemi (giriş gerektirir)
-Disallow: /ticket.html
-
-# Yönetim / hesaba özel sayfalar
+# Hesaba özel / yönetim sayfaları (bağlantısı sitede verilmeyenler taranmaz)
 Disallow: /fatura.html
 Disallow: /dekont.html
 Disallow: /guvenlik.html
+
+# Giriş, profil, ticket, şifre sıfırlama sayfaları: taramaya AÇIK bırakıldı çünkü
+# sayfalarda "noindex" meta etiketi var; Google'ın bu etiketi görebilmesi için taranabilmeli.
 
 # Veri / güncelleme dosyaları (sayfa değil)
 Disallow: /launcher-data.json
 Disallow: /latest.yml
 
-# Google görsel botu: logo, ikon ve oyun görselleri açık
+# Görsel botu: logo, ikonlar ve oyun görselleri açık
 User-agent: Googlebot-Image
 Allow: /
 

@@ -3,28 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dekont – HEXAGES GAMES</title>
-  <meta name="description" content="Dekont görüntüleme." />
-  <meta name="robots" content="noindex, nofollow" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="color-scheme" content="dark" />
-  <meta name="application-name" content="HEXAGES GAMES" />
-  <meta name="apple-mobile-web-app-title" content="HEXAGES GAMES" />
-
-  <!-- Favicon / logo (Google için 48px'in katları) -->
-  <link rel="icon" href="/favicon.ico" sizes="48x48" />
-  <link rel="icon" type="image/png" sizes="48x48" href="/img/icons/favicon-48x48.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/favicon-96x96.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/icon-192.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-
+  <title>Dekont | HEXAGES GAMES</title>
+  <meta name="description" content="HEXAGES GAMES – Dekont.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta name="application-name" content="HEXAGES GAMES">
+  <meta name="apple-mobile-web-app-title" content="HEXAGES">
+  <!-- İkonlar: Google arama sonuçlarındaki favicon için 48x48 katı + .ico -->
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
-<style>
+  <style>
     .dekont-wrap {
-      border: 1px solid var(--border);
+      border: 1px solid var(--border); background: var(--surface-1);
       padding: 40px;
       position: relative;
       overflow: hidden;
@@ -32,22 +30,22 @@
       margin: 0 auto;
     }
     .dekont-header { text-align:center; margin-bottom:32px; padding-bottom:24px; border-bottom:1px solid var(--border); }
-    .dekont-logo { font-family:var(--font-heading); font-weight:900; font-size:1.4rem; letter-spacing:4px; margin-bottom:6px; }
+    .dekont-logo { font-family:var(--font-heading); font-weight:600; font-size:1.4rem; letter-spacing:4px; margin-bottom:6px; }
     .dekont-subtitle { font-family:var(--font-mono); font-size:10px; color:var(--muted-foreground); letter-spacing:2px; }
     .dekont-row { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-family:var(--font-mono); font-size:12px; }
     .dekont-row:last-child { border-bottom:none; }
     .dekont-key { color:var(--muted-foreground); flex-shrink:0; }
     .dekont-val { text-align:right; word-break:break-all; }
-    .badge-aktif { display:inline-block; font-family:var(--font-mono); font-size:10px; padding:3px 10px; border:1px solid rgba(52,211,153,0.4); color:#34d399; }
+    .badge-aktif { display:inline-block; font-family:var(--font-mono); font-size:10px; padding:3px 10px; border:1px solid #222224; color:#FFFFFF; }
     .dekont-aciklama { font-family:var(--font-mono); font-size:11px; color:var(--muted-foreground); line-height:1.7; margin-top:20px; padding:16px; border:1px solid var(--border); white-space:pre-wrap; }
     .dekont-foto-wrap { margin-top:24px; border:1px solid var(--border); overflow:hidden; }
-    .dekont-foto-wrap img { width:100%; display:block; max-height:600px; object-fit:contain; background:#111; }
+    .dekont-foto-wrap img { width:100%; display:block; max-height:600px; object-fit:contain; background:#000; }
     .dekont-foto-pdf { padding:24px; text-align:center; font-family:var(--font-mono); font-size:12px; color:var(--muted-foreground); }
     .dekont-footer { text-align:center; margin-top:28px; padding-top:20px; border-top:1px solid var(--border); font-family:var(--font-mono); font-size:10px; color:var(--muted-foreground); line-height:1.9; }
-    .dekont-watermark { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-30deg); font-family:var(--font-heading); font-size:5rem; font-weight:900; color:rgba(52,211,153,0.04); pointer-events:none; white-space:nowrap; letter-spacing:8px; }
+    .dekont-watermark { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-30deg);  font-size:5rem; font-weight:600; color:#222224; pointer-events:none; white-space:nowrap; letter-spacing:8px; }
     .not-found-box { text-align:center; padding:64px 24px; border:1px solid var(--border); max-width:500px; margin:0 auto; }
     .not-found-icon { font-size:3rem; margin-bottom:20px; display:block; }
-    .not-found-title { font-family:var(--font-heading); font-size:1.4rem; font-weight:900; margin-bottom:12px; }
+    .not-found-title { font-family:var(--font-heading); font-size:1.4rem; font-weight:600; margin-bottom:12px; }
     .not-found-msg { font-family:var(--font-mono); font-size:11px; color:var(--muted-foreground); line-height:1.8; margin-bottom:28px; }
     @media print {
       nav, footer, #layout-top, #layout-footer, .no-print { display:none !important; }
@@ -69,17 +67,17 @@
       <div class="container" style="max-width:720px">
 
         <div class="anim-in anim-in-delay-1" style="margin-bottom:48px;text-align:center">
-          <span class="eyebrow" id="d-mono-label">FATURA BİLGİLENDİRME MERKEZİ</span>
-          <h1 id="d-page-title" style="font-family:var(--font-heading);font-weight:500;font-size:clamp(2rem,5vw,4rem);line-height:1;margin-top:8px">FATURA</h1>
+          <span class="mono-label" id="d-mono-label">// FATURA BİLGİLENDİRME MERKEZİ</span>
+          <h1 id="d-page-title" style="font-weight:600;font-size:clamp(2rem,5vw,4rem);line-height:1;margin-top:8px">FATURA</h1>
         </div>
 
         <!-- Yükleniyor -->
-        <div id="d-loading" style="text-align:center;padding:48px;font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground)">Yükleniyor...</div>
+        <div id="d-loading" style="text-align:center;padding:48px;font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground)">YÜKLENİYOR...</div>
 
         <!-- Bulunamadı -->
         <div id="d-notfound" style="display:none">
           <div class="not-found-box anim-in anim-in-delay-2">
-            <span class="not-found-icon">⚠</span>
+            <span class="not-found-icon">!</span>
             <p class="not-found-title">DEKONT BULUNAMADI</p>
             <p class="not-found-msg" id="nf-msg">
               Bu faturaya ait dekont bulunamadı. Süresi geçmiş veya silinmiş olabilir.<br>
@@ -93,6 +91,7 @@
         <!-- Dekont İçeriği -->
         <div id="d-content" style="display:none" class="anim-in anim-in-delay-2">
           <div class="dekont-wrap">
+            <div class="shimmer" style="position:absolute;inset:0;pointer-events:none"></div>
             <div class="dekont-watermark">HEXAGES</div>
             <div style="position:relative;z-index:1">
 
@@ -104,7 +103,7 @@
               <div id="d-rows"></div>
 
               <div id="d-aciklama-wrap">
-                <p style="font-family:var(--font-mono);font-size:10px;color:var(--muted-foreground);margin-top:20px;margin-bottom:6px;letter-spacing:1px">AçıkLAMA</p>
+                <p style="font-family:var(--font-mono);font-size:10px;color:var(--muted-foreground);margin-top:20px;margin-bottom:6px;letter-spacing:1px">AÇIKLAMA</p>
                 <div class="dekont-aciklama" id="d-aciklama"></div>
               </div>
 
@@ -122,11 +121,11 @@
           </div>
 
           <div style="text-align:center;margin-top:24px" class="no-print">
-            <button onclick="window.print()" class="btn-submit" style="width:auto;padding:12px 28px;font-size:11px">🖨 YAZDIR / İNDİR</button>
+            <button onclick="window.print()" class="btn-submit" style="width:auto;padding:12px 28px;font-size:11px"> YAZDIR / İNDİR</button>
             <a href="profil.html" style="margin-left:16px;font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground);border-bottom:1px solid var(--border);padding-bottom:2px">← PROFİLE DÖN</a>
           </div>
           <div style="text-align:center;margin-top:16px;font-family:var(--font-mono);font-size:10px;color:var(--muted-foreground)" class="no-print">
-            ⚠ Dekontlar oluşturulma tarihinden itibaren 50 gün boyunca erişilebilir.
+             Dekontlar oluşturulma tarihinden itibaren 50 gün boyunca erişilebilir.
           </div>
         </div>
 
@@ -139,13 +138,13 @@
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import {
-      auth, isAdmin, initTheme, initNavbar, initReveal, initAuthNav,
+      auth, isAdmin, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
       onAuthStateChanged, getFaturaByNo, sanitize
     } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
-    initTheme(); initNavbar(); initReveal(); initAuthNav();
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
 
     const SAKLANMA_GUNU = 50;
     const params = new URLSearchParams(window.location.search);
@@ -224,13 +223,13 @@
         fotoWrap.style.display = 'block';
         if (f.dekontURL.toLowerCase().includes('.pdf') || f.dekontURL.includes('%2F') && f.dekontURL.includes('.pdf')) {
           fotoInner.innerHTML = `<div class="dekont-foto-pdf">
-            <p style="margin-bottom:12px">📄 PDF dekont mevcut</p>
+            <p style="margin-bottom:12px"> PDF dekont mevcut</p>
             <a href="${f.dekontURL}" target="_blank" rel="noopener" class="btn-submit" style="display:inline-block;padding:10px 20px;font-size:11px;text-decoration:none">PDF'İ GÖRÜNTÜLE</a>
           </div>`;
         } else {
           fotoInner.innerHTML = `<img src="${f.dekontURL}" alt="Dekont fotoğrafı" loading="lazy">`;
         }
-        document.getElementById('d-mono-label').textContent = 'ÖDEME DEKONTu';
+        document.getElementById('d-mono-label').textContent = '// ÖDEME DEKONTu';
         document.getElementById('d-page-title').textContent = 'DEKONT';
       }
       // dekontURL yoksa foto alanı gizli kalır — sayfa "Fatura Bilgilendirme Merkezi" olarak kalır

@@ -3,198 +3,263 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chasing the Shlump Dev Log – Geliştirme Günlüğü | HEXAGES GAMES</title>
-  <meta name="description" content="Chasing the Shlump geliştirme günlüğü: HEXAGES GAMES ekibinin oyun yapım sürecinden notlar, kararlar ve yeni görseller." />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="color-scheme" content="dark" />
-  <meta name="application-name" content="HEXAGES GAMES" />
-  <meta name="apple-mobile-web-app-title" content="HEXAGES GAMES" />
-  <link rel="canonical" href="https://hexagesgames.vercel.app/devlog.html" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="HEXAGES GAMES" />
-  <meta property="og:locale" content="tr_TR" />
-  <meta property="og:title" content="Chasing the Shlump Dev Log – Geliştirme Günlüğü | HEXAGES GAMES" />
-  <meta property="og:description" content="Chasing the Shlump geliştirme günlüğü: HEXAGES GAMES ekibinin oyun yapım sürecinden notlar, kararlar ve yeni görseller." />
-  <meta property="og:url" content="https://hexagesgames.vercel.app/devlog.html" />
-  <meta property="og:image" content="https://hexagesgames.vercel.app/img/og-cover.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="HEXAGES GAMES" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@hexages_games" />
-  <meta name="twitter:title" content="Chasing the Shlump Dev Log – Geliştirme Günlüğü | HEXAGES GAMES" />
-  <meta name="twitter:description" content="Chasing the Shlump geliştirme günlüğü: HEXAGES GAMES ekibinin oyun yapım sürecinden notlar, kararlar ve yeni görseller." />
-  <meta name="twitter:image" content="https://hexagesgames.vercel.app/img/og-cover.png" />
-
-  <!-- Favicon / logo (Google için 48px'in katları) -->
-  <link rel="icon" href="/favicon.ico" sizes="48x48" />
-  <link rel="icon" type="image/png" sizes="48x48" href="/img/icons/favicon-48x48.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/favicon-96x96.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/icon-192.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-
+  <title>Chasing the Shlump Devlog – Geliştirme Günlüğü | HEXAGES</title>
+  <meta name="description" content="Chasing the Shlump geliştirme günlüğü: multiplayer lobi, Hunter rolü, ateş animasyonu ve daha fazlası. HEXAGES GAMES devlog girişleri.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://hexagesgames.vercel.app/devlog.html">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta name="application-name" content="HEXAGES GAMES">
+  <meta name="apple-mobile-web-app-title" content="HEXAGES">
+  <!-- İkonlar: Google arama sonuçlarındaki favicon için 48x48 katı + .ico -->
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <!-- Open Graph / Sosyal medya -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HEXAGES GAMES">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:title" content="Chasing the Shlump Devlog – Geliştirme Günlüğü | HEXAGES">
+  <meta property="og:description" content="Chasing the Shlump geliştirme günlüğü: multiplayer lobi, Hunter rolü, ateş animasyonu ve daha fazlası. HEXAGES GAMES devlog girişleri.">
+  <meta property="og:url" content="https://hexagesgames.vercel.app/devlog.html">
+  <meta property="og:image" content="https://hexagesgames.vercel.app/img/og/og-chasing-the-shlump.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Chasing the Shlump Devlog – Geliştirme Günlüğü | HEXAGES">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@hexages_games">
+  <meta name="twitter:title" content="Chasing the Shlump Devlog – Geliştirme Günlüğü | HEXAGES">
+  <meta name="twitter:description" content="Chasing the Shlump geliştirme günlüğü: multiplayer lobi, Hunter rolü, ateş animasyonu ve daha fazlası. HEXAGES GAMES devlog girişleri.">
+  <meta name="twitter:image" content="https://hexagesgames.vercel.app/img/og/og-chasing-the-shlump.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="css/style.css">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
+  "@graph": [
     {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Ana sayfa",
-      "item": "https://hexagesgames.vercel.app/"
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Ana Sayfa",
+          "item": "https://hexagesgames.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Oyunlar",
+          "item": "https://hexagesgames.vercel.app/oyunlar.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Chasing the Shlump Devlog",
+          "item": "https://hexagesgames.vercel.app/devlog.html"
+        }
+      ]
     },
     {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Oyunlar",
-      "item": "https://hexagesgames.vercel.app/oyunlar.html"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Chasing the Shlump Dev Log",
-      "item": "https://hexagesgames.vercel.app/devlog.html"
-    }
-  ]
-}
-  </script>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "VideoGame",
-  "@id": "https://hexagesgames.vercel.app/devlog.html#game",
-  "name": "Chasing the Shlump",
-  "url": "https://hexagesgames.vercel.app/devlog.html",
-  "image": "https://hexagesgames.vercel.app/img/games/chasing-the-shlump-card.png",
-  "publisher": {
-    "@id": "https://hexagesgames.vercel.app/#organization"
-  },
-  "author": {
-    "@id": "https://hexagesgames.vercel.app/#organization"
-  },
-  "inLanguage": "tr"
-}
-  </script>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Blog",
-  "@id": "https://hexagesgames.vercel.app/devlog.html#blog",
-  "name": "Chasing the Shlump Dev Log",
-  "url": "https://hexagesgames.vercel.app/devlog.html",
-  "inLanguage": "tr",
-  "publisher": {
-    "@id": "https://hexagesgames.vercel.app/#organization"
-  },
-  "about": {
-    "@id": "https://hexagesgames.vercel.app/devlog.html#game"
-  },
-  "blogPost": [
-    {
-      "@type": "BlogPosting",
-      "@id": "https://hexagesgames.vercel.app/devlog.html#devlog-001",
-      "headline": "Dev Log #001 — Günlük başlıyor",
-      "datePublished": "2026-10-10",
-      "dateModified": "2026-10-10",
-      "image": "https://hexagesgames.vercel.app/img/devlog/devlog-001.png",
-      "inLanguage": "tr",
-      "author": {
-        "@id": "https://hexagesgames.vercel.app/#organization"
-      },
+      "@type": "VideoGame",
+      "@id": "https://hexagesgames.vercel.app/devlog.html#game",
+      "name": "Chasing the Shlump",
+      "url": "https://hexagesgames.vercel.app/devlog.html",
+      "image": "https://hexagesgames.vercel.app/img/games/chasing-the-shlump/cover.png",
+      "description": "HEXAGES GAMES tarafından geliştirilen, av ve kaçış üzerine kurulu çok oyunculu oyun. Geliştirme günlüğü (devlog) sayfada paylaşılıyor.",
+      "inLanguage": "tr-TR",
       "publisher": {
         "@id": "https://hexagesgames.vercel.app/#organization"
       },
-      "mainEntityOfPage": "https://hexagesgames.vercel.app/devlog.html#devlog-001"
+      "author": {
+        "@id": "https://hexagesgames.vercel.app/#organization"
+      }
+    },
+    {
+      "@type": "Blog",
+      "@id": "https://hexagesgames.vercel.app/devlog.html#blog",
+      "name": "Chasing the Shlump Devlog",
+      "url": "https://hexagesgames.vercel.app/devlog.html",
+      "inLanguage": "tr-TR",
+      "publisher": {
+        "@id": "https://hexagesgames.vercel.app/#organization"
+      },
+      "about": {
+        "@id": "https://hexagesgames.vercel.app/devlog.html#game"
+      },
+      "blogPost": [
+        {
+          "@type": "BlogPosting",
+          "@id": "https://hexagesgames.vercel.app/devlog.html#devlog-003",
+          "headline": "Ateş animasyonu sisteme bağlandı",
+          "datePublished": "2026-10-10",
+          "dateModified": "2026-10-10",
+          "url": "https://hexagesgames.vercel.app/devlog.html#devlog-003",
+          "image": "https://hexagesgames.vercel.app/img/games/chasing-the-shlump/devlog-003.png",
+          "author": {
+            "@id": "https://hexagesgames.vercel.app/#organization"
+          },
+          "publisher": {
+            "@id": "https://hexagesgames.vercel.app/#organization"
+          },
+          "mainEntityOfPage": "https://hexagesgames.vercel.app/devlog.html#devlog-003"
+        },
+        {
+          "@type": "BlogPosting",
+          "@id": "https://hexagesgames.vercel.app/devlog.html#devlog-002",
+          "headline": "Hunter ve Player rolleri",
+          "datePublished": "2026-10-04",
+          "dateModified": "2026-10-04",
+          "url": "https://hexagesgames.vercel.app/devlog.html#devlog-002",
+          "image": "https://hexagesgames.vercel.app/img/games/chasing-the-shlump/devlog-002.png",
+          "author": {
+            "@id": "https://hexagesgames.vercel.app/#organization"
+          },
+          "publisher": {
+            "@id": "https://hexagesgames.vercel.app/#organization"
+          },
+          "mainEntityOfPage": "https://hexagesgames.vercel.app/devlog.html#devlog-002"
+        },
+        {
+          "@type": "BlogPosting",
+          "@id": "https://hexagesgames.vercel.app/devlog.html#devlog-001",
+          "headline": "Oda kurma ve katılma sistemi",
+          "datePublished": "2026-10-03",
+          "dateModified": "2026-10-03",
+          "url": "https://hexagesgames.vercel.app/devlog.html#devlog-001",
+          "image": "https://hexagesgames.vercel.app/img/games/chasing-the-shlump/devlog-001.png",
+          "author": {
+            "@id": "https://hexagesgames.vercel.app/#organization"
+          },
+          "publisher": {
+            "@id": "https://hexagesgames.vercel.app/#organization"
+          },
+          "mainEntityOfPage": "https://hexagesgames.vercel.app/devlog.html#devlog-001"
+        }
+      ]
     }
   ]
 }
-  </script>
+</script>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div id="layout-top"></div>
-  <noscript><p style="padding:96px 24px 24px;font-size:14px"><a href="index.html">Ana sayfa</a> · <a href="oyunlar.html">Oyunlar</a> · <a href="devlog.html">Dev Log</a> · <a href="pluginlerimiz.html">Pluginler</a> · <a href="launcher.html">Launcher</a> · <a href="iletisim.html">İletişim</a></p></noscript>
-  <main>
 
-    <section class="page-top" style="padding-left:24px;padding-right:24px">
+  <main>
+    <section style="min-height:100vh;padding:112px 24px 96px">
       <div class="container">
-        <div class="breadcrumb anim-in anim-in-delay-1" aria-label="Sayfa yolu">
-          <a href="index.html">Ana sayfa</a><span>/</span><a href="oyunlar.html">Oyunlar</a><span>/</span><span>Dev Log</span>
+
+        <div class="anim-in anim-in-delay-1" style="margin-bottom:24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <a href="oyunlar.html" class="sec-link">← OYUNLAR</a>
+          <span class="mono-label">// DEVLOG</span>
         </div>
-        <div class="devlog-hero">
-          <div class="anim-in anim-in-delay-2">
-            <span class="eyebrow">Geliştirme günlüğü</span>
-            <h1 class="page-title">Chasing the Shlump</h1>
-            <p class="page-sub">Oyunun yapım sürecinden notlar, tasarım kararları ve yeni görseller. En yeni yazı en üstte.</p>
-            <div class="devlog-meta">
-              <span class="pill"><i></i>Geliştiriliyor</span>
-              <span class="pill quiet">Son güncelleme · <time datetime="2026-10-10">10 Ekim 2026</time></span>
-              <span class="pill quiet">1 yazı</span>
+
+        <header class="dv-hero anim-in anim-in-delay-2">
+          <div class="dv-cover">
+            <img src="img/games/chasing-the-shlump/banner.png" alt="Chasing the Shlump banner" width="1920" height="1080">
+          </div>
+          <div class="dv-info">
+            <div class="dv-info-head">
+              <span class="tag red"><span class="pip"></span>GELİŞTİRİLİYOR</span>
+              <h1>Chasing<br>the Shlump</h1>
+              <p>Av ve kaçış üzerine kurulu çok oyunculu oyun. Burada geliştirme sürecini adım adım paylaşıyoruz.</p>
+            </div>
+            <div class="dv-table">
+              <div class="dv-row"><span class="k">Stüdyo</span><span class="v">HEXAGES GAMES</span></div>
+              <div class="dv-row"><span class="k">Motor</span><span class="v">Unreal Engine</span></div>
+              <div class="dv-row"><span class="k">Mod</span><span class="v">Çok oyunculu</span></div>
+              <div class="dv-row"><span class="k">Durum</span><span class="v red">Geliştiriliyor</span></div>
+            </div>
+            <div class="dv-links">
+              <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener">DİSCORD</a>
+              <a href="https://x.com/hexages_games" target="_blank" rel="noopener">X</a>
+              <a href="https://www.instagram.com/hexagesgames" target="_blank" rel="noopener">İNSTAGRAM</a>
             </div>
           </div>
-          <div class="devlog-cover anim-in anim-in-delay-3">
-            <img src="img/devlog/cover.png" alt="Chasing the Shlump kapak görseli" width="1920" height="1080">
-          </div>
-        </div>
-      </div>
-    </section>
+        </header>
 
-    <section class="section rule-t" style="padding-top:80px">
-      <div class="container">
-        <div class="devlog-layout">
-          <aside class="devlog-index" aria-label="Yazılar">
-            <a href="#devlog-001"><span>Günlük başlıyor</span><span>#001</span></a>
+        <div class="dv-layout">
+          <aside class="dv-index" aria-label="Devlog girişleri">
+            <div class="dv-index-title">GİRİŞLER</div>
+            <a href="#devlog-003"><span>#003</span>Ateş Animasyonu</a><a href="#devlog-002"><span>#002</span>Hunter Rolü</a><a href="#devlog-001"><span>#001</span>Multiplayer Lobi</a>
           </aside>
 
-          <div id="devlog-entries">
-            <!--
-              ============ YENİ DEV LOG YAZISI EKLEMEK İÇİN ============
-              1) Aşağıdaki <article> bloğunu kopyala ve EN ÜSTE (#001'in üstüne) yapıştır.
-              2) id, tarih, başlık, metin ve görsel yolunu değiştir (görseller: img/devlog/ klasörü).
-              3) Soldaki .devlog-index içine aynı id'ye giden bir <a> satırı ekle.
-
-              <article class="devlog-entry" id="devlog-002">
-                <div class="devlog-entry-head"><span class="tag">#002</span><time datetime="2026-10-17">17 Ekim 2026</time></div>
-                <h2>Başlık</h2>
-                <figure class="devlog-figure">
-                  <img src="img/devlog/devlog-002.png" alt="Görsel açıklaması" width="1600" height="900" loading="lazy">
-                  <figcaption>Görsel alt yazısı</figcaption>
-                </figure>
-                <div class="prose"><p>Metin...</p></div>
-              </article>
-            -->
-
-            <article class="devlog-entry" id="devlog-001">
-              <div class="devlog-entry-head"><span class="tag">#001</span><time datetime="2026-10-10">10 Ekim 2026</time></div>
-              <h2>Günlük başlıyor</h2>
-              <figure class="devlog-figure">
-                <img src="img/devlog/devlog-001.png" alt="Chasing the Shlump geliştirme görseli" width="1600" height="900" loading="lazy">
-                <figcaption>Görsel yer tutucu — img/devlog/devlog-001.png dosyasını değiştirin.</figcaption>
+          <!--
+            ============ YENİ DEVLOG GİRİŞİ EKLEMEK İÇİN ============
+            Aşağıdaki en üstteki <article> bloğunu kopyala, listenin EN ÜSTÜNE yapıştır,
+            id="devlog-004" yap, tarihi/başlığı/maddeleri değiştir, görseli
+            img/games/chasing-the-shlump/devlog-004.png olarak ekle.
+            Soldaki "GİRİŞLER" listesine de bir satır ekle. sitemap.xml'deki lastmod'u güncelle.
+            =========================================================
+          -->
+          <div class="dv-list">
+          <article class="dv-entry" id="devlog-003" itemscope itemtype="https://schema.org/BlogPosting">
+            <meta itemprop="datePublished" content="2026-10-10">
+            <div class="dv-entry-head">
+              <span class="dv-num">DEVLOG #003</span>
+              <time class="dv-date" datetime="2026-10-10">2026-10-10</time>
+            </div>
+            <div class="dv-body">
+              <div class="tags"><span class="tag">ANİMASYON</span><span class="tag">KARAKTER</span></div>
+              <h2 itemprop="headline">Ateş animasyonu sisteme bağlandı</h2>
+              <ul><li>Silah ateşleme animasyonu karakter animasyon blueprint'ine bağlandı.</li><li>Ateş ederken animasyon oynuyor, tuş bırakılınca karakter yumuşak şekilde idle pozuna dönüyor.</li><li>Geçişler sıfırdan elden geçirildi; takılma ve pozun "atlama" sorunu giderildi.</li></ul>
+              <h3>Teknik notlar</h3>
+              <ul><li>Animasyon blueprint'i ateş katmanıyla genişletildi.</li><li>Geri dönüş (blend-out) süresi ince ayarlandı.</li><li>Sıradaki adım: ateş sesi ve geri tepme.</li></ul>
+              <figure class="dv-shot">
+                <img src="img/games/chasing-the-shlump/devlog-003.png" alt="Ateş animasyonu — oyun içi görüntü" width="1280" height="720" loading="lazy">
+                <figcaption>Ateş animasyonu — oyun içi görüntü</figcaption>
               </figure>
-              <div class="prose">
-                <p>Chasing the Shlump için geliştirme günlüğümüz açıldı. Bu sayfada oyunun yapım sürecini, aldığımız kararları ve ortaya çıkan yeni görselleri paylaşacağız.</p>
-                <h3>Burada neler olacak</h3>
-                <ul>
-                  <li>Tasarım ve mekanik notları</li>
-                  <li>Ekran görüntüleri ve konsept çalışmaları</li>
-                  <li>Güncelleme duyuruları</li>
-                </ul>
-                <p>Yeni yazılardan haberdar olmak için <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener">Discord sunucumuza</a> katılabilirsiniz.</p>
-              </div>
-            </article>
-
-            <div class="empty-slot">Sonraki yazılar burada yayınlanacak.</div>
+            </div>
+          </article>
+          <article class="dv-entry" id="devlog-002" itemscope itemtype="https://schema.org/BlogPosting">
+            <meta itemprop="datePublished" content="2026-10-04">
+            <div class="dv-entry-head">
+              <span class="dv-num">DEVLOG #002</span>
+              <time class="dv-date" datetime="2026-10-04">2026-10-04</time>
+            </div>
+            <div class="dv-body">
+              <div class="tags"><span class="tag">OYUN SİSTEMİ</span><span class="tag">ROLLER</span></div>
+              <h2 itemprop="headline">Hunter ve Player rolleri</h2>
+              <ul><li>Oyuna iki rol eklendi: Hunter ve Player.</li><li>Rol atama, oyun modu tarafında sunucu otoritesiyle yapılıyor.</li><li>Her rol için ayrı kontrol ve yetenek seti planlandı.</li></ul>
+              <h3>Teknik notlar</h3>
+              <ul><li>Rol bilgisi oyuncu kontrolcüsünde tutuluyor.</li><li>Hunter'a özel mekanikler için temel hazırlandı.</li></ul>
+              <figure class="dv-shot">
+                <img src="img/games/chasing-the-shlump/devlog-002.png" alt="Hunter rolü — ilk prototip" width="1280" height="720" loading="lazy">
+                <figcaption>Hunter rolü — ilk prototip</figcaption>
+              </figure>
+            </div>
+          </article>
+          <article class="dv-entry" id="devlog-001" itemscope itemtype="https://schema.org/BlogPosting">
+            <meta itemprop="datePublished" content="2026-10-03">
+            <div class="dv-entry-head">
+              <span class="dv-num">DEVLOG #001</span>
+              <time class="dv-date" datetime="2026-10-03">2026-10-03</time>
+            </div>
+            <div class="dv-body">
+              <div class="tags"><span class="tag">ALTYAPI</span><span class="tag">ÇOK OYUNCULU</span></div>
+              <h2 itemprop="headline">Oda kurma ve katılma sistemi</h2>
+              <ul><li>Arayüzden oda kurma (host) sistemi çalışıyor.</li><li>Herkese açık ve özel (private) oda ayrımı eklendi.</li><li>Özel odalara kodla giriş sistemi planlandı.</li></ul>
+              <h3>Teknik notlar</h3>
+              <ul><li>Online altyapı Epic Online Services üzerine kuruldu.</li><li>Oturum yönetimi için Advanced Sessions kullanılıyor.</li></ul>
+              <figure class="dv-shot">
+                <img src="img/games/chasing-the-shlump/devlog-001.png" alt="Oda kurma arayüzü" width="1280" height="720" loading="lazy">
+                <figcaption>Oda kurma arayüzü</figcaption>
+              </figure>
+            </div>
+          </article>
           </div>
         </div>
+
       </div>
     </section>
   </main>
+
   <div id="layout-footer"></div>
+
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import { initTheme, initNavbar, initReveal, initAuthNav } from './js/app.js';
