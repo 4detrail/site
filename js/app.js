@@ -85,38 +85,97 @@ function validateTicketInput(subject, message, category) {
 }
 
 
-// Dekoratif katmanlar (yıldız alanı, imleç ışığı) yeni tasarımda kaldırıldı.
-// Sayfalar bu fonksiyonları çağırdığı için boş bırakıldı.
-function initStarfield() {}
-function initCursorGlow() {}
-
-// Tema: site artık tek bir sert siyah temaya sahip (açık tema kaldırıldı).
-function initTheme() {
-  document.documentElement.classList.remove('light');
+function initStarfield() {
+  const canvas = document.getElementById('starfield');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  const initStars = () => {
+    stars = Array.from({ length: 200 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.2,
+      speed: 0.05 + Math.random() * 0.1,
+      opacity: 0.1 + Math.random() * 0.7,
+      pulse: Math.random() * Math.PI * 2
+    }));
+  };
+  const resize = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initStars();
+  };
+  const draw = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach((s) => {
+      s.pulse += 0.01;
+      const o = s.opacity * (0.5 + 0.5 * Math.sin(s.pulse));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${o})`;
+      ctx.fill();
+      s.y += s.speed;
+      if (s.y > canvas.height) { s.y = 0; s.x = Math.random() * canvas.width; }
+    });
+    requestAnimationFrame(draw);
+  };
+  resize(); draw();
+  window.addEventListener('resize', resize);
 }
-function toggleTheme() {}
+
+
+function initCursorGlow() {
+  const glow = document.getElementById('cursor-glow');
+  if (!glow) return;
+  document.addEventListener('mousemove', (e) => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+}
+
+
+function initTheme() {
+  const saved = localStorage.getItem('hx-theme') || 'dark';
+  applyTheme(saved);
+  if (localStorage.getItem('hx-reduce-motion') === '1') document.documentElement.classList.add('reduce-motion');
+}
+function applyTheme(theme) {
+  if (theme === 'light') document.documentElement.classList.add('light');
+  else document.documentElement.classList.remove('light');
+  localStorage.setItem('hx-theme', theme);
+  const icon = document.getElementById('theme-icon');
+  if (icon) icon.textContent = theme === 'dark' ? '☀' : '☽';
+}
+function toggleTheme() {
+  const current = localStorage.getItem('hx-theme') || 'dark';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+}
 
 
 function initNavbar() {
+  const nav = document.querySelector('nav');
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
-
-  function setMenu(open) {
-    if (!hamburger || !mobileMenu) return;
-    mobileMenu.classList.toggle('open', open);
-    mobileMenu.setAttribute('aria-hidden', String(!open));
-    hamburger.setAttribute('aria-expanded', String(open));
-    hamburger.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
-    document.body.classList.toggle('menu-open', open);
+  const themeBtn = document.getElementById('theme-btn');
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
   }
-
   if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
-    mobileMenu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 900) setMenu(false); });
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      hamburger.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+    });
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.textContent = '☰';
+      });
+    });
   }
-
+  if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
   const page = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link').forEach((link) => {
     const href = link.getAttribute('href');
@@ -141,19 +200,15 @@ function initAuthNav() {
     if (!navAuth) return;
     if (user) {
       const name = user.displayName ? user.displayName.split(' ')[0].toUpperCase() : 'PROFİL';
-      const adminLink = isAdmin(user.email)
-        ? `<a href="guvenlik.html" class="btn-profile admin">GÜVENLİK</a>`
-        : '';
-      navAuth.innerHTML = `<div style="display:flex;align-items:center;gap:8px">${adminLink}<a href="profil.html" class="btn-profile">${sanitize(name)}</a></div>`;
+      const adminLink = '';
+      navAuth.innerHTML = `<div style="display:flex;align-items:center;gap:10px">${adminLink}<a href="profil.html" class="btn-profile">👤 ${sanitize(name)}</a></div>`;
       if (mobileAuth) {
-        const mobileAdminLink = isAdmin(user.email)
-          ? `<a href="guvenlik.html" class="nav-link">GÜVENLİK PANELİ</a>`
-          : '';
-        mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">PROFİL (${sanitize(user.email || '')})</a>`;
+        const mobileAdminLink = '';
+        mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">→ PROFİL (${sanitize(user.email || '')})</a>`;
       }
     } else {
       navAuth.innerHTML = `<a href="giris.html" class="btn-login">GİRİŞ</a>`;
-      if (mobileAuth) mobileAuth.innerHTML = `<a href="giris.html" class="nav-link">GİRİŞ YAP</a>`;
+      if (mobileAuth) mobileAuth.innerHTML = `<a href="giris.html" class="nav-link">→ GİRİŞ YAP</a>`;
     }
   });
 }
@@ -373,6 +428,83 @@ function subscribeLauncherDownloadCount(statId, callback) {
   }
 }
 
+// ===== OYUN HABERLERİ (game_news) =====
+// Herkes okuyabilir; yazma/silme sadece admin. Sorgu tek alan filtresi kullanır (composite index gerektirmez).
+const NEWS_CATEGORIES = ['Duyuru', 'Güncelleme', 'Haber', 'Yama Notu'];
+
+async function getGameNews(gameId) {
+  const q = query(collection(db, 'game_news'), where('gameId', '==', gameId));
+  const snap = await getDocs(q);
+  return snap.docs
+    .map(d => {
+      const x = d.data();
+      return {
+        id: d.id,
+        ...x,
+        createdAt: x.createdAt?.toDate?.().toISOString() || null
+      };
+    })
+    .sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+}
+
+async function uploadNewsImage(gameId, file) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  if (!['png', 'jpg', 'jpeg', 'webp'].includes(ext)) throw new Error('Sadece PNG, JPG veya WEBP yüklenebilir.');
+  if (file.size > 5 * 1024 * 1024) throw new Error('Görsel 5 MB\'den küçük olmalı.');
+  const path = `game-news/${gameId}/${Date.now()}.${ext}`;
+  const ref = storageRef(storage, path);
+  await uploadBytes(ref, file);
+  return await getDownloadURL(ref);
+}
+
+function validateNews(item) {
+  if (!item.title || item.title.trim().length < 3 || item.title.trim().length > 150) return 'Başlık 3-150 karakter olmalıdır.';
+  if (!item.body || item.body.trim().length < 10 || item.body.trim().length > 5000) return 'İçerik 10-5000 karakter olmalıdır.';
+  if (!NEWS_CATEGORIES.includes(item.category)) return 'Geçersiz kategori.';
+  if (!item.gameId || !/^[a-z0-9-]{2,60}$/.test(item.gameId)) return 'Geçersiz oyun kimliği.';
+  return null;
+}
+
+async function createGameNews(item) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const err = validateNews(item);
+  if (err) throw new Error(err);
+  const ref = await addDoc(collection(db, 'game_news'), {
+    gameId: item.gameId,
+    title: item.title.trim().slice(0, 150),
+    category: item.category,
+    body: item.body.trim().slice(0, 5000),
+    imageURL: item.imageURL || null,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+    createdBy: user.email
+  });
+  return ref.id;
+}
+
+async function updateGameNews(newsId, item) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  const err = validateNews(item);
+  if (err) throw new Error(err);
+  await updateDoc(doc(db, 'game_news', newsId), {
+    title: item.title.trim().slice(0, 150),
+    category: item.category,
+    body: item.body.trim().slice(0, 5000),
+    imageURL: item.imageURL || null,
+    updatedAt: serverTimestamp()
+  });
+}
+
+async function deleteGameNews(newsId) {
+  const user = auth.currentUser;
+  if (!user || !isAdmin(user.email)) throw new Error('Yetki yok');
+  await deleteDoc(doc(db, 'game_news', newsId));
+}
+
 export {
   auth, db, storage, isAdmin, sanitize, checkRateLimit,
   onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
@@ -381,5 +513,6 @@ export {
   saveFatura, getFaturaByNo, getAllFaturalar, uploadDekontFoto, deleteFatura,
   getThreatLogs, updateThreatLogStatus, getGuildConfigs,
   trackLauncherDownload, subscribeLauncherDownloadCount,
-  initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme
+  getGameNews, uploadNewsImage, createGameNews, updateGameNews, deleteGameNews, NEWS_CATEGORIES,
+  initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme, applyTheme
 };

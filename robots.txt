@@ -4,20 +4,30 @@
 User-agent: *
 Allow: /
 
-# Hesaba özel / yönetim sayfaları (bağlantısı sitede verilmeyenler taranmaz)
-Disallow: /fatura.html
-Disallow: /dekont.html
+# Hesap ve kişisel sayfalar
+Disallow: /giris.html
+Disallow: /profil.html
+Disallow: /ayarlar.html
+Disallow: /sifremi-unuttum.html
+
+# Destek ve yönetim sayfaları
+Disallow: /ticket.html
+Disallow: /admin-haberler.html
 Disallow: /guvenlik.html
 
-# Giriş, profil, ticket, şifre sıfırlama sayfaları: taramaya AÇIK bırakıldı çünkü
-# sayfalarda "noindex" meta etiketi var; Google'ın bu etiketi görebilmesi için taranabilmeli.
+# Faturalandırma (arayüzde yok, arka planda çalışır)
+Disallow: /fatura.html
+Disallow: /dekont.html
 
-# Veri / güncelleme dosyaları (sayfa değil)
+# Veri / güncelleme dosyaları
 Disallow: /launcher-data.json
 Disallow: /latest.yml
 
-# Görsel botu: logo, ikonlar ve oyun görselleri açık
+# Görsel botu için logo ve oyun görselleri açık
 User-agent: Googlebot-Image
+Allow: /assets/
+Allow: /logo.png
+Allow: /logom1.png
 Allow: /
 
 Sitemap: https://hexagesgames.vercel.app/sitemap.xml

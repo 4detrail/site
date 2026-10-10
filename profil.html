@@ -3,108 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profil | HEXAGES GAMES</title>
-  <meta name="description" content="HEXAGES GAMES – Profil.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#000000">
-  <meta name="color-scheme" content="dark">
-  <meta name="application-name" content="HEXAGES GAMES">
-  <meta name="apple-mobile-web-app-title" content="HEXAGES">
-  <!-- İkonlar: Google arama sonuçlarındaki favicon için 48x48 katı + .ico -->
-  <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>Profil | HEXAGES GAMES</title>
+  <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div id="layout-top"></div>
 
   <main>
-    <section style="min-height:100vh;padding-top:128px;padding-bottom:96px;padding-left:24px;padding-right:24px">
-      <div class="container" style="max-width:1024px">
+    <section style="padding:160px 24px 96px">
+      <div class="v2-container" style="max-width:1100px">
 
-        <div class="anim-in anim-in-delay-1" style="margin-bottom:48px">
+        <div id="not-logged" class="v2-panel" style="display:none;text-align:center;padding:72px 32px">
           <span class="mono-label">// OYUNCU DOSYASI</span>
-          <h1 style="font-weight:600;font-size:clamp(2.5rem,6vw,5rem);line-height:1;margin-top:8px">PROFİL</h1>
-        </div>
-
-        <div id="not-logged" style="display:none;text-align:center;padding:64px 24px;border:1px solid var(--border)">
-          <p style="font-family:var(--font-mono);font-size:13px;color:var(--muted-foreground);margin-bottom:24px">Bu sayfayı görüntülemek için giriş yapmalısınız.</p>
-          <a href="giris.html" class="btn-download" style="font-size:11px">GİRİŞ YAP</a>
+          <h1 class="v2-h2" style="margin:16px 0 20px">GİRİŞ GEREKLİ</h1>
+          <p class="v2-lead" style="margin:0 auto 28px">Profilinizi görüntülemek için hesabınızla giriş yapın.</p>
+          <a href="giris.html" class="btn-download">GİRİŞ YAP</a>
         </div>
 
         <div id="profile-content" style="display:none">
-          <div class="profile-grid-react">
-            <!-- Avatar sidebar -->
-            <div class="profile-card" style="text-align:center">
-              <div id="profile-avatar-wrap">
-                <div class="profile-avatar float-anim" id="profile-avatar">?</div>
+          <span class="mono-label">// OYUNCU DOSYASI</span>
+          <h1 class="v2-h2" style="font-size:clamp(44px,6vw,80px);margin-top:12px">PROFİL</h1>
+          <div class="v2-divider-red"></div>
+
+          <!-- Üst kart -->
+          <div class="v2-panel" style="margin-top:40px">
+            <div class="v2-profile-head">
+              <div class="v2-avatar" id="avatar">?</div>
+              <div style="flex:1;min-width:220px">
+                <div style="font-family:var(--font-heading);font-weight:900;font-size:40px;line-height:1" id="p-name">—</div>
+                <div style="color:var(--muted-foreground);font-size:14px;margin-top:6px" id="p-email">—</div>
+                <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap" id="badges"></div>
               </div>
-              <div id="access-badge" class="access-badge">USER ACCESS</div>
-              <button onclick="handleLogout()" class="btn-logout">ÇIKIŞ YAP</button>
-            </div>
-
-            <!-- Info -->
-            <div class="profile-card profile-info-card">
-              <span class="mono-label" style="display:block;margin-bottom:24px">// KİMLİK BİLGİLERİ</span>
-
-              <div class="profile-field">
-                <label class="form-label">KULLANICI ADI</label>
-                <div id="name-view" style="display:flex;align-items:center;gap:12px">
-                  <span class="profile-name" id="profile-name">—</span>
-                  <button onclick="startEdit()" class="btn-icon" type="button" style="font-family:var(--font-heading);font-weight:600;font-size:10px;letter-spacing:.12em">DÜZENLE</button>
-                </div>
-                <div id="name-edit" style="display:none;gap:8px;align-items:center">
-                  <input type="text" id="edit-name" class="form-input" style="flex:1">
-                  <button onclick="updateName()" class="btn-icon btn-icon-ok" type="button" style="font-family:var(--font-heading);font-weight:600;font-size:10px;letter-spacing:.12em">KAYDET</button>
-                  <button onclick="cancelEdit()" class="btn-icon btn-icon-cancel" type="button" style="font-family:var(--font-heading);font-weight:600;font-size:10px;letter-spacing:.12em">İPTAL</button>
-                </div>
-                <div id="edit-error" class="error-msg" style="display:none;margin-top:8px"></div>
-                <div id="edit-success" class="success-msg" style="display:none;margin-top:8px">Ad başarıyla güncellendi!</div>
-              </div>
-
-              <div class="profile-field">
-                <label class="form-label">E-POSTA</label>
-                <div class="profile-email" id="profile-email">—</div>
-              </div>
-
-              <div class="profile-field">
-                <label class="form-label">KAYIT TARİHİ</label>
-                <div class="profile-email" id="profile-joined">—</div>
-              </div>
-
-              <div class="profile-field" style="border-bottom:none;padding-bottom:0">
-                <label class="form-label">OYUNCU ID</label>
-                <div class="profile-email" id="profile-uid" style="word-break:break-all">—</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <a href="ayarlar.html" class="v2-btn ghost">AYARLAR</a>
+                <button id="p-logout" class="v2-btn danger" type="button">ÇIKIŞ</button>
               </div>
             </div>
 
-            <!-- Quick links -->
-            <div class="profile-card profile-quick-card">
-              <span class="mono-label" style="display:block;margin-bottom:20px">// HIZLI ERİŞİM</span>
-              <div class="quick-links-grid">
-                <a href="ticket.html" class="quick-link-card">
-                  <span class="quick-link-title">TİCKETLARIM</span>
-                  <span class="quick-link-desc">Destek taleplerim</span>
-                </a>
-                <a href="launcher.html" class="quick-link-card">
-                  <span class="quick-link-title">LAUNCHER</span>
-                  <span class="quick-link-desc">İndir &amp; güncelle</span>
-                </a>
-                <a href="oyunlar.html" class="quick-link-card">
-                  <span class="quick-link-title">OYUNLAR</span>
-                  <span class="quick-link-desc">Gelecek projeler</span>
-                </a>
-                <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="quick-link-card">
-                  <span class="quick-link-title">DİSCORD</span>
-                  <span class="quick-link-desc">Topluluğa katıl</span>
-                </a>
-              </div>
+            <div class="v2-stat-row">
+              <div class="v2-stat"><div class="n" id="st-tickets">—</div><div class="l">DESTEK TALEBİ</div></div>
+              <div class="v2-stat"><div class="n" id="st-open">—</div><div class="l">AÇIK TALEP</div></div>
+              <div class="v2-stat"><div class="n" id="st-login">—</div><div class="l">SON GİRİŞ</div></div>
+            </div>
+          </div>
+
+          <!-- Hesap bilgileri -->
+          <div class="v2-panel">
+            <h2>HESAP BİLGİLERİ</h2>
+            <p class="desc">Bu bilgiler hesabınıza aittir. Ad ve şifre değişiklikleri için Ayarlar sayfasını kullanın.</p>
+            <div class="v2-row"><div><div class="label">Görünen ad</div></div><div style="color:var(--muted-foreground)" id="i-name">—</div></div>
+            <div class="v2-row"><div><div class="label">E-posta</div></div><div style="color:var(--muted-foreground)" id="i-email">—</div></div>
+            <div class="v2-row"><div><div class="label">Kayıt tarihi</div></div><div style="color:var(--muted-foreground)" id="i-joined">—</div></div>
+            <div class="v2-row"><div><div class="label">Giriş yöntemi</div></div><div style="color:var(--muted-foreground)" id="i-provider">—</div></div>
+            <div class="v2-row"><div><div class="label">Oyuncu kimliği</div></div><div style="color:var(--muted-foreground);font-family:var(--font-mono);font-size:12px;word-break:break-all" id="i-uid">—</div></div>
+          </div>
+
+          <!-- Son destek talepleri -->
+          <div class="v2-panel">
+            <h2>SON DESTEK TALEPLERİ</h2>
+            <p class="desc">Açtığınız en güncel talepler burada görünür.</p>
+            <div id="recent-tickets"><p class="desc">Yükleniyor…</p></div>
+            <div style="margin-top:20px"><a href="ticket.html" class="v2-btn ghost">TÜM TALEPLER</a></div>
+          </div>
+
+          <!-- Hızlı erişim -->
+          <div class="v2-panel">
+            <h2>HIZLI ERİŞİM</h2>
+            <p class="desc">Sık kullanılan sayfalara buradan ulaşın.</p>
+            <div class="v2-link-grid">
+              <a href="ticket.html" class="v2-link-card"><div class="t">DESTEK</div><div class="d">Talep aç ve yanıtları takip et.</div></a>
+              <a href="launcher.html" class="v2-link-card"><div class="t">LAUNCHER</div><div class="d">İndir ve güncellemeleri kontrol et.</div></a>
+              <a href="oyunlar.html" class="v2-link-card"><div class="t">OYUNLAR</div><div class="d">Geliştirmedeki projelerimiz.</div></a>
+              <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="v2-link-card"><div class="t">DISCORD</div><div class="d">Topluluğa katıl.</div></a>
+            </div>
+          </div>
+
+          <!-- Yönetici -->
+          <div class="v2-panel" id="admin-box" style="display:none">
+            <h2>YÖNETİM</h2>
+            <p class="desc">Yetkili hesap olarak görüyorsunuz.</p>
+            <div class="v2-link-grid">
+              <a href="admin-haberler.html" class="v2-link-card"><div class="t">OYUN HABERLERİ</div><div class="d">Oyun sayfalarına haber yönetimi.</div></a>
+              <a href="guvenlik.html" class="v2-link-card"><div class="t">GÜVENLİK PANELİ</div><div class="d">Güvenlik kayıtları.</div></a>
             </div>
           </div>
         </div>
@@ -118,91 +100,90 @@
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import {
-      auth, isAdmin, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
-      onAuthStateChanged, signOut, updateProfile
+      auth, isAdmin, onAuthStateChanged, signOut, getTickets,
+      initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav
     } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
-
     initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
 
-    onAuthStateChanged(auth, user => {
+    const $ = id => document.getElementById(id);
+    const STATUS_TR = { 'open': 'Açık', 'in-progress': 'İnceleniyor', 'resolved': 'Çözüldü', 'closed': 'Kapatıldı' };
+
+    function fmt(d) {
+      return d ? new Date(d).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+    }
+    function fmtTime(d) {
+      return d ? new Date(d).toLocaleString('tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '—';
+    }
+
+    onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        document.getElementById('not-logged').style.display = 'block';
+        $('not-logged').style.display = 'block';
         return;
       }
-      document.getElementById('profile-content').style.display = 'block';
+      $('profile-content').style.display = 'block';
 
       const name = user.displayName || 'İsimsiz Oyuncu';
       const initial = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
-
-      const avatarWrap = document.getElementById('profile-avatar-wrap');
       if (user.photoURL) {
-        avatarWrap.innerHTML = `<img src="${user.photoURL}" alt="Avatar" style="width:96px;height:96px;border-radius:50%;border:1px solid var(--border);margin:0 auto 20px;display:block">`;
+        $('avatar').innerHTML = `<img src="${user.photoURL}" alt="Profil fotoğrafı">`;
       } else {
-        document.getElementById('profile-avatar').textContent = initial;
+        $('avatar').textContent = initial;
       }
 
-      document.getElementById('profile-name').textContent = name;
-      document.getElementById('profile-email').textContent = user.email;
-      document.getElementById('edit-name').value = user.displayName || '';
+      $('p-name').textContent = name;
+      $('p-email').textContent = user.email || '';
+      $('i-name').textContent = name;
+      $('i-email').textContent = user.email || '—';
+      $('i-joined').textContent = fmt(user.metadata?.creationTime);
+      $('i-uid').textContent = user.uid;
+      const provider = user.providerData?.[0]?.providerId;
+      $('i-provider').textContent = provider === 'google.com' ? 'Google' : provider === 'password' ? 'E-posta ve şifre' : (provider || '—');
+      $('st-login').textContent = fmtTime(user.metadata?.lastSignInTime);
 
-      const joined = user.metadata?.creationTime
-        ? new Date(user.metadata.creationTime).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })
-        : 'Bilinmiyor';
-      document.getElementById('profile-joined').textContent = joined;
-      document.getElementById('profile-uid').textContent = user.uid;
+      const badges = $('badges');
+      badges.innerHTML = '';
+      const b = document.createElement('span');
+      b.className = 'news-badge';
+      b.textContent = isAdmin(user.email) ? 'YÖNETİCİ' : 'OYUNCU';
+      badges.appendChild(b);
+      if (isAdmin(user.email)) $('admin-box').style.display = 'block';
 
-      const badge = document.getElementById('access-badge');
-      if (isAdmin(user.email)) {
-        badge.textContent = ' ADMIN ACCESS';
-        badge.classList.add('admin');
+      // Gerçek destek talepleri
+      try {
+        const tickets = await getTickets();
+        $('st-tickets').textContent = tickets.length;
+        $('st-open').textContent = tickets.filter(t => t.status === 'open' || t.status === 'in-progress').length;
+        const wrap = $('recent-tickets');
+        wrap.innerHTML = '';
+        if (!tickets.length) {
+          wrap.innerHTML = '<div class="v2-empty">HENÜZ DESTEK TALEBİNİZ YOK</div>';
+        } else {
+          tickets.slice(0, 3).forEach(t => {
+            const row = document.createElement('div');
+            row.className = 'v2-news-item';
+            const info = document.createElement('div');
+            const tt = document.createElement('div'); tt.className = 't'; tt.style.fontSize = '17px'; tt.textContent = t.subject || 'Konu yok';
+            const dd = document.createElement('div'); dd.className = 'd'; dd.textContent = `${t.category || ''} · ${fmt(t.createdAt)}`;
+            info.append(tt, dd);
+            const st = document.createElement('span');
+            st.className = 'news-badge';
+            st.textContent = STATUS_TR[t.status] || t.status;
+            row.append(info, st);
+            wrap.appendChild(row);
+          });
+        }
+      } catch (err) {
+        $('recent-tickets').innerHTML = '<div class="v2-empty">TALEPLER YÜKLENEMEDİ</div>';
       }
     });
 
-    window.handleLogout = async () => {
+    $('p-logout').addEventListener('click', async () => {
       await signOut(auth);
-      window.location.href = 'index.html';
-    };
-
-    window.startEdit = () => {
-      document.getElementById('name-view').style.display = 'none';
-      const edit = document.getElementById('name-edit');
-      edit.style.display = 'flex';
-    };
-
-    window.cancelEdit = () => {
-      document.getElementById('name-edit').style.display = 'none';
-      document.getElementById('name-view').style.display = 'flex';
-      document.getElementById('edit-name').value = auth.currentUser?.displayName || '';
-      document.getElementById('edit-error').style.display = 'none';
-    };
-
-    window.updateName = async () => {
-      const name = document.getElementById('edit-name').value.trim();
-      const errEl = document.getElementById('edit-error');
-      const okEl = document.getElementById('edit-success');
-      errEl.style.display = 'none';
-      okEl.style.display = 'none';
-      if (!name) {
-        errEl.textContent = 'Ad boş olamaz.';
-        errEl.style.display = 'block';
-        return;
-      }
-      try {
-        await updateProfile(auth.currentUser, { displayName: name });
-        document.getElementById('profile-name').textContent = name;
-        const avatar = document.getElementById('profile-avatar');
-        if (avatar) avatar.textContent = name.charAt(0).toUpperCase();
-        okEl.style.display = 'block';
-        cancelEdit();
-        setTimeout(() => { okEl.style.display = 'none'; }, 3000);
-      } catch {
-        errEl.textContent = 'Güncelleme başarısız.';
-        errEl.style.display = 'block';
-      }
-    };
+      location.href = 'index.html';
+    });
   </script>
 </body>
 </html>

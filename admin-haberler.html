@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Oyun Haberleri Yönetimi | HEXAGES GAMES</title>
+  <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+
+  <main>
+    <section style="padding:160px 24px 96px">
+      <div class="v2-container" style="max-width:1100px">
+        <span class="mono-label">// YÖNETİM</span>
+        <h1 class="v2-h2" style="font-size:clamp(44px,6vw,80px);margin-top:12px">OYUN HABERLERİ</h1>
+        <p class="v2-lead">Burada eklediğiniz haberler, seçtiğiniz oyunun sayfasında anında yayınlanır. Yalnızca yetkili yöneticiler bu sayfayı kullanabilir.</p>
+        <div class="v2-divider-red"></div>
+
+        <div id="gate" class="v2-panel" style="margin-top:48px;text-align:center">
+          <p class="v2-lead" style="margin:0 auto 24px">Yükleniyor…</p>
+        </div>
+
+        <div id="panel" style="display:none">
+          <div class="v2-panel" style="margin-top:48px">
+            <h2 id="form-title">YENİ HABER</h2>
+            <p class="desc">Başlık, kategori ve içerik zorunludur. Görsel isteğe bağlıdır (PNG, JPG, WEBP — en fazla 5 MB).</p>
+
+            <form id="news-form" novalidate>
+              <div class="v2-field">
+                <label for="f-game">OYUN</label>
+                <select id="f-game" class="v2-select"></select>
+              </div>
+              <div class="v2-field">
+                <label for="f-cat">KATEGORİ</label>
+                <select id="f-cat" class="v2-select"></select>
+              </div>
+              <div class="v2-field">
+                <label for="f-title">BAŞLIK</label>
+                <input id="f-title" class="v2-input" maxlength="150" placeholder="Örn: Yeni bölge duyuruldu">
+              </div>
+              <div class="v2-field">
+                <label for="f-body">İÇERİK</label>
+                <textarea id="f-body" class="v2-textarea" maxlength="5000" placeholder="Haber metnini buraya yazın…"></textarea>
+              </div>
+              <div class="v2-field">
+                <label for="f-img">GÖRSEL (İSTEĞE BAĞLI)</label>
+                <input id="f-img" type="file" accept="image/png,image/jpeg,image/webp" class="v2-input">
+                <p id="f-img-current" class="desc" style="margin:8px 0 0;display:none"></p>
+              </div>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+                <button type="submit" class="v2-btn" id="btn-save">YAYINLA</button>
+                <button type="button" class="v2-btn ghost" id="btn-cancel" style="display:none">DÜZENLEMEYİ İPTAL ET</button>
+              </div>
+              <div id="form-msg" class="v2-msg"></div>
+            </form>
+          </div>
+
+          <div class="v2-panel">
+            <h2>YAYINLANAN HABERLER</h2>
+            <div class="desc" style="margin-bottom:8px">Seçili oyun için kayıtlar:</div>
+            <div id="list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { GAMES } from './js/games.js';
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import {
+      auth, isAdmin, onAuthStateChanged, initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav,
+      getGameNews, uploadNewsImage, createGameNews, updateGameNews, deleteGameNews, NEWS_CATEGORIES
+    } from './js/app.js';
+
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+
+    const $ = id => document.getElementById(id);
+    let editing = null;      // düzenlenen haberin id'si
+    let editingImage = null; // mevcut görsel URL'si
+
+    function showMsg(text, ok) {
+      const m = $('form-msg');
+      m.textContent = text;
+      m.className = 'v2-msg ' + (ok ? 'ok' : 'err');
+      setTimeout(() => { m.className = 'v2-msg'; }, 4000);
+    }
+
+    function fillGameSelect() {
+      const sel = $('f-game');
+      sel.innerHTML = '';
+      GAMES.forEach(g => {
+        const o = document.createElement('option');
+        o.value = g.id; o.textContent = g.name;
+        sel.appendChild(o);
+      });
+    }
+    function fillCatSelect() {
+      const sel = $('f-cat');
+      sel.innerHTML = '';
+      NEWS_CATEGORIES.forEach(c => {
+        const o = document.createElement('option');
+        o.value = c; o.textContent = c;
+        sel.appendChild(o);
+      });
+    }
+
+    function resetForm() {
+      editing = null; editingImage = null;
+      $('news-form').reset();
+      $('form-title').textContent = 'YENİ HABER';
+      $('btn-save').textContent = 'YAYINLA';
+      $('btn-cancel').style.display = 'none';
+      $('f-img-current').style.display = 'none';
+    }
+
+    async function refreshList() {
+      const list = $('list');
+      list.innerHTML = '<p class="desc">Yükleniyor…</p>';
+      try {
+        const items = await getGameNews($('f-game').value);
+        list.innerHTML = '';
+        if (!items.length) {
+          list.innerHTML = '<div class="v2-empty">BU OYUN İÇİN HENÜZ HABER YOK</div>';
+          return;
+        }
+        items.forEach(n => {
+          const row = document.createElement('div');
+          row.className = 'v2-news-item';
+          const info = document.createElement('div');
+          const t = document.createElement('div'); t.className = 't'; t.textContent = n.title;
+          const d = document.createElement('div'); d.className = 'd';
+          d.textContent = `${n.category} · ${n.createdAt ? new Date(n.createdAt).toLocaleString('tr-TR') : ''}`;
+          info.append(t, d);
+          const actions = document.createElement('div');
+          actions.style.cssText = 'display:flex;gap:8px';
+          const edit = document.createElement('button'); edit.className = 'v2-btn ghost'; edit.type = 'button'; edit.textContent = 'DÜZENLE';
+          edit.onclick = () => startEdit(n);
+          const del = document.createElement('button'); del.className = 'v2-btn danger'; del.type = 'button'; del.textContent = 'SİL';
+          del.onclick = () => removeNews(n);
+          actions.append(edit, del);
+          row.append(info, actions);
+          list.appendChild(row);
+        });
+      } catch (err) {
+        list.innerHTML = '<div class="v2-empty">LİSTE YÜKLENEMEDİ</div>';
+        console.warn(err.code || err.message);
+      }
+    }
+
+    function startEdit(n) {
+      editing = n.id;
+      editingImage = n.imageURL || null;
+      $('f-cat').value = n.category;
+      $('f-title').value = n.title || '';
+      $('f-body').value = n.body || '';
+      $('form-title').textContent = 'HABERİ DÜZENLE';
+      $('btn-save').textContent = 'DEĞİŞİKLİKLERİ KAYDET';
+      $('btn-cancel').style.display = 'inline-block';
+      if (editingImage) {
+        $('f-img-current').style.display = 'block';
+        $('f-img-current').textContent = 'Mevcut görsel korunacak. Yeni bir dosya seçerseniz değişir.';
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function removeNews(n) {
+      if (!confirm(`"${n.title}" haberi silinsin mi? Bu işlem geri alınamaz.`)) return;
+      try {
+        await deleteGameNews(n.id);
+        if (editing === n.id) resetForm();
+        showMsg('Haber silindi.', true);
+        refreshList();
+      } catch (err) {
+        showMsg(err.message || 'Silme başarısız.', false);
+      }
+    }
+
+    $('news-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = $('btn-save');
+      btn.disabled = true;
+      try {
+        let imageURL = editingImage;
+        const file = $('f-img').files[0];
+        if (file) imageURL = await uploadNewsImage($('f-game').value, file);
+        const item = {
+          gameId: $('f-game').value,
+          category: $('f-cat').value,
+          title: $('f-title').value,
+          body: $('f-body').value,
+          imageURL
+        };
+        if (editing) {
+          await updateGameNews(editing, item);
+          showMsg('Haber güncellendi.', true);
+        } else {
+          await createGameNews(item);
+          showMsg('Haber yayınlandı.', true);
+        }
+        resetForm();
+        refreshList();
+      } catch (err) {
+        showMsg(err.message || 'Kaydetme başarısız.', false);
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    $('btn-cancel').addEventListener('click', resetForm);
+    $('f-game').addEventListener('change', () => { resetForm(); refreshList(); });
+
+    fillGameSelect();
+    fillCatSelect();
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        $('gate').innerHTML = '<p class="v2-lead" style="margin:0 auto 24px">Bu sayfayı görmek için giriş yapmalısınız.</p><a href="giris.html" class="btn-download">GİRİŞ YAP</a>';
+        return;
+      }
+      if (!isAdmin(user.email)) {
+        $('gate').innerHTML = '<p class="v2-lead" style="margin:0 auto">Bu sayfaya erişim yetkiniz yok.</p>';
+        return;
+      }
+      $('gate').style.display = 'none';
+      $('panel').style.display = 'block';
+      refreshList();
+    });
+  </script>
+</body>
+</html>

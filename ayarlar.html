@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ayarlar | HEXAGES GAMES</title>
+  <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+
+  <main>
+    <section style="padding:160px 24px 96px">
+      <div class="v2-container" style="max-width:920px">
+        <span class="mono-label">// AYARLAR</span>
+        <h1 class="v2-h2" style="font-size:clamp(44px,6vw,80px);margin-top:12px">AYARLAR</h1>
+        <div class="v2-divider-red"></div>
+
+        <!-- HESAP -->
+        <div class="v2-panel" style="margin-top:48px" id="acc-panel">
+          <h2>HESAP</h2>
+          <p class="desc">Görünen adınızı ve şifrenizi buradan yönetin.</p>
+          <div id="acc-logged-out" style="display:none">
+            <p class="v2-lead" style="margin:0 0 20px">Hesap ayarlarını düzenlemek için giriş yapın.</p>
+            <a href="giris.html" class="btn-download">GİRİŞ YAP</a>
+          </div>
+          <div id="acc-logged-in" style="display:none">
+            <div class="v2-row" style="flex-direction:column;align-items:stretch">
+              <div class="v2-field" style="margin:0">
+                <label for="s-name">GÖRÜNEN AD</label>
+                <div style="display:flex;gap:12px;flex-wrap:wrap">
+                  <input id="s-name" class="v2-input" maxlength="40" style="flex:1;min-width:200px">
+                  <button id="s-name-save" class="v2-btn" type="button">KAYDET</button>
+                </div>
+              </div>
+              <div id="s-name-msg" class="v2-msg"></div>
+            </div>
+            <div class="v2-row">
+              <div><div class="label">E-posta</div><div class="sub" id="s-email">—</div></div>
+            </div>
+            <div class="v2-row">
+              <div><div class="label">Şifre</div><div class="sub">Şifre sıfırlama bağlantısını e-posta adresinize gönderir.</div></div>
+              <button id="s-reset" class="v2-btn ghost" type="button">SIFIRLAMA E-POSTASI GÖNDER</button>
+            </div>
+            <div id="s-reset-msg" class="v2-msg"></div>
+            <div class="v2-row">
+              <div><div class="label">Oturum</div><div class="sub">Bu cihazdaki oturumunuzu kapatın.</div></div>
+              <button id="s-logout" class="v2-btn danger" type="button">ÇIKIŞ YAP</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- GÖRÜNÜM -->
+        <div class="v2-panel">
+          <h2>GÖRÜNÜM</h2>
+          <p class="desc">Tercihleriniz bu tarayıcıda saklanır ve anında uygulanır.</p>
+          <div class="v2-row">
+            <div><div class="label">Tema</div><div class="sub">Koyu tema ya da yumuşak beyaz tema.</div></div>
+            <div style="display:flex;gap:8px">
+              <button class="v2-btn ghost" type="button" data-theme="dark">KOYU</button>
+              <button class="v2-btn ghost" type="button" data-theme="light">AÇIK</button>
+            </div>
+          </div>
+          <div class="v2-row">
+            <div><div class="label">Hareketi azalt</div><div class="sub">Yıldız alanı ve animasyonları kapatır.</div></div>
+            <label class="v2-switch"><input type="checkbox" id="s-motion"><span></span></label>
+          </div>
+        </div>
+
+        <!-- YÖNETİM (sadece admin) -->
+        <div class="v2-panel" id="admin-panel" style="display:none">
+          <h2>YÖNETİM</h2>
+          <p class="desc">Bu bölüm yalnızca yetkili yöneticilere görünür.</p>
+          <div class="v2-link-grid">
+            <a href="admin-haberler.html" class="v2-link-card"><div class="t">OYUN HABERLERİ</div><div class="d">Oyun sayfalarına haber ekle, düzenle, sil.</div></a>
+            <a href="guvenlik.html" class="v2-link-card"><div class="t">GÜVENLİK PANELİ</div><div class="d">Güvenlik kayıtlarını incele.</div></a>
+          </div>
+        </div>
+
+        <!-- VERİ -->
+        <div class="v2-panel">
+          <h2>VERİ</h2>
+          <p class="desc">Tarayıcıda tutulan tercihleri sıfırlayabilirsiniz. Hesabınıza bağlı veriler etkilenmez.</p>
+          <div class="v2-row">
+            <div><div class="label">Tercihleri sıfırla</div><div class="sub">Tema ve hareket tercihini varsayılan değerlere döndürür.</div></div>
+            <button id="s-reset-prefs" class="v2-btn ghost" type="button">SIFIRLA</button>
+          </div>
+          <div id="s-prefs-msg" class="v2-msg"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import {
+      auth, isAdmin, onAuthStateChanged, signOut, updateProfile, sendPasswordResetEmail,
+      initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, applyTheme
+    } from './js/app.js';
+
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+
+    const $ = id => document.getElementById(id);
+    function msg(el, text, ok) {
+      el.textContent = text;
+      el.className = 'v2-msg ' + (ok ? 'ok' : 'err');
+      setTimeout(() => { el.className = 'v2-msg'; }, 4000);
+    }
+
+    // --- Görünüm ---
+    function paintTheme() {
+      const cur = localStorage.getItem('hx-theme') || 'dark';
+      document.querySelectorAll('[data-theme]').forEach(b => {
+        b.style.borderColor = b.dataset.theme === cur ? 'var(--accent)' : '';
+        b.style.color = b.dataset.theme === cur ? 'var(--accent)' : '';
+      });
+    }
+    document.querySelectorAll('[data-theme]').forEach(b => {
+      b.addEventListener('click', () => { applyTheme(b.dataset.theme); paintTheme(); });
+    });
+    paintTheme();
+
+    const motion = $('s-motion');
+    motion.checked = localStorage.getItem('hx-reduce-motion') === '1';
+    motion.addEventListener('change', () => {
+      localStorage.setItem('hx-reduce-motion', motion.checked ? '1' : '0');
+      document.documentElement.classList.toggle('reduce-motion', motion.checked);
+    });
+
+    $('s-reset-prefs').addEventListener('click', () => {
+      localStorage.removeItem('hx-theme');
+      localStorage.removeItem('hx-reduce-motion');
+      applyTheme('dark');
+      motion.checked = false;
+      document.documentElement.classList.remove('reduce-motion');
+      paintTheme();
+      msg($('s-prefs-msg'), 'Tercihler varsayılana döndürüldü.', true);
+    });
+
+    // --- Hesap ---
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        $('acc-logged-out').style.display = 'block';
+        $('acc-logged-in').style.display = 'none';
+        $('admin-panel').style.display = 'none';
+        return;
+      }
+      $('acc-logged-out').style.display = 'none';
+      $('acc-logged-in').style.display = 'block';
+      $('s-name').value = user.displayName || '';
+      $('s-email').textContent = user.email || '—';
+      $('admin-panel').style.display = isAdmin(user.email) ? 'block' : 'none';
+    });
+
+    $('s-name-save').addEventListener('click', async () => {
+      const name = $('s-name').value.trim();
+      if (name.length < 2 || name.length > 40) return msg($('s-name-msg'), 'Ad 2-40 karakter olmalıdır.', false);
+      try {
+        await updateProfile(auth.currentUser, { displayName: name });
+        msg($('s-name-msg'), 'Görünen ad güncellendi.', true);
+      } catch (err) {
+        msg($('s-name-msg'), 'Güncelleme başarısız oldu.', false);
+      }
+    });
+
+    $('s-reset').addEventListener('click', async () => {
+      const email = auth.currentUser?.email;
+      if (!email) return;
+      try {
+        await sendPasswordResetEmail(auth, email);
+        msg($('s-reset-msg'), 'Sıfırlama bağlantısı e-posta adresinize gönderildi.', true);
+      } catch (err) {
+        msg($('s-reset-msg'), 'E-posta gönderilemedi. Birkaç dakika sonra tekrar deneyin.', false);
+      }
+    });
+
+    $('s-logout').addEventListener('click', async () => {
+      await signOut(auth);
+      location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>

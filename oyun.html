@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chasing the SHlump | HEXAGES GAMES</title>
+  <meta name="description" content="Chasing the SHlump, HEXAGES GAMES tarafından geliştiriliyor. Geliştirici duyuruları, güncellemeler ve oyun haberleri." />
+  <link rel="canonical" href="https://hexagesgames.vercel.app/oyun.html?id=chasing-the-shlump" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="HEXAGES GAMES" />
+  <meta property="og:title" content="Chasing the SHlump | HEXAGES GAMES" />
+  <meta property="og:description" content="Chasing the SHlump geliştirme duyuruları ve haberleri." />
+  <meta property="og:url" content="https://hexagesgames.vercel.app/oyun.html?id=chasing-the-shlump" />
+  <meta property="og:image" content="https://hexagesgames.vercel.app/assets/games/chasing-the-shlump/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Chasing the SHlump",
+    "url": "https://hexagesgames.vercel.app/oyun.html?id=chasing-the-shlump",
+    "image": "https://hexagesgames.vercel.app/assets/games/chasing-the-shlump/cover.png",
+    "gamePlatform": "PC",
+    "publisher": { "@type": "Organization", "name": "HEXAGES GAMES", "url": "https://hexagesgames.vercel.app/" },
+    "developer": { "@type": "Organization", "name": "HEXAGES GAMES" }
+  }
+  </script>
+  <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+
+  <main id="game-root">
+    <div class="v2-container" style="padding:200px 24px;text-align:center">
+      <p class="v2-lead" style="margin:0 auto">Oyun yükleniyor…</p>
+    </div>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { getGame } from './js/games.js';
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import { initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, getGameNews } from './js/app.js';
+
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+
+    const root = document.getElementById('game-root');
+    const id = new URLSearchParams(location.search).get('id');
+    const game = getGame(id);
+
+    function el(tag, cls, text) {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text !== undefined) n.textContent = text;
+      return n;
+    }
+
+    function fmtDate(iso) {
+      if (!iso) return '';
+      return new Date(iso).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    if (!game) {
+      root.innerHTML = `
+        <div class="v2-404" style="min-height:70vh">
+          <div>
+            <p class="mono-label">// HATA</p>
+            <h1 class="v2-h2" style="margin:16px 0">OYUN BULUNAMADI</h1>
+            <p class="v2-lead" style="margin:0 auto 28px">Aradığınız oyun mevcut değil ya da kaldırılmış olabilir.</p>
+            <a href="oyunlar.html" class="btn-download">OYUNLARA DÖN</a>
+          </div>
+        </div>`;
+    } else {
+      document.title = `${game.name} | HEXAGES GAMES`;
+      root.innerHTML = '';
+
+      // HERO
+      const hero = el('section', 'gd-hero');
+      const bg = el('img', 'bg'); bg.src = game.images.banner; bg.alt = ''; bg.setAttribute('aria-hidden', 'true');
+      const content = el('div', 'content');
+      content.innerHTML = `
+        <span class="mono-label">// OYUN</span>
+        <img class="gd-logo" src="${game.images.logo}" alt="${game.name} logosu" onerror="this.remove()">
+        <h1 class="gd-title">${game.name}</h1>
+        <p class="v2-lead" style="font-size:17px">${game.summary}</p>
+        <div class="gd-facts">
+          <div class="gd-fact"><div class="k">DURUM</div><div class="v">${game.status}</div></div>
+          <div class="gd-fact"><div class="k">PLATFORM</div><div class="v">${game.platform}</div></div>
+          <div class="gd-fact"><div class="k">TÜR</div><div class="v">${game.genre}</div></div>
+        </div>`;
+      hero.append(bg, el('div', 'veil'), content);
+      root.appendChild(hero);
+
+      // GÖVDE
+      const section = el('section', 'v2-section');
+      const wrap = el('div', 'v2-container gd-grid');
+      const main = el('div');
+      const side = el('div');
+
+      // Haberler
+      main.appendChild(el('span', 'mono-label', '// GELİŞTİRİCİ HABERLERİ'));
+      main.appendChild(el('h2', 'v2-h2', 'HABERLER'));
+      const newsList = el('div');
+      newsList.style.marginTop = '28px';
+      newsList.appendChild(el('div', 'v2-empty', 'HABERLER YÜKLENİYOR…'));
+      main.appendChild(newsList);
+
+      // Hakkında + ekran görüntüleri
+      const about = el('div');
+      about.style.marginTop = '64px';
+      about.appendChild(el('span', 'mono-label', '// HAKKINDA'));
+      about.appendChild(el('h2', 'v2-h2', 'OYUN HAKKINDA'));
+      about.appendChild(el('p', 'v2-lead', game.description));
+      const shots = el('div', 'gd-shots');
+      game.images.screenshots.forEach((src, i) => {
+        const img = el('img'); img.src = src; img.alt = `${game.name} ekran görüntüsü ${i + 1}`; img.loading = 'lazy';
+        shots.appendChild(img);
+      });
+      about.appendChild(shots);
+      main.appendChild(about);
+
+      // Yan panel
+      const box = el('div', 'side-box');
+      box.appendChild(el('h4', '', 'HABERDAR OL'));
+      box.appendChild(el('p', '', 'Yeni duyurular ve geliştirme notları ilk olarak Discord\'da paylaşılır.'));
+      const dc = el('a', 'btn-download', "DİSCORD'A KATIL →");
+      dc.href = 'https://discord.gg/ETe46SWQtC'; dc.target = '_blank'; dc.rel = 'noopener';
+      dc.style.cssText = 'margin-top:20px;width:100%;justify-content:center;font-size:11px;padding:14px 20px';
+      box.appendChild(dc);
+      side.appendChild(box);
+
+      const back = el('div', 'side-box');
+      back.style.marginTop = '20px';
+      back.appendChild(el('h4', '', 'DİĞER OYUNLAR'));
+      const backLink = el('a', 'nav-link', '→ OYUN KATALOĞUNA DÖN');
+      backLink.href = 'oyunlar.html'; backLink.style.cssText = 'display:inline-block;margin-top:6px';
+      back.appendChild(backLink);
+      side.appendChild(back);
+
+      wrap.append(main, side);
+      section.appendChild(wrap);
+      root.appendChild(section);
+
+      // Haberleri Firestore'dan yükle (sadece gerçek kayıtlar)
+      (async () => {
+        try {
+          const items = await getGameNews(game.id);
+          newsList.innerHTML = '';
+          if (!items.length) {
+            newsList.appendChild(el('div', 'v2-empty', 'HENÜZ HABER YAYINLANMADI'));
+            return;
+          }
+          items.forEach(n => {
+            const card = el('article', 'news-card');
+            const top = el('div', 'top');
+            top.append(el('span', 'news-badge', n.category || 'Haber'), el('span', 'news-date', fmtDate(n.createdAt)));
+            const h = el('h3', '', n.title || '');
+            const body = el('div', 'body', n.body || '');
+            card.append(top, h, body);
+            if (n.imageURL) {
+              const img = el('img', 'news-img'); img.src = n.imageURL; img.alt = n.title || ''; img.loading = 'lazy';
+              card.appendChild(img);
+            }
+            newsList.appendChild(card);
+          });
+        } catch (err) {
+          console.warn('Haberler yüklenemedi:', err.code || err.message);
+          newsList.innerHTML = '';
+          newsList.appendChild(el('div', 'v2-empty', 'HABERLER ŞU AN YÜKLENEMİYOR. DAHA SONRA TEKRAR DENEYİN.'));
+        }
+      })();
+    }
+  </script>
+</body>
+</html>

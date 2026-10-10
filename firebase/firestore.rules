@@ -1,0 +1,52 @@
+rules_version = '2';
+// Firestore güvenlik kuralları — Firebase konsolunda veya `firebase deploy --only firestore:rules` ile yayınlayın.
+// Yönetici e-postaları istemci tarafında değil, burada doğrulanmalıdır.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email in [
+        'yigittr1922@gmail.com',
+        'firecrostnetwork@gmail.com',
+        'hexagesgames@gmail.com',
+        'wither3169999@gmail.com'
+      ];
+    }
+
+    // Oyun haberleri: herkes okur, sadece yönetici yazar
+    match /game_news/{newsId} {
+      allow read: if true;
+      allow create, update: if isAdmin()
+        && request.resource.data.title is string && request.resource.data.title.size() <= 150
+        && request.resource.data.body is string && request.resource.data.body.size() <= 5000;
+      allow delete: if isAdmin();
+    }
+
+    // Destek talepleri: sahibi ve yönetici okur, sahibi oluşturur
+    match /launcher_tickets/{ticketId} {
+      allow read: if request.auth != null
+        && (resource.data.uid == request.auth.uid || isAdmin());
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid;
+      allow update: if isAdmin();
+    }
+
+    // Faturalar: yalnızca yönetici ve ilgili kullanıcı okur
+    match /faturalar/{faturaNo} {
+      allow read: if request.auth != null
+        && (isAdmin() || resource.data.email == request.auth.token.email);
+      allow write: if isAdmin();
+    }
+
+    // İndirme sayacı: herkes okur, sadece sayaç artırılabilir
+    match /launcher_stats/{statId} {
+      allow read: if true;
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['count']);
+    }
+
+    // Varsayılan: kapalı
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

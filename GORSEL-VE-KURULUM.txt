@@ -1,0 +1,43 @@
+HEXAGES GAMES - GÖRSEL DOSYALARI VE KURULUM NOTLARI
+====================================================
+
+1) OYUN GÖRSELLERİ (PNG) — assets/games/chasing-the-shlump/
+   Şu dosyaları aynı isimle üzerine yazabilirsin:
+   - cover.png          600 x 800   (oyunlar listesi kapak kartı)
+   - banner.png         1920 x 1080 (oyun sayfası üst arka plan)
+   - logo.png           1200 x 400  (şeffaf PNG önerilir, oyun başlığı)
+   - screenshot-1.png   1920 x 1080 (ekran görüntüsü)
+   - screenshot-2.png   1920 x 1080
+   - screenshot-3.png   1920 x 1080
+   - screenshot-4.png   1920 x 1080
+   - og-image.png       1200 x 630  (Discord/X paylaşım önizlemesi)
+
+   Yeni bir ekran görüntüsü eklemek istersen: js/games.js içindeki
+   "screenshots" listesine yolu ekle.
+
+2) İKONLAR — assets/icons/
+   favicon-32.png, apple-touch-icon.png, icon-192.png, icon-512.png
+   (logom1.png'den üretildi; logonu değiştirirsen bu dosyaları yeniden üret.)
+
+3) YENİ OYUN EKLEMEK — js/games.js
+   GAMES dizisine yeni bir kayıt ekle. Oyunlar listesi, oyun sayfası ve
+   admin haber panelinin oyun seçimi otomatik olarak güncellenir.
+
+4) HABER YÖNETİMİ — admin-haberler.html
+   Yalnızca yönetici hesapları girebilir. Profil > Yönetim bölümünden erişilir.
+   Haberler Firestore'da "game_news" koleksiyonunda tutulur.
+
+5) FIREBASE GÜVENLİK KURALLARI — firebase/
+   firestore.rules ve storage.rules dosyalarını Firebase konsoluna yapıştır
+   veya "firebase deploy --only firestore:rules,storage" ile yayınla.
+   ÖNEMLİ: Yayından önce bu kuralların mevcut kurallarınla uyumlu olduğunu
+   kontrol et (özellikle guild_configs ve diğer koleksiyonlar varsayılan olarak kapalıdır).
+
+6) FATURALANDIRMA
+   Fatura / dekont sayfaları arayüzden kaldırıldı. Dosyalar ve arka plan
+   fonksiyonları (js/app.js) yerinde duruyor; doğrudan adresle erişilebilir
+   ama arama motorlarından gizli (noindex).
+
+7) SEARCH CONSOLE
+   sitemap.xml ve robots.txt güncellendi. Google Search Console'da
+   https://hexagesgames.vercel.app/sitemap.xml adresini yeniden gönder.
