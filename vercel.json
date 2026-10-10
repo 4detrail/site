@@ -1,9 +1,0 @@
-{
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "redirects": [
-    { "source": "/pluginlerimiz", "destination": "/launcher#pluginler", "permanent": true },
-    { "source": "/pluginlerimiz.html", "destination": "/launcher#pluginler", "permanent": true },
-    { "source": "/index", "destination": "/", "permanent": true }
-  ]
-}

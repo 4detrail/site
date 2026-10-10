@@ -138,13 +138,6 @@ function initTheme() {
   const saved = localStorage.getItem('hx-theme') || 'dark';
   applyTheme(saved);
   if (localStorage.getItem('hx-reduce-motion') === '1') document.documentElement.classList.add('reduce-motion');
-  applyLightText(getLightText());
-}
-// Açık temada metin rengi: 'black' (siyah, varsayılan) veya 'soft' (yumuşak koyu gri)
-function getLightText() { return localStorage.getItem('hx-light-text') || 'black'; }
-function applyLightText(mode) {
-  document.documentElement.classList.toggle('light-text-black', mode === 'black');
-  localStorage.setItem('hx-light-text', mode);
 }
 function applyTheme(theme) {
   if (theme === 'light') document.documentElement.classList.add('light');
@@ -159,130 +152,44 @@ function toggleTheme() {
 }
 
 
-const SEARCH_INDEX_LOCAL = [
-  { title: 'Ana Sayfa', desc: 'Stüdyo, oyunlar ve haberler', href: 'index.html', keys: 'anasayfa ana sayfa home hexages' },
-  { title: 'Oyunlar', desc: 'Tüm projelerimiz', href: 'oyunlar.html', keys: 'oyunlar oyun katalog projeler' },
-  { title: 'Chasing the SHlump', desc: 'Oyun sayfası ve geliştirici haberleri', href: 'oyun.html?id=chasing-the-shlump', keys: 'chasing shlump oyun haber' },
-  { title: 'Aperon Launcher', desc: 'Minecraft için ücretsiz launcher', href: 'launcher.html', keys: 'launcher aperon indir minecraft mod' },
-  { title: 'Pluginler', desc: 'Banknotes, NEX Admin, NEX Duels', href: 'launcher.html#pluginler', keys: 'plugin pluginler eklenti modrinth banknotes nex admin duels' },
-  { title: 'Hakkımızda', desc: 'Stüdyomuz ve yaklaşımımız', href: 'hakkimizda.html', keys: 'hakkimizda stüdyo kurumsal biz kimiz' },
-  { title: 'İletişim', desc: 'Bize ulaşın', href: 'iletisim.html', keys: 'iletisim mail ulas' },
-  { title: 'Destek', desc: 'Destek talebi oluşturun', href: 'ticket.html', keys: 'destek ticket talep yardim' },
-  { title: 'Gizlilik Politikası', desc: 'Verileriniz nasıl korunur', href: 'privacy.html', keys: 'gizlilik privacy kvkk politika' },
-  { title: 'Giriş Yap', desc: 'Hesabınıza giriş yapın', href: 'giris.html', keys: 'giris kayit hesap login' },
-  { title: 'Ayarlar', desc: 'Görünüm ve hesap tercihleri', href: 'ayarlar.html', keys: 'ayarlar tema gorunum' }
-];
-
 function initNavbar() {
   const nav = document.querySelector('nav');
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
   const themeBtn = document.getElementById('theme-btn');
-  const progress = document.getElementById('scroll-progress');
-
-  const onScroll = () => {
-    if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
-    if (progress) {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      progress.style.transform = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max) : 0})`;
-    }
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  // Hamburger: çizgiler HTML'de kalır (textContent ile silinmez), durum sınıfla yönetilir
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+  }
   if (hamburger && mobileMenu) {
-    const setMenu = (open) => {
-      mobileMenu.classList.toggle('open', open);
-      hamburger.classList.toggle('is-open', open);
-      hamburger.setAttribute('aria-expanded', String(open));
-      mobileMenu.setAttribute('aria-hidden', String(!open));
-    };
-    hamburger.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
-    mobileMenu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 768) setMenu(false); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      hamburger.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+    });
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.textContent = '☰';
+      });
+    });
   }
   if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
-
-  // Aktif sayfa (clean URL ve .html ikisiyle de çalışır)
-  const norm = (p) => (p || '').split('#')[0].split('?')[0].replace(/^\//, '').replace(/\.html$/, '') || 'index';
-  const page = norm(window.location.pathname.split('/').pop());
+  const page = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link').forEach((link) => {
-    if (norm(link.getAttribute('href')) === page) link.classList.add('active');
+    const href = link.getAttribute('href');
+    if (href === page || (page === '' && href === 'index.html')) link.classList.add('active');
   });
-
-  const topBtn = document.getElementById('footer-top-btn');
-  if (topBtn) topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  initSearch();
-}
-
-// Arama: sonuçlarda dosya adı (index.html vb.) yerine okunur sayfa adları gösterilir
-function initSearch() {
-  const wire = (inputId, resultsId, isDesktop) => {
-    const input = document.getElementById(inputId);
-    const box = document.getElementById(resultsId);
-    if (!input || !box) return;
-    const fold = (t) => (t || '').toLocaleLowerCase('tr').replace(/ı/g, 'i').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    let items = [], active = -1;
-    const render = (q) => {
-      const query = fold(q).trim();
-      if (!query) { box.classList.remove('open'); box.innerHTML = ''; items = []; input.setAttribute('aria-expanded', 'false'); return; }
-      items = SEARCH_INDEX_LOCAL.filter(p => fold(p.title + ' ' + p.keys + ' ' + p.desc).includes(query)).slice(0, 6);
-      active = -1;
-      box.innerHTML = items.length
-        ? items.map((p, i) => `<a href="${p.href}" role="option" class="ns-item" data-i="${i}"><span class="ns-title">${sanitize(p.title)}</span><span class="ns-desc">${sanitize(p.desc)}</span></a>`).join('')
-        : `<div class="ns-empty">Sonuç bulunamadı</div>`;
-      box.classList.add('open');
-      input.setAttribute('aria-expanded', 'true');
-    };
-    input.addEventListener('input', () => render(input.value));
-    input.addEventListener('focus', () => { if (input.value) render(input.value); });
-    input.addEventListener('keydown', (e) => {
-      const links = box.querySelectorAll('.ns-item');
-      if (e.key === 'ArrowDown' && links.length) { e.preventDefault(); active = (active + 1) % links.length; }
-      else if (e.key === 'ArrowUp' && links.length) { e.preventDefault(); active = (active - 1 + links.length) % links.length; }
-      else if (e.key === 'Enter') { e.preventDefault(); const t = links[active >= 0 ? active : 0]; if (t) window.location.href = t.getAttribute('href'); return; }
-      else if (e.key === 'Escape') { box.classList.remove('open'); input.blur(); return; }
-      else return;
-      links.forEach((l, i) => l.classList.toggle('is-active', i === active));
-    });
-    if (isDesktop) {
-      document.addEventListener('click', (e) => { if (!e.target.closest('#nav-search')) box.classList.remove('open'); });
-      document.getElementById('nav-search-btn')?.addEventListener('click', () => input.focus());
-    }
-  };
-  wire('nav-search-input', 'nav-search-results', true);
-  wire('mobile-search-input', 'mobile-search-results', false);
 }
 
 
 function initReveal() {
-  // Site genelinde: işaretlenmemiş kart/başlık bloklarına otomatik, sade bir giriş animasyonu ekle
-  const AUTO = '.page-hero .v2-container > *, .v2-page-card, .pl-card, .faq-item, .news-card, .side-box, .pv-sec, .ln-step, .ln-perk, .pillar, .auth-box, .v2-panel, .ticket-card, .gd-shots img';
-  document.querySelectorAll(AUTO).forEach((el, i) => {
-    if (el.closest('.reveal, .stagger-children') && el.parentElement.closest('.reveal, .stagger-children')) return;
-    if (!el.classList.contains('reveal')) { el.classList.add('reveal'); el.dataset.delay = String((i % 4) + 1); }
-  });
   const observer = new IntersectionObserver(
-    (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
-    { threshold: 0.08, rootMargin: '0px 0px -4% 0px' }
+    (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
+    { threshold: 0.1 }
   );
   document.querySelectorAll('.reveal, .stagger-children').forEach((el) => observer.observe(el));
-
-  // Kartlarda imleci izleyen ışık ve hafif eğim (yalnızca masaüstü, hareket azaltma kapalıyken)
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('reduce-motion');
-  if (reduce || !matchMedia('(pointer: fine)').matches) return;
-  document.querySelectorAll('.feat-card, .pl-card').forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-    });
-  });
-  const hero = document.querySelector('.hero-hex-float');
-  if (hero) window.addEventListener('scroll', () => { hero.style.translate = '0 ' + (window.scrollY * 0.12) + 'px'; }, { passive: true });
 }
 
 
@@ -316,9 +223,8 @@ const SITE_PAGES = [
   { href: 'index.html', label: 'ANA SAYFA' },
   { href: 'oyunlar.html', label: 'OYUNLAR' },
   { href: 'oyun.html?id=chasing-the-shlump', label: 'CHASING THE SHLUMP' },
+  { href: 'pluginlerimiz.html', label: 'PLUGİNLER' },
   { href: 'launcher.html', label: 'LAUNCHER' },
-  { href: 'launcher.html#pluginler', label: 'PLUGİNLER' },
-  { href: 'hakkimizda.html', label: 'HAKKIMIZDA' },
   { href: 'iletisim.html', label: 'İLETİŞİM' },
   { href: 'ticket.html', label: 'DESTEK' }
 ];
@@ -680,5 +586,5 @@ export {
   getThreatLogs, updateThreatLogStatus, getGuildConfigs,
   trackLauncherDownload, subscribeLauncherDownloadCount,
   getGameNews, uploadNewsImage, createGameNews, updateGameNews, deleteGameNews, NEWS_CATEGORIES,
-  initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme, applyTheme, applyLightText, getLightText
+  initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, toggleTheme, applyTheme
 };

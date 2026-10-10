@@ -64,13 +64,6 @@
             </div>
           </div>
           <div class="v2-row">
-            <div><div class="label">Açık temada metin rengi</div><div class="sub">Beyaz temadayken yazıları siyah (okunaklı) ya da yumuşak koyu gri göster.</div></div>
-            <div style="display:flex;gap:8px">
-              <button class="v2-btn ghost" type="button" data-lighttext="black">SİYAH</button>
-              <button class="v2-btn ghost" type="button" data-lighttext="soft">YUMUŞAK</button>
-            </div>
-          </div>
-          <div class="v2-row">
             <div><div class="label">Hareketi azalt</div><div class="sub">Yıldız alanı ve animasyonları kapatır.</div></div>
             <label class="v2-switch"><input type="checkbox" id="s-motion"><span></span></label>
           </div>
@@ -106,7 +99,7 @@
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import {
       auth, isAdmin, onAuthStateChanged, signOut, updateProfile, sendPasswordResetEmail,
-      initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, applyTheme, applyLightText, getLightText
+      initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, applyTheme
     } from './js/app.js';
 
     document.getElementById('layout-top').innerHTML = getNavHTML();
@@ -133,18 +126,6 @@
     });
     paintTheme();
 
-    function paintLightText() {
-      const cur = getLightText();
-      document.querySelectorAll('[data-lighttext]').forEach(b => {
-        b.style.borderColor = b.dataset.lighttext === cur ? 'var(--accent)' : '';
-        b.style.color = b.dataset.lighttext === cur ? 'var(--accent)' : '';
-      });
-    }
-    document.querySelectorAll('[data-lighttext]').forEach(b => {
-      b.addEventListener('click', () => { applyLightText(b.dataset.lighttext); paintLightText(); });
-    });
-    paintLightText();
-
     const motion = $('s-motion');
     motion.checked = localStorage.getItem('hx-reduce-motion') === '1';
     motion.addEventListener('change', () => {
@@ -155,8 +136,6 @@
     $('s-reset-prefs').addEventListener('click', () => {
       localStorage.removeItem('hx-theme');
       localStorage.removeItem('hx-reduce-motion');
-      localStorage.removeItem('hx-light-text');
-      applyLightText('black'); paintLightText();
       applyTheme('dark');
       motion.checked = false;
       document.documentElement.classList.remove('reduce-motion');
