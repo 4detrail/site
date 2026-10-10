@@ -1720,3 +1720,9 @@ section[style*="padding-top:128px"] .mono-label { margin-bottom: 4px; }
 }
 .um-link:hover { background: var(--card-hover); color: var(--accent); padding-left: 26px; }
 .um-link:last-of-type { border-bottom: 1px solid var(--border); }
+
+/* ===== V8 — Açılır menü sayfa alanı: kompakt ===== */
+.user-menu-panel { width: 240px; }
+.um-group-label { padding: 10px 18px 4px; font-size: 9.5px; }
+.um-link { padding: 7px 18px; font-size: 13.5px; letter-spacing: .03em; }
+.um-link:hover { padding-left: 22px; }
