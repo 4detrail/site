@@ -3,105 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aperon Launcher İndir (v1.1.7) – Minecraft Mod Launcher | HEXAGES GAMES</title>
-  <meta name="description" content="Aperon Launcher'ı ücretsiz indir: Minecraft: Java Edition için Modrinth mod entegrasyonu, otomatik bağımlılık kurulumu, %60+ FPS artışı ve VirusTotal onaylı güvenlik. Vanilla, Forge ve Fabric destekli." />
+  <title>Aperon Launcher İndir (v1.1.7) | HEXAGES GAMES</title>
+  <meta name="description" content="Aperon Launcher'ı ücretsiz indir. Minecraft: Java Edition için Modrinth mod entegrasyonu, otomatik bağımlılık kurulumu ve VirusTotal onaylı güvenlik. Vanilla, Forge ve Fabric destekli." />
   <link rel="canonical" href="https://hexagesgames.vercel.app/launcher.html" />
 
-  <!-- Open Graph / Sosyal medya paylaşım kartları -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="HEXAGES GAMES" />
-  <meta property="og:title" content="Aperon Launcher İndir – Minecraft Mod Launcher" />
-  <meta property="og:description" content="Modrinth mod entegrasyonu, otomatik bağımlılık kurulumu ve 3D skin viewer bir arada. VirusTotal onaylı, %60+ FPS artışı." />
+  <meta property="og:title" content="Aperon Launcher İndir | HEXAGES GAMES" />
+  <meta property="og:description" content="Modlarını tek yerden yönet. Ücretsiz, güvenli ve hızlı Minecraft launcher'ı." />
   <meta property="og:url" content="https://hexagesgames.vercel.app/launcher.html" />
   <meta property="og:image" content="https://hexagesgames.vercel.app/logom1.png" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Aperon Launcher İndir – HEXAGES GAMES" />
-  <meta name="twitter:description" content="Minecraft: Java Edition için ücretsiz Aperon Launcher indir." />
-  <meta name="twitter:image" content="https://hexagesgames.vercel.app/logom1.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Aperon Launcher",
+    "alternateName": "HEXAGES GAMES Launcher",
+    "applicationCategory": "GameApplication",
+    "operatingSystem": "Windows 10/11 (64-bit)",
+    "softwareVersion": "1.1.7",
+    "fileSize": "120MB",
+    "url": "https://hexagesgames.vercel.app/launcher.html",
+    "downloadUrl": "https://github.com/4detrail/hexagesgames-release/releases/download/v1.1.7/Aperon_Setup_1.1.7.exe",
+    "author": { "@type": "Organization", "name": "HEXAGES GAMES", "url": "https://hexagesgames.vercel.app/" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Minecraft: Java Edition için Modrinth mod entegrasyonu, otomatik bağımlılık kurulumu ve 3D skin görüntüleyici içeren launcher. Vanilla, Forge ve Fabric destekli."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Aperon Launcher tamamen ücretsiz mi?", "acceptedAnswer": { "@type": "Answer", "text": "Evet. Tüm özellikler ücretsizdir; reklam yoktur ve veri satışı yapılmaz." } },
+      { "@type": "Question", "name": "Launcher güvenli mi?", "acceptedAnswer": { "@type": "Answer", "text": "Dosya VirusTotal üzerinde kontrol edilmiştir." } },
+      { "@type": "Question", "name": "Otomatik güncelleme nasıl çalışıyor?", "acceptedAnswer": { "@type": "Answer", "text": "Yeni sürüm çıktığında launcher güncellemeyi size onaylatır. Sessizce güncelleme yapılmaz." } },
+      { "@type": "Question", "name": "Modrinth modları kolay yükleniyor mu?", "acceptedAnswer": { "@type": "Answer", "text": "Evet. Bağımlı modlar otomatik indirilir. Modrinth hız limitine takılırsa launcher bekleyip yeniden dener." } },
+      { "@type": "Question", "name": "Hangi Minecraft sürümlerini destekliyor?", "acceptedAnswer": { "@type": "Answer", "text": "Vanilla, Forge ve Fabric loader'larını destekler; Minecraft: Java Edition sürümleriyle uyumludur." } },
+      { "@type": "Question", "name": "Minimum sistem gereksinimleri nelerdir?", "acceptedAnswer": { "@type": "Answer", "text": "Windows 10/11 64-bit, Intel i3 / Ryzen 3, 4 GB RAM." } }
+    ]
+  }
+  </script>
+
   <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="css/style.css">
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Aperon Launcher",
-      "alternateName": "HEXAGES GAMES Launcher",
-      "applicationCategory": "GameApplication",
-      "operatingSystem": "Windows 10/11 (64-bit)",
-      "softwareVersion": "1.1.7",
-      "fileSize": "120MB",
-      "url": "https://hexagesgames.vercel.app/launcher.html",
-      "downloadUrl": "https://github.com/4detrail/hexagesgames-release/releases/download/v1.1.7/Aperon_Setup_1.1.7.exe",
-      "author": {
-        "@type": "Organization",
-        "name": "HEXAGES GAMES",
-        "url": "https://hexagesgames.vercel.app/"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": "Minecraft: Java Edition için Modrinth mod entegrasyonu, otomatik bağımlılık kurulumu ve 3D skin viewer içeren launcher. Vanilla, Forge ve Fabric destekli."
+  <style>
+    .ln-hero-art {
+      position: absolute; right: -6%; top: 50%; transform: translateY(-50%);
+      width: min(520px, 60vw); aspect-ratio: 1; opacity: .9; pointer-events: none;
     }
-  </script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Aperon Launcher tamamen ücretsiz mi?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Evet, Aperon Launcher'ın tüm özellikleri tamamen ücretsiz, reklam ve veri satışı yok." }
-        },
-        {
-          "@type": "Question",
-          "name": "Launcher güvenli midir?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Evet. VirusTotal'da kontrol edilmiştir." }
-        },
-        {
-          "@type": "Question",
-          "name": "Otomatik güncelleme nasıl çalışıyor?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yeni sürüm çıktığında launcher size İndir misin diye sorar. Onay verirseniz güncelleme yapılır, sessizce güncellenmez." }
-        },
-        {
-          "@type": "Question",
-          "name": "Modrinth modları kolay yükleniyor mu?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Evet. Bağımlı modlar otomatik indirilir. Modrinth hız limitine çarparsa launcher otomatik bekler ve yeniden dener." }
-        },
-        {
-          "@type": "Question",
-          "name": "Hangi Minecraft versiyonlarını destekliyor?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Vanilla, Forge ve Fabric loader'larını destekler. Tüm Minecraft: Java Edition sürümleriyle uyumlu." }
-        },
-        {
-          "@type": "Question",
-          "name": "Minimum sistem gereksinimleri nelerdir?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Windows 10/11 64-bit, Intel i3 / Ryzen 3, 4 GB RAM. Launcher otomatik donanımı analiz edip en uygun ayarları önerir." }
-        }
-      ]
+    .ln-hero-art .ring {
+      position: absolute; inset: 0; border: 1px solid var(--border-strong); border-radius: 50%;
+      animation: lnSpin 40s linear infinite;
     }
-  </script>
+    .ln-hero-art .ring.r2 { inset: 12%; border-style: dashed; animation-duration: 28s; animation-direction: reverse; }
+    .ln-hero-art .core {
+      position: absolute; inset: 30%; border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 35%, transparent), transparent 70%);
+      animation: lnGlow 6s ease-in-out infinite;
+    }
+    .ln-hero-art img { position: absolute; left: 50%; top: 50%; width: 38%; transform: translate(-50%,-50%); animation: lnFloat 7s ease-in-out infinite; }
+    @keyframes lnSpin { to { transform: rotate(360deg); } }
+    @keyframes lnGlow { 0%,100% { opacity: .5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
+    @keyframes lnFloat { 0%,100% { transform: translate(-50%,-50%); } 50% { transform: translate(-50%,-56%); } }
+    @media (max-width: 860px) { .ln-hero-art { opacity: .25; right: -30%; } }
+
+    .ln-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media (max-width: 860px) { .ln-steps { grid-template-columns: 1fr; } }
+    .ln-step { border: 1px solid var(--border); background: var(--card); padding: 30px; position: relative; transition: transform .3s ease, border-color .3s ease; }
+    .ln-step:hover { transform: translateY(-4px); border-color: var(--border-strong); }
+    .ln-step .n { font-family: var(--font-heading); font-weight: 900; font-size: 52px; line-height: 1; color: var(--accent); }
+    .ln-step h3 { font-family: var(--font-heading); font-weight: 800; font-size: 24px; margin: 16px 0 8px; text-transform: none; }
+    .ln-step p { color: var(--muted-foreground); font-size: 14.5px; line-height: 1.7; }
+
+    .ln-perks { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 8px; }
+    .ln-perk { display: flex; gap: 14px; align-items: flex-start; padding: 22px; border: 1px solid var(--border); background: var(--card); }
+    .ln-perk .dot { width: 34px; height: 34px; flex-shrink: 0; border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 15px; }
+    .ln-perk h4 { font-family: var(--font-body); font-weight: 600; font-size: 15px; }
+    .ln-perk p { color: var(--muted-foreground); font-size: 13.5px; line-height: 1.6; margin-top: 4px; }
+
+    .ln-download-ready { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 12px; color: var(--muted-foreground); }
+    .ln-download-ready::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #3ddc97; box-shadow: 0 0 0 0 rgba(61,220,151,.6); animation: lnPing 2.2s ease-out infinite; }
+    @keyframes lnPing { 0% { box-shadow: 0 0 0 0 rgba(61,220,151,.5); } 100% { box-shadow: 0 0 0 10px rgba(61,220,151,0); } }
+
+    .ln-thanks { text-align: center; padding: 56px 24px; border-top: 1px solid var(--border); }
+    .ln-thanks p { color: var(--muted-foreground); font-size: 16px; line-height: 1.8; max-width: 620px; margin: 16px auto 0; }
+  </style>
 </head>
 <body>
   <div id="layout-top"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="v2-container">
-        <span class="mono-label">İNDİR</span>
-        <h1 class="page-title">APERON<br>LAUNCHER</h1>
-        <p class="page-sub">Minecraft: Java Edition için tasarlanmış, performans odaklı mod launcher'ı. Modrinth entegrasyonu, otomatik bağımlılık kurulumu ve 3D skin görüntüleyici tek bir uygulamada.</p>
+    <!-- HERO -->
+    <section class="page-hero" style="position:relative">
+      <div class="ln-hero-art" aria-hidden="true">
+        <div class="ring"></div>
+        <div class="ring r2"></div>
+        <div class="core"></div>
+        <img src="logom1.png" alt="" width="200" height="200">
+      </div>
+      <div class="v2-container" style="position:relative">
+        <span class="mono-label">HOŞ GELDİN</span>
+        <h1 class="page-title">MODLARINI<br>KOLAYCA YÖNET</h1>
+        <p class="page-sub">Aperon Launcher, Minecraft: Java Edition'da modlarını tek bir yerden bulmanı, kurmanı ve yönetmeni sağlar. Ücretsiz, sade ve güvenli.</p>
+        <div style="margin-top:36px;display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+          <a id="dl-main-btn" href="https://github.com/4detrail/hexagesgames-release/releases/download/v1.1.7/Aperon_Setup_1.1.7.exe" class="btn-download">⬇ ŞİMDİ İNDİR · 120 MB</a>
+          <span class="ln-download-ready">Sürüm 1.1.7 · Windows 10/11 · 64-bit</span>
+        </div>
       </div>
     </section>
 
+    <!-- ÖZET KART + SAYAÇ -->
     <section class="content-section">
       <div class="content-wrap">
-
         <div class="ln-grid reveal">
-          <!-- Ana kart -->
           <div class="ln-card">
             <div class="ln-card-top">
               <div class="ln-logo"><img src="logom1.png" alt="Aperon Launcher logosu" width="44" height="44"></div>
@@ -110,86 +128,128 @@
                 <h2 class="ln-title" style="margin-top:8px">APERON<span class="ln-version">v1.1.7</span></h2>
               </div>
             </div>
-
-            <p class="ln-desc">Modrinth mod entegrasyonu, otomatik bağımlılık kurulumu ve 3D skin viewer bir arada. Sistem bileşenleri, düşük donanımlı bilgisayarlarda bile verimli çalışacak şekilde optimize edildi.</p>
-
+            <p class="ln-desc">Beğendiğin modları aramaktan, bağımlılıklarını tek tek bulmaktan kurtul. Aperon, ihtiyaç duyduğun her şeyi senin yerine düşünür ve hazırlar.</p>
             <div class="ln-tags">
-              <span class="ln-tag">%60+ DAHA FAZLA FPS</span>
+              <span class="ln-tag">MODRINTH ENTEGRASYONU</span>
+              <span class="ln-tag">OTOMATİK BAĞIMLILIK</span>
               <span class="ln-tag">VANILLA · FORGE · FABRIC</span>
-              <span class="ln-tag">VIRUSTOTAL ONAYLI</span>
               <span class="ln-tag">TR · EN · RU</span>
-              <span class="ln-tag">SINIRSIZ PROFİL</span>
+              <span class="ln-tag">VIRUSTOTAL ONAYLI</span>
             </div>
-
             <div class="ln-actions">
-              <a id="dl-main-btn" href="https://github.com/4detrail/hexagesgames-release/releases/download/v1.1.7/Aperon_Setup_1.1.7.exe" class="btn-download">
-                ⬇ İNDİR — 120 MB
-              </a>
-              <a href="https://www.virustotal.com/gui/file/a41eb67a55a5b18258c6414ac41d752b9d9f8c95914cbff578641f8ece8300a0/detection" target="_blank" rel="noopener" class="btn-download outline">
-                VIRUSTOTAL'DA GÖR →
-              </a>
+              <a href="https://www.virustotal.com/gui/file/a41eb67a55a5b18258c6414ac41d752b9d9f8c95914cbff578641f8ece8300a0/detection" target="_blank" rel="noopener" class="btn-download outline">GÜVENLİK RAPORUNU GÖR →</a>
             </div>
-            <p class="ln-meta">SÜRÜM 1.1.7 · WINDOWS 10/11 · 64-BIT · 120 MB</p>
-
             <div class="ln-specs">
               <div class="ln-spec"><div class="ln-spec-label">MOD DESTEĞİ</div><div class="ln-spec-val">Modrinth + otomatik bağımlılık</div></div>
-              <div class="ln-spec"><div class="ln-spec-label">GÜNCELLEME</div><div class="ln-spec-val">Onaylı, sessiz değil</div></div>
+              <div class="ln-spec"><div class="ln-spec-label">GÜNCELLEME</div><div class="ln-spec-val">Onayınla, sessizce değil</div></div>
               <div class="ln-spec"><div class="ln-spec-label">GİZLİLİK</div><div class="ln-spec-val">Veri satışı yok</div></div>
             </div>
           </div>
 
-          <!-- Canlı sayaç -->
           <div class="ln-counter">
             <div>
               <span class="ln-live"><i></i>CANLI SAYAÇ</span>
               <div class="ln-count" id="dl-counter-num">—</div>
               <div class="ln-count-label">TOPLAM İNDİRME</div>
             </div>
-            <p class="ln-count-sub">Her indirme anlık olarak sayılıyor. Şeffaflık, güvenin temelidir.</p>
+            <p class="ln-count-sub">Aperon'u indiren her oyuncu bu sayıya anlık olarak eklenir. Topluluğun büyümesini birlikte izliyoruz.</p>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Güncelleme notları (açılır) -->
+    <!-- NASIL ÇALIŞIR -->
+    <section class="v2-section">
+      <div class="content-wrap">
+        <div class="reveal">
+          <span class="mono-label">BAŞLAMAK ÇOK KOLAY</span>
+          <h2 class="v2-h2" style="margin-top:14px">ÜÇ ADIMDA HAZIR</h2>
+        </div>
+        <div class="ln-steps stagger-children" style="margin-top:48px">
+          <div class="ln-step"><div class="n">01</div><h3>İndir</h3><p>Kurulum dosyasını yukarıdaki butondan indir. Yaklaşık 120 MB.</p></div>
+          <div class="ln-step"><div class="n">02</div><h3>Kur</h3><p>Kurulum sihirbazını takip et. Birkaç tıklamayla tamamlanır.</p></div>
+          <div class="ln-step"><div class="n">03</div><h3>Keşfet</h3><p>Launcher'ı aç, Minecraft sürümünü ve modlarını seç. Gerisini Aperon halleder.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEDEN APERON -->
+    <section class="v2-section">
+      <div class="content-wrap">
+        <div class="reveal">
+          <span class="mono-label">NEDEN APERON?</span>
+          <h2 class="v2-h2" style="margin-top:14px">SADE, GÜVENLİ, SENİN İÇİN</h2>
+        </div>
+        <div class="ln-perks reveal" style="margin-top:48px">
+          <div class="ln-perk"><div class="dot">✦</div><div><h4>Bağımlılıklar otomatik</h4><p>Bir modun ihtiyaç duyduğu diğer modlar da otomatik olarak bulunur ve indirilir.</p></div></div>
+          <div class="ln-perk"><div class="dot">◎</div><div><h4>Kararı sen ver</h4><p>Yeni bir sürüm çıktığında launcher sana sorar. Güncelleme yalnızca onayınla yapılır.</p></div></div>
+          <div class="ln-perk"><div class="dot">⚑</div><div><h4>Dilini seç</h4><p>Mod açıklamalarını Türkçe, İngilizce veya Rusça olarak okuyabilirsin.</p></div></div>
+          <div class="ln-perk"><div class="dot">⚡</div><div><h4>Hafif çalışır</h4><p>Arka plan işlemleri optimize edildi. Oyunun kaynaklarını gereksiz yere tüketmez.</p></div></div>
+          <div class="ln-perk"><div class="dot">✓</div><div><h4>Kontrol edilmiş dosya</h4><p>Kurulum dosyası VirusTotal üzerinde incelenmiştir. Raporu dilediğin zaman görebilirsin.</p></div></div>
+          <div class="ln-perk"><div class="dot">⌘</div><div><h4>Geliştiricilere uygun</h4><p>Java yolu ve bağlantıları gibi ayarları ayrıntılı biçimde yapılandırabilirsin.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GÜNCELLEME NOTLARI -->
+    <section class="content-section" style="padding-top:0">
+      <div class="content-wrap">
         <div class="ln-notes reveal">
           <button id="notes-toggle" class="ln-notes-toggle" type="button" aria-expanded="false" aria-controls="notes-body">
-            <h3>v1.1.7 Güncelleme Notları</h3>
+            <h3>v1.1.7 neler yeni?</h3>
             <span class="ln-chev" aria-hidden="true">▼</span>
           </button>
           <div id="notes-body" class="ln-notes-body">
             <div class="ln-notes-inner">
-              <div class="ln-note"><h4>Modrinth Entegrasyonu — Binlerce Mod Tek Yerden</h4><p>Modrinth üzerindeki modlara doğrudan Aperon Launcher içinden ulaşın. Modları arayın, inceleyin ve kolayca indirin. Bağımlılık takibi sayesinde ihtiyaç duyulan diğer modlar da otomatik olarak tespit edilir ve indirilir.</p></div>
-              <div class="ln-note"><h4>Modları Kendi Dilinizde İnceleyin</h4><p>Mod açıklamalarını Türkçe, Rusça ve İngilizce olarak görüntüleyebilirsiniz.</p></div>
-              <div class="ln-note"><h4>Daha Güvenli Güncelleme Sistemi</h4><p>Yeni bir sürüm bulunduğunda Aperon size güncelleme seçeneği sunar. Karar size aittir. "Şimdi Değil" seçerseniz güncellemeyi kaçırmazsınız. Ayarlar bölümündeki periyodik kontrol ile sürümünüzü istediğiniz zaman doğrulayabilirsiniz.</p></div>
-              <div class="ln-note"><h4>FPS ve Verimlilik İyileştirmeleri</h4><p><strong>Arka plan sistemleri tamamen optimize edildi.</strong> AFK durumlarında gereksiz kaynak tüketimini önlemek için oyun verimlilik modunda 30 FPS ile sınırlandırılır. Sonuç: eski launcher'lara kıyasla <strong>%60+ daha fazla FPS</strong> ve daha az CPU/RAM kullanımı.</p></div>
-              <div class="ln-note"><h4>Çökme Günlüğü (Crash Log)</h4><p>Oyun veya program beklenmedik şekilde kapandığında hata kayıtları Ayarlar bölümünde takip edilebilir.</p></div>
-              <div class="ln-note"><h4>Geliştiriciler İçin Java Ayarları</h4><p>Ayarlar bölümünde Java yolu ve bağlantılarını ayrıntılı biçimde yapılandırabilirsiniz. Eski sürümlerdeki Java sorunları için bu sistem baştan ele alındı.</p></div>
+              <div class="ln-note"><h4>Modrinth entegrasyonu</h4><p>Modrinth'teki modlara doğrudan launcher içinden ulaş. Ara, incele ve kolayca indir.</p></div>
+              <div class="ln-note"><h4>Modları kendi dilinde incele</h4><p>Mod açıklamalarını Türkçe, Rusça ve İngilizce olarak görüntüleyebilirsin.</p></div>
+              <div class="ln-note"><h4>Daha güvenli güncelleme</h4><p>Yeni sürüm bulunduğunda sana bir seçenek sunulur. "Şimdi değil" dersen güncellemeyi istediğin zaman yapabilirsin.</p></div>
+              <div class="ln-note"><h4>Performans iyileştirmeleri</h4><p>Arka plan sistemleri optimize edildi. AFK durumlarında kaynak tüketimi düşürülür; önceki sürümlere göre daha akıcı bir deneyim hedeflenir.</p></div>
+              <div class="ln-note"><h4>Çökme günlüğü</h4><p>Beklenmedik bir kapanma olduğunda hata kayıtlarını Ayarlar bölümünden inceleyebilirsin.</p></div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Geri bildirim -->
+    <!-- GERİ BİLDİRİM -->
+    <section class="content-section" style="padding-top:0">
+      <div class="content-wrap">
         <div class="ln-feedback reveal">
           <div>
-            <h3>Geri bildiriminiz önemli</h3>
-            <p>Sorun mu var, öneriniz mi? Discord sunucumuzda doğrudan geliştirici ekibiyle konuşabilirsiniz.</p>
+            <h3>Bir fikrin ya da sorunun mu var?</h3>
+            <p>Seninle birlikte gelişiyoruz. Discord'da geliştirici ekibiyle doğrudan konuşabilir, önerilerini paylaşabilirsin.</p>
           </div>
-          <a href="https://discord.gg/rKnZDrZUHS" target="_blank" rel="noopener" class="btn-download outline">DİSCORD SUNUCUMUZA KATILIN</a>
+          <a href="https://discord.gg/rKnZDrZUHS" target="_blank" rel="noopener" class="btn-download outline">DISCORD'A KATIL →</a>
         </div>
+      </div>
+    </section>
 
-        <!-- SSS -->
-        <div class="reveal" style="margin-top:96px">
-          <span class="mono-label">SIK SORULAN SORULAR</span>
-          <h2 class="v2-h2" style="margin:14px 0 36px">MERAK EDİLENLER</h2>
-          <div class="faq-grid">
-            <div class="faq-item"><p class="faq-q">Aperon Launcher tamamen ücretsiz mi?</p><p class="faq-a">Evet. Tüm özellikler ücretsizdir; reklam yoktur ve veri satışı yapılmaz.</p></div>
-            <div class="faq-item"><p class="faq-q">Launcher güvenli mi?</p><p class="faq-a">Evet. Dosya VirusTotal üzerinde kontrol edilmiştir; sonuçları yukarıdaki bağlantıdan inceleyebilirsiniz.</p></div>
-            <div class="faq-item"><p class="faq-q">Otomatik güncelleme nasıl çalışıyor?</p><p class="faq-a">Yeni sürüm çıktığında launcher size güncellemeyi onaylatır. Sessizce güncelleme yapılmaz.</p></div>
-            <div class="faq-item"><p class="faq-q">Modrinth modları kolay yükleniyor mu?</p><p class="faq-a">Evet. Bağımlı modlar otomatik indirilir. Modrinth hız limitine takılırsa launcher otomatik bekleyip yeniden dener.</p></div>
-            <div class="faq-item"><p class="faq-q">Hangi Minecraft sürümlerini destekliyor?</p><p class="faq-a">Vanilla, Forge ve Fabric loader'larını destekler; Minecraft: Java Edition sürümleriyle uyumludur.</p></div>
-            <div class="faq-item"><p class="faq-q">Minimum sistem gereksinimleri nelerdir?</p><p class="faq-a">Windows 10/11 64-bit, Intel i3 / Ryzen 3, 4 GB RAM. Launcher donanımınızı analiz edip uygun ayarları önerir.</p></div>
-          </div>
+    <!-- SSS -->
+    <section class="v2-section">
+      <div class="content-wrap">
+        <div class="reveal">
+          <span class="mono-label">MERAK EDİLENLER</span>
+          <h2 class="v2-h2" style="margin:14px 0 40px">SIK SORULAN SORULAR</h2>
         </div>
+        <div class="faq-grid">
+          <div class="faq-item reveal"><p class="faq-q">Aperon Launcher tamamen ücretsiz mi?</p><p class="faq-a">Evet. Tüm özellikler ücretsizdir; reklam yoktur ve veri satışı yapılmaz.</p></div>
+          <div class="faq-item reveal"><p class="faq-q">Launcher güvenli mi?</p><p class="faq-a">Evet. Kurulum dosyası VirusTotal üzerinde kontrol edilmiştir; raporu yukarıdaki bağlantıdan inceleyebilirsin.</p></div>
+          <div class="faq-item reveal"><p class="faq-q">Otomatik güncelleme nasıl çalışıyor?</p><p class="faq-a">Yeni sürüm çıktığında launcher güncellemeyi sana onaylatır. Sessizce güncelleme yapılmaz.</p></div>
+          <div class="faq-item reveal"><p class="faq-q">Modrinth modları kolay yükleniyor mu?</p><p class="faq-a">Evet. Bağımlı modlar otomatik indirilir. Modrinth hız limitine takılırsa launcher bekleyip yeniden dener.</p></div>
+          <div class="faq-item reveal"><p class="faq-q">Hangi Minecraft sürümlerini destekliyor?</p><p class="faq-a">Vanilla, Forge ve Fabric loader'larını destekler; Minecraft: Java Edition sürümleriyle uyumludur.</p></div>
+          <div class="faq-item reveal"><p class="faq-q">Minimum sistem gereksinimleri nelerdir?</p><p class="faq-a">Windows 10/11 64-bit, Intel i3 / Ryzen 3 ve 4 GB RAM. Launcher donanımını analiz edip uygun ayarları önerir.</p></div>
+        </div>
+      </div>
+    </section>
 
+    <!-- KAPANIŞ -->
+    <section class="ln-thanks reveal">
+      <span class="mono-label">HAZIR MISIN?</span>
+      <h2 class="v2-h2" style="margin-top:14px">MODLARINLA BULUŞMAYA</h2>
+      <p>Aperon ile Minecraft'ta yeni bir sayfa aç. Kurulumu bir kez yap, gerisini birlikte keşfedelim.</p>
+      <div style="margin-top:32px">
+        <a href="https://github.com/4detrail/hexagesgames-release/releases/download/v1.1.7/Aperon_Setup_1.1.7.exe" class="btn-download" onclick="trackLauncherDownloadClick()">⬇ ŞİMDİ İNDİR</a>
       </div>
     </section>
   </main>
@@ -209,11 +269,11 @@
 
     // Açılır güncelleme notları
     const toggle = document.getElementById('notes-toggle');
-    const body = document.getElementById('notes-body');
+    const notesBody = document.getElementById('notes-body');
     toggle.addEventListener('click', () => {
       const open = toggle.getAttribute('aria-expanded') !== 'true';
       toggle.setAttribute('aria-expanded', String(open));
-      body.style.maxHeight = open ? body.scrollHeight + 'px' : '0';
+      notesBody.style.maxHeight = open ? notesBody.scrollHeight + 'px' : '0';
     });
 
     // Canlı indirme sayacı
@@ -235,7 +295,11 @@
       animateCounter(shownCount, count);
       shownCount = count;
     });
-    document.getElementById('dl-main-btn').addEventListener('click', () => trackLauncherDownload(DL_STAT_ID));
+
+    // İndirme sayacı: her indirme butonu aynı sayacı artırır
+    const track = () => trackLauncherDownload(DL_STAT_ID);
+    document.getElementById('dl-main-btn').addEventListener('click', track);
+    window.trackLauncherDownloadClick = track;
   </script>
 </body>
 </html>
