@@ -20,23 +20,33 @@
   <div id="layout-top"></div>
 
   <main>
-    <section style="padding:160px 24px 64px">
+    <section class="page-hero">
       <div class="v2-container">
-        <span class="mono-label">// OYUNLAR</span>
-        <h1 class="v2-h2" style="font-size:clamp(56px,9vw,120px);margin-top:12px">OYUNLARIMIZ</h1>
-        <p class="v2-lead">Geliştirmekte olan projelerimizi buradan takip edebilirsiniz. Her oyunun kendi sayfasında haberler, güncellemeler ve geliştirici notları yer alır.</p>
-        <div class="v2-divider-red"></div>
+        <span class="mono-label">OYUNLAR</span>
+        <h1 class="page-title">OYUNLARIMIZ</h1>
+        <p class="page-sub">Geliştirmekte olan projelerimizi buradan takip edebilirsiniz. Her oyunun kendi sayfasında haberler, güncellemeler ve geliştirici notları yer alır.</p>
       </div>
     </section>
 
-    <section style="padding:0 24px 96px">
-      <div class="v2-container">
-        <div class="games-grid" id="games-grid"></div>
+    <section class="content-section">
+      <div class="content-wrap">
+        <!-- Oyun kartı: görsel yolu doğrudan burada -->
+        <div class="games-grid">
+          <a href="oyun.html?id=chasing-the-shlump" class="v2-game-card" aria-label="Chasing the SHlump oyun sayfası">
+            <img class="cover" src="assets/games/chasing-the-shlump/cover.png" alt="Chasing the SHlump kapak görseli" loading="lazy">
+            <div class="shade"></div>
+            <div class="meta">
+              <span class="tag">GELİŞTİRİLİYOR · PC</span>
+              <h3>Chasing the SHlump</h3>
+              <div class="arrow">DETAYLARI GÖR →</div>
+            </div>
+          </a>
+        </div>
 
         <div class="v2-empty" style="margin-top:32px">YENİ PROJELER DUYURULDUĞUNDA BURADA YER ALACAK</div>
 
-        <div class="v2-panel" style="margin-top:64px;text-align:center;padding:56px 32px">
-          <span class="mono-label">// GÜNCELLEMELERİ TAKİP ET</span>
+        <div class="v2-page-card" style="margin-top:64px;text-align:center;padding:56px 32px">
+          <span class="mono-label">GÜNCELLEMELERİ TAKİP ET</span>
           <h2 class="v2-h2" style="font-size:clamp(32px,4vw,48px);margin-top:14px">HABERDAR OL</h2>
           <p class="v2-lead" style="margin-left:auto;margin-right:auto">Yeni duyurular ilk olarak Discord üzerinden paylaşılır.</p>
           <div style="margin-top:28px">
@@ -50,30 +60,11 @@
   <div id="layout-footer"></div>
 
   <script type="module">
-    import { GAMES } from './js/games.js';
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import { initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav } from './js/app.js';
-
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
     initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
-
-    const grid = document.getElementById('games-grid');
-    GAMES.forEach(g => {
-      const a = document.createElement('a');
-      a.className = 'v2-game-card';
-      a.href = `oyun.html?id=${encodeURIComponent(g.id)}`;
-      a.setAttribute('aria-label', `${g.name} oyun sayfası`);
-      a.innerHTML = `
-        <img class="cover" src="${g.images.cover}" alt="${g.name} kapak görseli" loading="lazy">
-        <div class="shade"></div>
-        <div class="meta">
-          <span class="tag">${g.status.toUpperCase()} · ${g.platform}</span>
-          <h3>${g.name}</h3>
-          <div class="arrow">DETAYLARI GÖR →</div>
-        </div>`;
-      grid.appendChild(a);
-    });
   </script>
 </body>
 </html>
