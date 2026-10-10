@@ -70,20 +70,65 @@
     <!-- HERO -->
     <section class="hero" id="hero" style="position:relative;overflow:hidden">
       <div class="hero-glow" aria-hidden="true"></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden" aria-hidden="true">
-        <div class="hero-hex-float" style="width:760px;height:760px;opacity:0.05;border:1px solid var(--foreground);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexRotate 60s linear infinite"></div>
-        <div style="position:absolute;width:480px;height:480px;opacity:0.06;border:1px solid var(--accent);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexRotate 40s linear infinite reverse"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding-right:6vw;pointer-events:none;overflow:hidden" aria-hidden="true" data-parallax>
+        <div class="hero-hex-float" style="width:620px;height:620px;opacity:0.05;border:1px solid var(--foreground);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexRotate 60s linear infinite"></div>
+        <div style="position:absolute;right:calc(6vw + 70px);width:480px;height:480px;opacity:0.06;border:1px solid var(--accent);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexRotate 40s linear infinite reverse"></div>
       </div>
-      <div class="hero-content" style="max-width:1200px;margin:0 auto;padding:0 24px;width:100%;position:relative">
-        <div class="hero-badge">OYUN STÜDYOSU · 2026</div>
-        <h1 class="hero-title">HEXAGES<br><span class="accent-line">GAMES</span></h1>
-        <p class="hero-sub" style="margin-top:28px">Oyunlarımızı özenle tasarlıyor, her detayda kaliteden ödün vermeden geliştiriyoruz. Yeni projelerimiz ve haberlerimiz burada.</p>
-        <div class="hero-buttons" style="margin-top:36px;display:flex;gap:14px;flex-wrap:wrap">
-          <a href="oyun.html?id=chasing-the-shlump" class="btn-download">CHASING THE SHLUMP →</a>
-          <a href="oyunlar.html" class="btn-download outline">TÜM OYUNLAR</a>
+      <div class="hero-mark" aria-hidden="true"><img class="logo-dark" src="assets/brand/hx-white.png" alt=""><img class="logo-light" src="assets/brand/hx-black.png" alt=""></div>
+      <div class="hero-content" style="padding:0 32px;position:relative">
+        <div class="hero-wrap" style="max-width:1400px;margin:0 auto">
+          <div class="hero-badge">OYUN STÜDYOSU · 2026</div>
+          <h1 class="hero-title">HEXAGES <span class="accent-line">GAMES</span></h1>
+          <p class="hero-sub">Oyunlarımızı özenle tasarlıyor, her detayda kaliteden ödün vermeden geliştiriyoruz. Yeni projelerimiz ve haberlerimiz burada.</p>
+          <div class="hero-buttons" style="margin-top:36px;display:flex;gap:14px;flex-wrap:wrap">
+            <a href="oyun.html?id=chasing-the-shlump" class="btn-download">CHASING THE SHLUMP →</a>
+            <a href="oyunlar.html" class="btn-download outline">TÜM OYUNLAR</a>
+          </div>
         </div>
       </div>
       <div class="hero-scroll"><span>KEŞFET</span><div class="scroll-line"></div></div>
+    </section>
+
+    <!-- OYUN KARTLARI: tek görseli tamamlayan 3 büyük kart -->
+    <section class="showcase" aria-labelledby="showcase-title">
+      <div class="showcase-inner">
+        <div class="showcase-head reveal">
+          <div>
+            <span class="mono-label">ÖNE ÇIKAN OYUN</span>
+            <h2 id="showcase-title">CHASING THE SHLUMP</h2>
+          </div>
+          <a href="oyunlar.html" class="btn-download outline">TÜM OYUNLAR</a>
+        </div>
+        <div class="triptych reveal">
+          <a class="big-card" href="oyun.html?id=chasing-the-shlump">
+            <img class="pic" src="assets/home/triptych.jpg" alt="" loading="eager">
+            <div class="meta">
+              <span class="tag">GELİŞTİRİLİYOR · PC</span>
+              <h3>Oyun Sayfası</h3>
+              <p>Stüdyomuzun ilk ana projesi. Oyunun tüm detayları tek sayfada.</p>
+              <span class="go">KEŞFET</span>
+            </div>
+          </a>
+          <a class="big-card" href="oyun.html?id=chasing-the-shlump#galeri">
+            <img class="pic" src="assets/home/triptych.jpg" alt="" loading="eager">
+            <div class="meta">
+              <span class="tag">GÖRSELLER</span>
+              <h3>Ekran Görüntüleri</h3>
+              <p>Oyundan sahneler ve geliştirme sürecinden kareler.</p>
+              <span class="go">GALERİYİ AÇ</span>
+            </div>
+          </a>
+          <a class="big-card" href="oyun.html?id=chasing-the-shlump#haberler">
+            <img class="pic" src="assets/home/triptych.jpg" alt="" loading="eager">
+            <div class="meta">
+              <span class="tag">DUYURULAR</span>
+              <h3>Geliştirici Haberleri</h3>
+              <p>Güncellemeler ve geliştirme notları ilk burada yayınlanır.</p>
+              <span class="go">HABERLERİ OKU</span>
+            </div>
+          </a>
+        </div>
+      </div>
     </section>
 
     <!-- KAYAN ŞERİT -->
@@ -139,7 +184,7 @@
           <span class="mono-label">LAUNCHER</span>
           <h2 class="v2-h2" style="margin:14px auto 0;max-width:760px">APERON LAUNCHER</h2>
           <p class="v2-lead" style="margin:22px auto 0;text-align:center">Minecraft: Java Edition için Modrinth mod entegrasyonu, otomatik bağımlılık kurulumu ve 3D skin görüntüleyici. Ücretsiz.</p>
-          <div style="margin-top:36px;position:relative"><a href="launcher.html" class="btn-download">LAUNCHER'I İNDİR</a></div>
+          <div style="margin-top:36px;position:relative"><a href="launcher.html" class="btn-download">LAUNCHER'I İNDİR</a> <a href="launcher.html#pluginler" class="btn-download outline" style="margin-left:10px">PLUGİNLERİ GÖR</a></div>
         </div>
       </div>
     </section>
