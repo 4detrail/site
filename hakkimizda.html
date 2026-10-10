@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hakkımızda | HEXAGES GAMES</title>
+  <meta name="description" content="HEXAGES GAMES, oyuncular için özenle tasarlanmış oyunlar ve araçlar geliştiren bağımsız bir oyun stüdyosudur." />
+  <link rel="canonical" href="https://hexagesgames.vercel.app/hakkimizda" />
+  <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+  <main>
+    <section class="page-hero">
+      <div class="v2-container">
+        <span class="mono-label">HAKKIMIZDA</span>
+        <h1 class="page-title">STÜDYOMUZ</h1>
+        <p class="page-sub">Oyuncular için özenle tasarlanmış oyunlar ve araçlar geliştiriyoruz.</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="content-wrap about-grid">
+        <div class="about-text reveal reveal-left">
+          <span class="mono-label">BİZ KİMİZ</span>
+          <h2 class="v2-h2" style="margin:14px 0 26px">KALİTEYİ DETAYDA ARIYORUZ</h2>
+          <p>HEXAGES GAMES, oyun geliştirmeye tutkuyla bağlı bağımsız bir stüdyodur. İlk ana projemiz Chasing the SHlump üzerinde çalışırken, Minecraft topluluğu için Aperon Launcher ve sunucu pluginleri de geliştiriyoruz.</p>
+          <p>Her ürünümüzde sade tasarımı, şeffaf iletişimi ve oyuncunun güvenini ön planda tutuyoruz. Geri bildirimlerinizi dinler, yol haritamızı toplulukla birlikte şekillendiririz.</p>
+          <div style="margin-top:34px;display:flex;gap:14px;flex-wrap:wrap">
+            <a href="oyunlar.html" class="btn-download">OYUNLARIMIZ</a>
+            <a href="iletisim.html" class="btn-download outline">İLETİŞİME GEÇ</a>
+          </div>
+        </div>
+        <div class="about-values stagger-children">
+          <div class="about-value"><b>01</b><div><h4>Kalite</h4><p>Her detayı özenle tasarlar, yayına almadan önce titizlikle test ederiz.</p></div></div>
+          <div class="about-value"><b>02</b><div><h4>Şeffaflık</h4><p>Gelişmeleri ve kararlarımızı toplulukla açıkça paylaşırız.</p></div></div>
+          <div class="about-value"><b>03</b><div><h4>Güven</h4><p>Verilerinizi satmaz, dosyalarımızı kontrol edilebilir şekilde sunarız.</p></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import { initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav } from './js/app.js';
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+  </script>
+</body>
+</html>

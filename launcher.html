@@ -168,7 +168,7 @@
         <div class="ring"></div>
         <div class="ring r2"></div>
         <div class="core"></div>
-        <img src="white.png" alt="" width="200" height="180">
+        <img src="white.png" alt="" width="200" height="176" class="logo-for-dark"><img src="logo-dark.png" alt="" width="200" height="176" class="logo-for-light">
       </div>
       <div class="v2-container" style="position:relative">
         <span class="mono-label">HOŞ GELDİN</span>
@@ -292,7 +292,7 @@
     </section>
 
     <!-- SSS -->
-    <section class="v2-section">
+    <section class="v2-section" id="sss">
       <div class="content-wrap">
         <div class="reveal">
           <span class="mono-label">MERAK EDİLENLER</span>
@@ -318,6 +318,41 @@
         <a href="https://github.com/4detrail/hexagesgames-release/releases/download/v1.1.7/Aperon_Setup_1.1.7.exe" class="btn-download btn-blue" onclick="trackLauncherDownloadClick()">⬇ ŞİMDİ İNDİR</a>
       </div>
     </section>
+
+    <!-- PLUGİNLER (eski pluginlerimiz sayfası buraya taşındı) -->
+    <section class="v2-section plugin-section" id="pluginler">
+      <div class="content-wrap">
+        <div class="reveal">
+          <span class="mono-label">PLUGİNLER</span>
+          <h2 class="v2-h2" style="margin-top:14px">PLUGİNLERİMİZ</h2>
+          <p class="page-sub">Minecraft sunucuları için HEXAGES eklentileri. Hepsi Modrinth üzerinden indirilebilir.</p>
+          <p class="pv-meta" style="margin-top:14px">3 AKTİF PLUGİN · MODRINTH'TE YAYINDA</p>
+        </div>
+        <div class="pl-grid reveal" id="plugins-grid"></div>
+
+        <div class="pl-yt reveal">
+          <div>
+            <span class="mono-label">YOUTUBE</span>
+            <h2 style="font-family:var(--font-heading);font-weight:900;font-size:clamp(32px,4vw,48px);margin-top:12px;text-transform:none">Zcrosty</h2>
+            <p class="v2-lead" style="margin-top:14px;font-size:15px">Plugin kullanım kılavuzları ve güncelleme videoları YouTube kanalımızda yayınlanıyor. Kurulum rehberleri için kanala abone olun.</p>
+            <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/@zcrosty?sub_confirmation=1" target="_blank" rel="noopener" class="btn-download">ABONE OL</a>
+              <a href="https://www.youtube.com/@zcrosty" target="_blank" rel="noopener" class="btn-download outline">KANALI AÇ →</a>
+            </div>
+          </div>
+          <a href="https://www.youtube.com/@zcrosty" target="_blank" rel="noopener" class="pl-yt-preview" aria-label="Zcrosty YouTube kanalı">
+            <span class="pl-yt-play">▶</span>
+          </a>
+        </div>
+
+        <div class="v2-page-card reveal" style="margin-top:24px;text-align:center">
+          <span class="mono-label">DAHA FAZLASI YAKINDA</span>
+          <h2 style="font-family:var(--font-heading);font-weight:900;font-size:30px;margin:12px 0;text-transform:none">Yeni pluginler için topluluğa katılın</h2>
+          <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="btn-download outline" style="margin-top:12px">DİSCORD'A KATIL →</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <div id="layout-footer"></div>
@@ -332,6 +367,21 @@
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
     initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+
+    // Pluginler (eski pluginlerimiz sayfasından taşındı)
+    const plugins = [
+      { name: 'HEXAGES BANKNOTES', desc: 'Sunucu ekonomisi için banknot sistemi', url: 'https://modrinth.com/plugin/hexagesbanknotes', tag: 'EKONOMİ' },
+      { name: 'NEX ADMIN', desc: 'Güçlü yönetim ve moderasyon araçları', url: 'https://modrinth.com/plugin/nexadmin', tag: 'YÖNETİM' },
+      { name: 'NEX DUELS', desc: 'Oyuncu düelloları ve arena sistemi', url: 'https://modrinth.com/plugin/nexduels', tag: 'PVP' }
+    ];
+    const plGrid = document.getElementById('plugins-grid');
+    plugins.forEach(pl => {
+      const a = document.createElement('a');
+      a.className = 'pl-card';
+      a.href = pl.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.innerHTML = `<span class="pl-tag">${pl.tag}</span><h3 class="pl-name">${pl.name}</h3><p class="pl-desc">${pl.desc}</p><span class="pl-link">MODRINTH'TE İNDİR →</span>`;
+      plGrid.appendChild(a);
+    });
 
     // Açılır güncelleme notları
     const toggle = document.getElementById('notes-toggle');

@@ -70,20 +70,98 @@
     <!-- HERO -->
     <section class="hero" id="hero" style="position:relative;overflow:hidden">
       <div class="hero-glow" aria-hidden="true"></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden" aria-hidden="true">
-        <div class="hero-hex-float" style="width:760px;height:760px;opacity:0.05;border:1px solid var(--foreground);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexRotate 60s linear infinite"></div>
-        <div style="position:absolute;width:480px;height:480px;opacity:0.06;border:1px solid var(--accent);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexRotate 40s linear infinite reverse"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding-right:6vw;pointer-events:none;overflow:hidden" aria-hidden="true">
+        <div class="hero-hex-float" style="width:620px;height:620px;opacity:0.06;border:1px solid var(--foreground);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexRotate 60s linear infinite"></div>
+        <div style="position:absolute;right:calc(6vw + 70px);width:480px;height:480px;opacity:0.07;border:1px solid var(--accent);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexRotate 40s linear infinite reverse"></div>
       </div>
-      <div class="hero-content" style="max-width:1200px;margin:0 auto;padding:0 24px;width:100%;position:relative">
+      <div class="hero-content" style="padding:0 8px;width:100%;position:relative">
         <div class="hero-badge">OYUN STÜDYOSU · 2026</div>
-        <h1 class="hero-title">HEXAGES<br><span class="accent-line">GAMES</span></h1>
-        <p class="hero-sub" style="margin-top:28px">Oyunlarımızı özenle tasarlıyor, her detayda kaliteden ödün vermeden geliştiriyoruz. Yeni projelerimiz ve haberlerimiz burada.</p>
-        <div class="hero-buttons" style="margin-top:36px;display:flex;gap:14px;flex-wrap:wrap">
-          <a href="oyun.html?id=chasing-the-shlump" class="btn-download">CHASING THE SHLUMP →</a>
-          <a href="oyunlar.html" class="btn-download outline">TÜM OYUNLAR</a>
+        <h1 class="hero-title">HEXAGES <span class="accent-line">GAMES</span></h1>
+        <div class="hero-lower">
+          <p class="hero-sub">Oyunlarımızı özenle tasarlıyor, her detayda kaliteden ödün vermeden geliştiriyoruz. Yeni projelerimiz ve haberlerimiz burada.</p>
+          <div class="hero-buttons">
+            <a href="oyun.html?id=chasing-the-shlump" class="btn-download">CHASING THE SHLUMP →</a>
+            <a href="oyunlar.html" class="btn-download outline">TÜM OYUNLAR</a>
+          </div>
+        </div>
+        <div class="hero-underline" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- OYUNLAR İÇİN 3 BÜYÜK KART: tek görselin 3 parçası, yan yana birbirini tamamlar -->
+    <section class="trio-section">
+      <div class="v2-container" style="max-width:1360px">
+        <div class="trio-head reveal">
+          <div>
+            <span class="mono-label">OYUNLARIMIZ</span>
+            <h2 class="v2-h2" style="margin-top:14px">KEŞFETMEYE BAŞLA</h2>
+          </div>
+          <a href="oyunlar.html" class="btn-download outline">TÜM OYUNLAR →</a>
+        </div>
+        <div class="trio stagger-children">
+          <a href="oyun.html?id=chasing-the-shlump" class="trio-card" aria-label="Chasing the SHlump oyun sayfası">
+            <img src="assets/home/trio-1.png" alt="" loading="lazy">
+            <div class="trio-meta">
+              <span class="trio-tag">GELİŞTİRİLİYOR · PC</span>
+              <h3>Chasing<br>the SHlump</h3>
+              <p>Stüdyomuzun ilk ana projesi. Oyun sayfasından detayları keşfet.</p>
+              <span class="trio-go">OYUN SAYFASI <span>→</span></span>
+            </div>
+          </a>
+          <a href="oyun.html?id=chasing-the-shlump" class="trio-card" aria-label="Geliştirici haberleri">
+            <img src="assets/home/trio-2.png" alt="" loading="lazy">
+            <div class="trio-meta">
+              <span class="trio-tag">GÜNCEL</span>
+              <h3>Geliştirici<br>Haberleri</h3>
+              <p>Duyurular, geliştirme notları ve güncellemeler oyun sayfasında.</p>
+              <span class="trio-go">HABERLERİ OKU <span>→</span></span>
+            </div>
+          </a>
+          <a href="oyunlar.html" class="trio-card" aria-label="Tüm oyunlar ve yeni projeler">
+            <img src="assets/home/trio-3.png" alt="" loading="lazy">
+            <div class="trio-meta">
+              <span class="trio-tag">YAKINDA</span>
+              <h3>Yeni<br>Projeler</h3>
+              <p>Duyurulduğunda tüm yeni oyunlarımız katalogda yer alacak.</p>
+              <span class="trio-go">KATALOĞA GİT <span>→</span></span>
+            </div>
+          </a>
         </div>
       </div>
-      <div class="hero-scroll"><span>KEŞFET</span><div class="scroll-line"></div></div>
+    </section>
+
+    <!-- BİLGİ KARTLARI -->
+    <section class="feat-section">
+      <div class="v2-container" style="max-width:1360px">
+        <div class="feat-grid stagger-children">
+          <a href="launcher.html" class="feat-card">
+            <img class="feat-logo logo-for-dark" src="white.png" alt="" width="46" height="40">
+            <img class="feat-logo logo-for-light" src="logo-dark.png" alt="" width="46" height="40">
+            <span class="feat-num">01 · YAZILIM</span>
+            <h3>Aperon Launcher</h3>
+            <p>Minecraft için Modrinth entegrasyonlu, ücretsiz ve güvenli launcher.</p>
+            <span class="feat-go">İNDİR <span>→</span></span>
+          </a>
+          <a href="launcher.html#pluginler" class="feat-card">
+            <span class="feat-num">02 · EKLENTİLER</span>
+            <h3>Pluginler</h3>
+            <p>HEXAGES Banknotes, NEX Admin ve NEX Duels. Modrinth üzerinden indirilebilir.</p>
+            <span class="feat-go">PLUGİNLERİ GÖR <span>→</span></span>
+          </a>
+          <a href="hakkimizda.html" class="feat-card">
+            <span class="feat-num">03 · STÜDYO</span>
+            <h3>Hakkımızda</h3>
+            <p>Stüdyomuzun yaklaşımı, değerleri ve oyunculara bakış açımız.</p>
+            <span class="feat-go">DAHA FAZLASI <span>→</span></span>
+          </a>
+          <a href="ticket.html" class="feat-card">
+            <span class="feat-num">04 · DESTEK</span>
+            <h3>Destek</h3>
+            <p>Bir sorunun mu var? Destek talebi oluştur, ekibimiz yardımcı olsun.</p>
+            <span class="feat-go">TALEP OLUŞTUR <span>→</span></span>
+          </a>
+        </div>
+      </div>
     </section>
 
     <!-- KAYAN ŞERİT -->
