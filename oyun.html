@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chasing The Shlump | HEXAGES GAMES</title>
+  <title>Chasing the SHlump | HEXAGES GAMES</title>
   <meta name="description" content="Chasing the SHlump, HEXAGES GAMES tarafından geliştiriliyor. Geliştirici duyuruları, güncellemeler ve oyun haberleri." />
   <link rel="canonical" href="https://hexagesgames.vercel.app/oyun.html?id=chasing-the-shlump" />
   <meta property="og:type" content="website" />
@@ -17,7 +17,7 @@
   {
     "@context": "https://schema.org",
     "@type": "VideoGame",
-    "name": "Chasing The Shlump",
+    "name": "Chasing the SHlump",
     "url": "https://hexagesgames.vercel.app/oyun.html?id=chasing-the-shlump",
     "image": "https://hexagesgames.vercel.app/assets/games/chasing-the-shlump/cover.png",
     "gamePlatform": "PC",
@@ -32,16 +32,64 @@
 <body>
   <div id="layout-top"></div>
 
-  <main id="game-root">
-    <div class="v2-container" style="padding:200px 24px;text-align:center">
-      <p class="v2-lead" style="margin:0 auto">Oyun yükleniyor…</p>
-    </div>
+  <main>
+    <!-- HERO: görsel yolları doğrudan burada -->
+    <section class="gd-hero">
+      <img class="bg" src="assets/games/chasing-the-shlump/banner.png" alt="" aria-hidden="true">
+      <div class="veil"></div>
+      <div class="content">
+        <span class="mono-label">OYUN</span>
+        <img class="gd-logo" src="assets/games/chasing-the-shlump/logo.png" alt="Chasing the SHlump logosu" onerror="this.remove()">
+        <h1 class="gd-title">Chasing the SHlump</h1>
+        <p class="v2-lead" style="font-size:17px">HEXAGES GAMES'in geliştirdiği Chasing the SHlump, yakında duyurulacak ilk ana projemizdir.</p>
+        <div class="gd-facts">
+          <div class="gd-fact"><div class="k">DURUM</div><div class="v">Geliştiriliyor</div></div>
+          <div class="gd-fact"><div class="k">PLATFORM</div><div class="v">PC</div></div>
+          <div class="gd-fact"><div class="k">TÜR</div><div class="v">Aksiyon / Macera</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="v2-section">
+      <div class="v2-container gd-grid">
+        <div>
+          <!-- HABERLER (Firestore'dan yüklenir) -->
+          <span class="mono-label">GELİŞTİRİCİ HABERLERİ</span>
+          <h2 class="v2-h2">HABERLER</h2>
+          <div id="news-list" style="margin-top:28px"><div class="v2-empty">HABERLER YÜKLENİYOR…</div></div>
+
+          <!-- HAKKINDA + EKRAN GÖRÜNTÜLERİ: görsel yolları doğrudan burada -->
+          <div style="margin-top:64px">
+            <span class="mono-label">HAKKINDA</span>
+            <h2 class="v2-h2">OYUN HAKKINDA</h2>
+            <p class="v2-lead">Oyun hakkında detaylı bilgiler, geliştirme güncellemeleri ve yayın tarihi açıklandığında bu sayfadan takip edebilirsiniz.</p>
+            <div class="gd-shots">
+              <img src="assets/games/chasing-the-shlump/screenshot-1.png" alt="Chasing the SHlump ekran görüntüsü 1" loading="lazy">
+              <img src="assets/games/chasing-the-shlump/screenshot-2.png" alt="Chasing the SHlump ekran görüntüsü 2" loading="lazy">
+              <img src="assets/games/chasing-the-shlump/screenshot-3.png" alt="Chasing the SHlump ekran görüntüsü 3" loading="lazy">
+              <img src="assets/games/chasing-the-shlump/screenshot-4.png" alt="Chasing the SHlump ekran görüntüsü 4" loading="lazy">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="side-box">
+            <h4>HABERDAR OL</h4>
+            <p>Yeni duyurular ve geliştirme notları ilk olarak Discord'da paylaşılır.</p>
+            <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="btn-download" style="margin-top:20px;width:100%;justify-content:center;font-size:11px;padding:14px 20px">DİSCORD'A KATIL →</a>
+          </div>
+          <div class="side-box" style="margin-top:20px">
+            <h4>DİĞER OYUNLAR</h4>
+            <a href="oyunlar.html" class="nav-link" style="display:inline-block;margin-top:6px">→ OYUN KATALOĞUNA DÖN</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <div id="layout-footer"></div>
 
   <script type="module">
-    import { getGame } from './js/games.js';
     import { getNavHTML, getFooterHTML } from './js/layout.js';
     import { initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav, getGameNews } from './js/app.js';
 
@@ -49,132 +97,36 @@
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
     initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
 
-    const root = document.getElementById('game-root');
-    const id = new URLSearchParams(location.search).get('id');
-    const game = getGame(id);
-
-    function el(tag, cls, text) {
+    const list = document.getElementById('news-list');
+    const el = (tag, cls, text) => {
       const n = document.createElement(tag);
       if (cls) n.className = cls;
       if (text !== undefined) n.textContent = text;
       return n;
-    }
+    };
+    const fmtDate = iso => iso ? new Date(iso).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
 
-    function fmtDate(iso) {
-      if (!iso) return '';
-      return new Date(iso).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-    }
-
-    if (!game) {
-      root.innerHTML = `
-        <div class="v2-404" style="min-height:70vh">
-          <div>
-            <p class="mono-label">// HATA</p>
-            <h1 class="v2-h2" style="margin:16px 0">OYUN BULUNAMADI</h1>
-            <p class="v2-lead" style="margin:0 auto 28px">Aradığınız oyun mevcut değil ya da kaldırılmış olabilir.</p>
-            <a href="oyunlar.html" class="btn-download">OYUNLARA DÖN</a>
-          </div>
-        </div>`;
-    } else {
-      document.title = `${game.name} | HEXAGES GAMES`;
-      root.innerHTML = '';
-
-      // HERO
-      const hero = el('section', 'gd-hero');
-      const bg = el('img', 'bg'); bg.src = game.images.banner; bg.alt = ''; bg.setAttribute('aria-hidden', 'true');
-      const content = el('div', 'content');
-      content.innerHTML = `
-        <span class="mono-label">// OYUN</span>
-        <img class="gd-logo" src="${game.images.logo}" alt="${game.name} logosu" onerror="this.remove()">
-        <h1 class="gd-title">${game.name}</h1>
-        <p class="v2-lead" style="font-size:17px">${game.summary}</p>
-        <div class="gd-facts">
-          <div class="gd-fact"><div class="k">DURUM</div><div class="v">${game.status}</div></div>
-          <div class="gd-fact"><div class="k">PLATFORM</div><div class="v">${game.platform}</div></div>
-          <div class="gd-fact"><div class="k">TÜR</div><div class="v">${game.genre}</div></div>
-        </div>`;
-      hero.append(bg, el('div', 'veil'), content);
-      root.appendChild(hero);
-
-      // GÖVDE
-      const section = el('section', 'v2-section');
-      const wrap = el('div', 'v2-container gd-grid');
-      const main = el('div');
-      const side = el('div');
-
-      // Haberler
-      main.appendChild(el('span', 'mono-label', '// GELİŞTİRİCİ HABERLERİ'));
-      main.appendChild(el('h2', 'v2-h2', 'HABERLER'));
-      const newsList = el('div');
-      newsList.style.marginTop = '28px';
-      newsList.appendChild(el('div', 'v2-empty', 'HABERLER YÜKLENİYOR…'));
-      main.appendChild(newsList);
-
-      // Hakkında + ekran görüntüleri
-      const about = el('div');
-      about.style.marginTop = '64px';
-      about.appendChild(el('span', 'mono-label', '// HAKKINDA'));
-      about.appendChild(el('h2', 'v2-h2', 'OYUN HAKKINDA'));
-      about.appendChild(el('p', 'v2-lead', game.description));
-      const shots = el('div', 'gd-shots');
-      game.images.screenshots.forEach((src, i) => {
-        const img = el('img'); img.src = src; img.alt = `${game.name} ekran görüntüsü ${i + 1}`; img.loading = 'lazy';
-        shots.appendChild(img);
-      });
-      about.appendChild(shots);
-      main.appendChild(about);
-
-      // Yan panel
-      const box = el('div', 'side-box');
-      box.appendChild(el('h4', '', 'HABERDAR OL'));
-      box.appendChild(el('p', '', 'Yeni duyurular ve geliştirme notları ilk olarak Discord\'da paylaşılır.'));
-      const dc = el('a', 'btn-download', "DİSCORD'A KATIL →");
-      dc.href = 'https://discord.gg/ETe46SWQtC'; dc.target = '_blank'; dc.rel = 'noopener';
-      dc.style.cssText = 'margin-top:20px;width:100%;justify-content:center;font-size:11px;padding:14px 20px';
-      box.appendChild(dc);
-      side.appendChild(box);
-
-      const back = el('div', 'side-box');
-      back.style.marginTop = '20px';
-      back.appendChild(el('h4', '', 'DİĞER OYUNLAR'));
-      const backLink = el('a', 'nav-link', '→ OYUN KATALOĞUNA DÖN');
-      backLink.href = 'oyunlar.html'; backLink.style.cssText = 'display:inline-block;margin-top:6px';
-      back.appendChild(backLink);
-      side.appendChild(back);
-
-      wrap.append(main, side);
-      section.appendChild(wrap);
-      root.appendChild(section);
-
-      // Haberleri Firestore'dan yükle (sadece gerçek kayıtlar)
-      (async () => {
-        try {
-          const items = await getGameNews(game.id);
-          newsList.innerHTML = '';
-          if (!items.length) {
-            newsList.appendChild(el('div', 'v2-empty', 'HENÜZ HABER YAYINLANMADI'));
-            return;
+    (async () => {
+      try {
+        const items = await getGameNews('chasing-the-shlump');
+        list.innerHTML = '';
+        if (!items.length) { list.appendChild(el('div', 'v2-empty', 'HENÜZ HABER YAYINLANMADI')); return; }
+        items.forEach(n => {
+          const card = el('article', 'news-card');
+          const top = el('div', 'top');
+          top.append(el('span', 'news-badge', n.category || 'Haber'), el('span', 'news-date', fmtDate(n.createdAt)));
+          card.append(top, el('h3', '', n.title || ''), el('div', 'body', n.body || ''));
+          if (n.imageURL) {
+            const img = el('img', 'news-img'); img.src = n.imageURL; img.alt = n.title || ''; img.loading = 'lazy';
+            card.appendChild(img);
           }
-          items.forEach(n => {
-            const card = el('article', 'news-card');
-            const top = el('div', 'top');
-            top.append(el('span', 'news-badge', n.category || 'Haber'), el('span', 'news-date', fmtDate(n.createdAt)));
-            const h = el('h3', '', n.title || '');
-            const body = el('div', 'body', n.body || '');
-            card.append(top, h, body);
-            if (n.imageURL) {
-              const img = el('img', 'news-img'); img.src = n.imageURL; img.alt = n.title || ''; img.loading = 'lazy';
-              card.appendChild(img);
-            }
-            newsList.appendChild(card);
-          });
-        } catch (err) {
-          console.warn('Haberler yüklenemedi:', err.code || err.message);
-          newsList.innerHTML = '';
-          newsList.appendChild(el('div', 'v2-empty', 'HABERLER ŞU AN YÜKLENEMİYOR. DAHA SONRA TEKRAR DENEYİN.'));
-        }
-      })();
-    }
+          list.appendChild(card);
+        });
+      } catch (err) {
+        list.innerHTML = '';
+        list.appendChild(el('div', 'v2-empty', 'HABERLER ŞU AN YÜKLENEMİYOR. DAHA SONRA TEKRAR DENEYİN.'));
+      }
+    })();
   </script>
 </body>
 </html>
