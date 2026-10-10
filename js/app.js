@@ -193,6 +193,32 @@ function initReveal() {
 }
 
 
+// Masaüstü profil açılır menüsü: butona tıklanınca menü açılır, doğrudan sayfaya gitmez.
+function bindUserMenu() {
+  const menu = document.getElementById('user-menu');
+  if (!menu) return;
+  const btn = menu.querySelector('.user-menu-btn');
+  const panel = menu.querySelector('.user-menu-panel');
+  const setOpen = (open) => {
+    menu.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  };
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setOpen(!menu.classList.contains('open'));
+  });
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { setOpen(false); btn.focus(); }
+  });
+  document.getElementById('um-logout')?.addEventListener('click', async () => {
+    try { await signOut(auth); } finally { window.location.href = 'index.html'; }
+  });
+  panel.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
+}
+
 function initAuthNav() {
   onAuthStateChanged(auth, (user) => {
     const navAuth = document.getElementById('nav-auth');
@@ -201,7 +227,25 @@ function initAuthNav() {
     if (user) {
       const name = user.displayName ? user.displayName.split(' ')[0].toUpperCase() : 'PROFİL';
       const adminLink = '';
-      navAuth.innerHTML = `<div style="display:flex;align-items:center;gap:10px">${adminLink}<a href="profil.html" class="btn-profile">👤 ${sanitize(name)}</a></div>`;
+      const initials = sanitize(name);
+      navAuth.innerHTML = `
+        <div class="user-menu" id="user-menu">
+          <button class="btn-profile user-menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="user-menu-panel">
+            <span class="um-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="um-name">${initials}</span>
+          </button>
+          <div class="user-menu-panel" id="user-menu-panel" role="menu">
+            <div class="um-head">
+              <span class="um-head-name">${sanitize(user.displayName || 'Oyuncu')}</span>
+              <span class="um-head-mail">${sanitize(user.email || '')}</span>
+            </div>
+            <a href="profil.html" role="menuitem" class="um-item"><span>Profil</span><small>Hesap ve destek talepleri</small></a>
+            <a href="ayarlar.html" role="menuitem" class="um-item"><span>Ayarlar</span><small>Görünüm ve hesap tercihleri</small></a>
+            <a href="privacy.html" role="menuitem" class="um-item"><span>Gizlilik Politikası</span><small>Verilerinizin nasıl korunduğu</small></a>
+            <button type="button" role="menuitem" class="um-item um-logout" id="um-logout"><span>Çıkış Yap</span><small>Bu cihazdaki oturumu kapat</small></button>
+          </div>
+        </div>`;
+      bindUserMenu();
       if (mobileAuth) {
         const mobileAdminLink = '';
         mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">→ PROFİL (${sanitize(user.email || '')})</a>`;
