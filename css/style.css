@@ -1710,3 +1710,13 @@ section[style*="padding-top:128px"] .mono-label { margin-bottom: 4px; }
 
 /* ===== V6 — Mobil menü: küçük ekranlarda kaydırılabilir ===== */
 .mobile-menu { max-height: calc(100vh - 64px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+/* ===== V7 — Masaüstü açılır menü: sayfa linkleri ===== */
+.user-menu-panel { max-height: calc(100vh - 100px); overflow-y: auto; }
+.um-group-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .18em; color: var(--muted-foreground); padding: 14px 20px 6px; }
+.um-link {
+  display: block; padding: 11px 20px; font-family: var(--font-heading); font-weight: 700; font-size: 17px;
+  letter-spacing: .02em; color: var(--foreground); border-bottom: 1px solid var(--border); transition: background .2s, color .2s, padding-left .2s;
+}
+.um-link:hover { background: var(--card-hover); color: var(--accent); padding-left: 26px; }
+.um-link:last-of-type { border-bottom: 1px solid var(--border); }
