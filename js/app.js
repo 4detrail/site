@@ -247,7 +247,9 @@ function initAuthNav() {
         </div>`;
       bindUserMenu();
       if (mobileAuth) {
-        const mobileAdminLink = '';
+        const mobileAdminLink = isAdmin(user.email)
+          ? `<a href="admin-haberler.html" class="nav-link" style="color:var(--accent)">→ OYUN HABERLERİ (YÖNETİM)</a><a href="guvenlik.html" class="nav-link" style="color:var(--accent)">→ GÜVENLİK PANELİ</a>`
+          : '';
         mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">→ PROFİL (${sanitize(user.email || '')})</a>`;
       }
     } else {
