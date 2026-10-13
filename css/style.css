@@ -1823,3 +1823,7 @@ section[style*="padding-top:128px"] .mono-label { margin-bottom: 4px; }
 @media (max-width: 860px) {
   .hero-title { text-align: center; font-size: clamp(56px, 20vw, 110px); }
 }
+
+/* ===== Beyaz tema: yazı seçim rengi (koyu temaya dokunmaz) ===== */
+.light ::selection { background: #2563eb; color: #ffffff; }
+.light ::-moz-selection { background: #2563eb; color: #ffffff; }
