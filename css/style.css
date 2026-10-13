@@ -1821,5 +1821,5 @@ section[style*="padding-top:128px"] .mono-label { margin-bottom: 4px; }
 }
 .hero-title .accent-line { font-weight: 400; }
 @media (max-width: 860px) {
-  .hero-title { text-align: center; }
+  .hero-title { text-align: center; font-size: clamp(56px, 20vw, 110px); }
 }
