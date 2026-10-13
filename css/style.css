@@ -1804,3 +1804,19 @@ section[style*="padding-top:128px"] .mono-label { margin-bottom: 4px; }
   .hero-symbols { right: -7em; opacity: .16; font-size: 9px; }
   .sym span { display: none; }
 }
+
+/* ===== Ana sayfa başlığı: Cut the crap fontu (sadece HEXAGES GAMES) ===== */
+@font-face {
+  font-family: 'Cut the crap';
+  src: url('../fonts/cut-the-crap.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+.hero-title {
+  font-family: 'Cut the crap', var(--font-heading);
+  font-weight: 400;
+  font-synthesis: none;
+  font-size: clamp(46px, 6.2vw, 92px);
+}
+.hero-title .accent-line { font-weight: 400; }
