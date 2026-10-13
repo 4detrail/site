@@ -22,7 +22,7 @@ export function getNavHTML() {
 <nav id="main-nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo" aria-label="HEXAGES GAMES ana sayfa">
-      <img src="logom1.png" alt="HEXAGES GAMES logo" width="32" height="32">
+      <img class="logo-dark" src="logo-white.png" alt="HEXAGES GAMES logo" width="36" height="32"><img class="logo-light" src="logo-black.png" alt="" aria-hidden="true" width="36" height="32">
       <span>HEXAGES GAMES</span>
     </a>
     <ul class="nav-links">${desktop}</ul>
@@ -52,7 +52,7 @@ export function getFooterHTML() {
     <div class="footer-grid">
       <div>
         <div class="footer-logo">
-          <img src="logom1.png" alt="HEXAGES GAMES logo" width="32" height="32">
+          <img class="logo-dark" src="logo-white.png" alt="HEXAGES GAMES logo" width="36" height="32"><img class="logo-light" src="logo-black.png" alt="" aria-hidden="true" width="36" height="32">
           <span>HEXAGES GAMES</span>
         </div>
         <p class="text-muted text-mono" style="font-size:13px;line-height:1.7">Oyun stüdyosu.<br>Oyunlarımızı sizinle birlikte şekillendiriyoruz.</p>

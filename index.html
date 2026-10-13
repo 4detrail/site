@@ -70,11 +70,11 @@
     <!-- HERO -->
     <section class="hero" id="hero" style="position:relative;overflow:hidden">
       <div class="hero-glow" aria-hidden="true"></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden" aria-hidden="true">
-        <div class="hero-hex-float" style="width:760px;height:760px;opacity:0.05;border:1px solid var(--foreground);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexRotate 60s linear infinite"></div>
-        <div style="position:absolute;width:480px;height:480px;opacity:0.06;border:1px solid var(--accent);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexRotate 40s linear infinite reverse"></div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hex hex-a"></div>
+        <div class="hex hex-b"></div>
       </div>
-      <div class="hero-content" style="max-width:1200px;margin:0 auto;padding:0 24px;width:100%;position:relative">
+      <div class="hero-content">
         <div class="hero-badge">OYUN STÜDYOSU · 2026</div>
         <h1 class="hero-title">HEXAGES<br><span class="accent-line">GAMES</span></h1>
         <p class="hero-sub" style="margin-top:28px">Oyunlarımızı özenle tasarlıyor, her detayda kaliteden ödün vermeden geliştiriyoruz. Yeni projelerimiz ve haberlerimiz burada.</p>
@@ -88,9 +88,10 @@
 
     <!-- KAYAN ŞERİT -->
     <div class="ticker" aria-hidden="true">
-      <div class="ticker-track">
-        <span>CHASING THE SHLUMP<b>✦</b></span><span>APERON LAUNCHER<b>✦</b></span><span>OYUN HABERLERİ<b>✦</b></span><span>TOPLULUK<b>✦</b></span>
-        <span>CHASING THE SHLUMP<b>✦</b></span><span>APERON LAUNCHER<b>✦</b></span><span>OYUN HABERLERİ<b>✦</b></span><span>TOPLULUK<b>✦</b></span>
+      <div class="ticker-track" id="ticker-track">
+        <div class="ticker-group">
+          <span>CHASING THE SHLUMP<b>✦</b></span><span>APERON LAUNCHER<b>✦</b></span><span>OYUN HABERLERİ<b>✦</b></span><span>TOPLULUK<b>✦</b></span>
+        </div>
       </div>
     </div>
 
@@ -167,6 +168,41 @@
     @keyframes hexRotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
     @media (max-width: 860px) { #spotlight { grid-template-columns: 1fr !important; gap: 48px !important; } }
   </style>
+
+  <script>
+(function(){
+    // Kayan şerit: ekran ne kadar geniş olursa olsun boşluk kalmaz, döngü kesintisiz
+    function initTicker() {
+      const track = document.getElementById('ticker-track');
+      if (!track) return;
+      const base = track.querySelector('.ticker-group');
+      const unit = base.innerHTML;
+      const build = () => {
+        track.innerHTML = '';
+        const first = document.createElement('div');
+        first.className = 'ticker-group';
+        first.innerHTML = unit;
+        track.appendChild(first);
+        // tek grubu en az ekran genişliği + 1 set kadar uzat
+        let guard = 0;
+        while (first.scrollWidth < window.innerWidth * 1.2 && guard++ < 30) first.insertAdjacentHTML('beforeend', unit);
+        // birebir aynı ikinci grup: animasyon tam -%50 kayınca başa dikişsiz döner
+        const second = first.cloneNode(true);
+        second.setAttribute('aria-hidden', 'true');
+        track.appendChild(second);
+        // hız sabit kalsın (px/sn)
+        track.style.setProperty('--ticker-dur', (first.scrollWidth / 70) + 's');
+      };
+      // Hemen kur; font/sayfa yüklenince ve ekran genişliği değişince yeniden hesapla
+      build();
+      let w = innerWidth, t;
+      addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { if (innerWidth !== w) { w = innerWidth; build(); } }, 200); });
+      addEventListener('load', build);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+    }
+    initTicker();
+})();
+  </script>
 
   <script type="module">
     import { getNavHTML, getFooterHTML } from './js/layout.js';
