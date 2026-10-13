@@ -24,7 +24,7 @@
           <p class="desc">Görünen adınızı ve şifrenizi buradan yönetin.</p>
           <div id="acc-logged-out" style="display:none">
             <p class="v2-lead" style="margin:0 0 20px">Hesap ayarlarını düzenlemek için giriş yapın.</p>
-            <a href="giris.html" class="btn-download">GİRİŞ YAP</a>
+            <a href="giris" class="btn-download">GİRİŞ YAP</a>
           </div>
           <div id="acc-logged-in" style="display:none">
             <div class="v2-row" style="flex-direction:column;align-items:stretch">
@@ -74,8 +74,8 @@
           <h2>YÖNETİM</h2>
           <p class="desc">Bu bölüm yalnızca yetkili yöneticilere görünür.</p>
           <div class="v2-link-grid">
-            <a href="admin-haberler.html" class="v2-link-card"><div class="t">OYUN HABERLERİ</div><div class="d">Oyun sayfalarına haber ekle, düzenle, sil.</div></a>
-            <a href="guvenlik.html" class="v2-link-card"><div class="t">GÜVENLİK PANELİ</div><div class="d">Güvenlik kayıtlarını incele.</div></a>
+            <a href="admin-haberler" class="v2-link-card"><div class="t">OYUN HABERLERİ</div><div class="d">Oyun sayfalarına haber ekle, düzenle, sil.</div></a>
+            <a href="guvenlik" class="v2-link-card"><div class="t">GÜVENLİK PANELİ</div><div class="d">Güvenlik kayıtlarını incele.</div></a>
           </div>
         </div>
 
@@ -182,7 +182,7 @@
 
     $('s-logout').addEventListener('click', async () => {
       await signOut(auth);
-      location.href = 'index.html';
+      location.href = '/';
     });
   </script>
 </body>

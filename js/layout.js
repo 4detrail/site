@@ -1,13 +1,13 @@
 // Ortak navbar & footer — tüm sayfalar bu dosyayı kullanır.
-// Not: Faturalandırma (fatura.html / dekont.html) arayüzden kaldırıldı; sayfalar arka planda çalışmaya devam eder.
+// Not: Faturalandırma (fatura / dekont) arayüzden kaldırıldı; sayfalar arka planda çalışmaya devam eder.
 
 const NAV_ITEMS = [
-  { href: 'index.html', label: 'ANA SAYFA' },
-  { href: 'oyunlar.html', label: 'OYUNLAR' },
-  { href: 'hakkimizda.html', label: 'HAKKIMIZDA' },
-  { href: 'launcher.html', label: 'LAUNCHER' },
-  { href: 'iletisim.html', label: 'İLETİŞİM' },
-  { href: 'ticket.html', label: 'DESTEK' }
+  { href: '/', label: 'ANA SAYFA' },
+  { href: 'oyunlar', label: 'OYUNLAR' },
+  { href: 'hakkimizda', label: 'HAKKIMIZDA' },
+  { href: 'launcher', label: 'LAUNCHER' },
+  { href: 'iletisim', label: 'İLETİŞİM' },
+  { href: 'ticket', label: 'DESTEK' }
 ];
 
 export function getNavHTML() {
@@ -21,14 +21,14 @@ export function getNavHTML() {
 
 <nav id="main-nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo" aria-label="HEXAGES GAMES ana sayfa">
+    <a href="/" class="nav-logo" aria-label="HEXAGES GAMES ana sayfa">
       <img class="logo-dark" src="logo-white.png" alt="HEXAGES GAMES logo" width="36" height="32"><img class="logo-light" src="logo-black.png" alt="" aria-hidden="true" width="36" height="32">
       <span>HEXAGES GAMES</span>
     </a>
     <ul class="nav-links">${desktop}</ul>
     <div class="nav-actions">
       <button class="btn-theme" id="theme-btn" type="button" aria-label="Temayı değiştir"><span id="theme-icon">☀</span></button>
-      <div id="nav-auth"><a href="giris.html" class="btn-login">GİRİŞ</a></div>
+      <div id="nav-auth"><a href="giris" class="btn-login">GİRİŞ</a></div>
       <button class="btn-hamburger" id="hamburger" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobile-menu">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
@@ -60,15 +60,15 @@ export function getFooterHTML() {
       <div>
         <p class="footer-heading">NAVİGASYON</p>
         <div class="footer-links">
-          <a href="index.html">→ ANA SAYFA</a>
-          <a href="oyunlar.html">→ OYUNLAR</a>
-          <a href="hakkimizda.html">→ HAKKIMIZDA</a>
-          <a href="launcher.html">→ LAUNCHER</a>
-          <a href="iletisim.html">→ İLETİŞİM</a>
-          <a href="ticket.html">→ DESTEK</a>
-          <a href="oyun.html?id=chasing-the-shlump">→ CHASING THE SHLUMP</a>
-          <a href="ayarlar.html">→ AYARLAR</a>
-          <a href="privacy.html">→ GİZLİLİK POLİTİKASI</a>
+          <a href="/">→ ANA SAYFA</a>
+          <a href="oyunlar">→ OYUNLAR</a>
+          <a href="hakkimizda">→ HAKKIMIZDA</a>
+          <a href="launcher">→ LAUNCHER</a>
+          <a href="iletisim">→ İLETİŞİM</a>
+          <a href="ticket">→ DESTEK</a>
+          <a href="oyun?id=chasing-the-shlump">→ CHASING THE SHLUMP</a>
+          <a href="ayarlar">→ AYARLAR</a>
+          <a href="privacy">→ GİZLİLİK POLİTİKASI</a>
         </div>
       </div>
       <div>
@@ -82,7 +82,7 @@ export function getFooterHTML() {
     </div>
     <div class="footer-bottom">
       <p class="text-muted text-mono" style="font-size:11px">© ${year} HEXAGES GAMES. TÜM HAKLARI SAKLIDIR.</p>
-      <p class="text-muted text-mono" style="font-size:11px"><a href="privacy.html" style="color:inherit">GİZLİLİK</a></p>
+      <p class="text-muted text-mono" style="font-size:11px"><a href="privacy" style="color:inherit">GİZLİLİK</a></p>
     </div>
   </div>
 </footer>

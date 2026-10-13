@@ -73,7 +73,7 @@
         <!-- Yetkisiz -->
         <div id="not-authorized" style="display:none;text-align:center;padding:64px 24px;border:1px solid var(--border)">
           <p style="font-family:var(--font-mono);font-size:13px;color:var(--muted-foreground);margin-bottom:24px">Bu sayfa yalnızca adminlere açıktır.</p>
-          <a href="index.html" class="btn-download" style="font-size:11px">ANA SAYFA</a>
+          <a href="/" class="btn-download" style="font-size:11px">ANA SAYFA</a>
         </div>
 
         <div id="fatura-content" style="display:none">
@@ -256,7 +256,7 @@
               <p style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground);line-height:1.7;margin-bottom:12px;white-space:pre-wrap">${sanitize(f.aciklama)}</p>
               <p style="font-family:var(--font-mono);font-size:10px;color:var(--muted-foreground)">Oluşturulma: ${createdAt}</p>
               <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
-                <a href="dekont.html?no=${encodeURIComponent(f.faturaNo)}" class="btn-submit" style="display:inline-block;padding:8px 18px;font-size:11px;text-decoration:none">
+                <a href="dekont?no=${encodeURIComponent(f.faturaNo)}" class="btn-submit" style="display:inline-block;padding:8px 18px;font-size:11px;text-decoration:none">
                   DEKONTu GÖRÜNTÜLE
                 </a>
                 <button onclick="window.deleteFaturaCard('${f.id}','${encodeURIComponent(f.dekontURL || '')}','${sanitize(f.faturaNo)}')" class="btn-submit" style="display:inline-block;padding:8px 18px;font-size:11px;background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.4);color:#f87171">

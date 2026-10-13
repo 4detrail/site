@@ -222,7 +222,7 @@
 
     onAuthStateChanged(auth, (user) => {
       if (!user) {
-        $('gate').innerHTML = '<p class="v2-lead" style="margin:0 auto 24px">Bu sayfayı görmek için giriş yapmalısınız.</p><a href="giris.html" class="btn-download">GİRİŞ YAP</a>';
+        $('gate').innerHTML = '<p class="v2-lead" style="margin:0 auto 24px">Bu sayfayı görmek için giriş yapmalısınız.</p><a href="giris" class="btn-download">GİRİŞ YAP</a>';
         return;
       }
       if (!isAdmin(user.email)) {

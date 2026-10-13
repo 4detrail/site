@@ -1,0 +1,165 @@
+{
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/anasayfa",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/admin-haberler.html",
+      "destination": "/admin-haberler",
+      "permanent": true
+    },
+    {
+      "source": "/ayarlar.html",
+      "destination": "/ayarlar",
+      "permanent": true
+    },
+    {
+      "source": "/dekont.html",
+      "destination": "/dekont",
+      "permanent": true
+    },
+    {
+      "source": "/fatura.html",
+      "destination": "/fatura",
+      "permanent": true
+    },
+    {
+      "source": "/giris.html",
+      "destination": "/giris",
+      "permanent": true
+    },
+    {
+      "source": "/guvenlik.html",
+      "destination": "/guvenlik",
+      "permanent": true
+    },
+    {
+      "source": "/hakkimizda.html",
+      "destination": "/hakkimizda",
+      "permanent": true
+    },
+    {
+      "source": "/iletisim.html",
+      "destination": "/iletisim",
+      "permanent": true
+    },
+    {
+      "source": "/launcher.html",
+      "destination": "/launcher",
+      "permanent": true
+    },
+    {
+      "source": "/oyun.html",
+      "destination": "/oyun",
+      "permanent": true
+    },
+    {
+      "source": "/oyunlar.html",
+      "destination": "/oyunlar",
+      "permanent": true
+    },
+    {
+      "source": "/pluginlerimiz.html",
+      "destination": "/pluginlerimiz",
+      "permanent": true
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/profil.html",
+      "destination": "/profil",
+      "permanent": true
+    },
+    {
+      "source": "/sifremi-unuttum.html",
+      "destination": "/sifremi-unuttum",
+      "permanent": true
+    },
+    {
+      "source": "/ticket.html",
+      "destination": "/ticket",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/admin-haberler",
+      "destination": "/admin-haberler.html"
+    },
+    {
+      "source": "/ayarlar",
+      "destination": "/ayarlar.html"
+    },
+    {
+      "source": "/dekont",
+      "destination": "/dekont.html"
+    },
+    {
+      "source": "/fatura",
+      "destination": "/fatura.html"
+    },
+    {
+      "source": "/giris",
+      "destination": "/giris.html"
+    },
+    {
+      "source": "/guvenlik",
+      "destination": "/guvenlik.html"
+    },
+    {
+      "source": "/hakkimizda",
+      "destination": "/hakkimizda.html"
+    },
+    {
+      "source": "/iletisim",
+      "destination": "/iletisim.html"
+    },
+    {
+      "source": "/launcher",
+      "destination": "/launcher.html"
+    },
+    {
+      "source": "/oyun",
+      "destination": "/oyun.html"
+    },
+    {
+      "source": "/oyunlar",
+      "destination": "/oyunlar.html"
+    },
+    {
+      "source": "/pluginlerimiz",
+      "destination": "/pluginlerimiz.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/profil",
+      "destination": "/profil.html"
+    },
+    {
+      "source": "/sifremi-unuttum",
+      "destination": "/sifremi-unuttum.html"
+    },
+    {
+      "source": "/ticket",
+      "destination": "/ticket.html"
+    }
+  ]
+}

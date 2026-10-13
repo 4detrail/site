@@ -19,7 +19,7 @@
           <span class="mono-label">// OYUNCU DOSYASI</span>
           <h1 class="v2-h2" style="margin:16px 0 20px">GİRİŞ GEREKLİ</h1>
           <p class="v2-lead" style="margin:0 auto 28px">Profilinizi görüntülemek için hesabınızla giriş yapın.</p>
-          <a href="giris.html" class="btn-download">GİRİŞ YAP</a>
+          <a href="giris" class="btn-download">GİRİŞ YAP</a>
         </div>
 
         <div id="profile-content" style="display:none">
@@ -37,7 +37,7 @@
                 <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap" id="badges"></div>
               </div>
               <div style="display:flex;gap:10px;flex-wrap:wrap">
-                <a href="ayarlar.html" class="v2-btn ghost">AYARLAR</a>
+                <a href="ayarlar" class="v2-btn ghost">AYARLAR</a>
                 <button id="p-logout" class="v2-btn danger" type="button">ÇIKIŞ</button>
               </div>
             </div>
@@ -65,7 +65,7 @@
             <h2>SON DESTEK TALEPLERİ</h2>
             <p class="desc">Açtığınız en güncel talepler burada görünür.</p>
             <div id="recent-tickets"><p class="desc">Yükleniyor…</p></div>
-            <div style="margin-top:20px"><a href="ticket.html" class="v2-btn ghost">TÜM TALEPLER</a></div>
+            <div style="margin-top:20px"><a href="ticket" class="v2-btn ghost">TÜM TALEPLER</a></div>
           </div>
 
           <!-- Hızlı erişim -->
@@ -73,9 +73,9 @@
             <h2>HIZLI ERİŞİM</h2>
             <p class="desc">Sık kullanılan sayfalara buradan ulaşın.</p>
             <div class="v2-link-grid">
-              <a href="ticket.html" class="v2-link-card"><div class="t">DESTEK</div><div class="d">Talep aç ve yanıtları takip et.</div></a>
-              <a href="launcher.html" class="v2-link-card"><div class="t">LAUNCHER</div><div class="d">İndir ve güncellemeleri kontrol et.</div></a>
-              <a href="oyunlar.html" class="v2-link-card"><div class="t">OYUNLAR</div><div class="d">Geliştirmedeki projelerimiz.</div></a>
+              <a href="ticket" class="v2-link-card"><div class="t">DESTEK</div><div class="d">Talep aç ve yanıtları takip et.</div></a>
+              <a href="launcher" class="v2-link-card"><div class="t">LAUNCHER</div><div class="d">İndir ve güncellemeleri kontrol et.</div></a>
+              <a href="oyunlar" class="v2-link-card"><div class="t">OYUNLAR</div><div class="d">Geliştirmedeki projelerimiz.</div></a>
               <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="v2-link-card"><div class="t">DISCORD</div><div class="d">Topluluğa katıl.</div></a>
             </div>
           </div>
@@ -85,8 +85,8 @@
             <h2>YÖNETİM</h2>
             <p class="desc">Yetkili hesap olarak görüyorsunuz.</p>
             <div class="v2-link-grid">
-              <a href="admin-haberler.html" class="v2-link-card"><div class="t">OYUN HABERLERİ</div><div class="d">Oyun sayfalarına haber yönetimi.</div></a>
-              <a href="guvenlik.html" class="v2-link-card"><div class="t">GÜVENLİK PANELİ</div><div class="d">Güvenlik kayıtları.</div></a>
+              <a href="admin-haberler" class="v2-link-card"><div class="t">OYUN HABERLERİ</div><div class="d">Oyun sayfalarına haber yönetimi.</div></a>
+              <a href="guvenlik" class="v2-link-card"><div class="t">GÜVENLİK PANELİ</div><div class="d">Güvenlik kayıtları.</div></a>
             </div>
           </div>
         </div>
@@ -182,7 +182,7 @@
 
     $('p-logout').addEventListener('click', async () => {
       await signOut(auth);
-      location.href = 'index.html';
+      location.href = '/';
     });
   </script>
 </body>

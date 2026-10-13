@@ -5,19 +5,19 @@ User-agent: *
 Allow: /
 
 # Hesap ve kişisel sayfalar
-Disallow: /giris.html
-Disallow: /profil.html
-Disallow: /ayarlar.html
-Disallow: /sifremi-unuttum.html
+Disallow: /giris
+Disallow: /profil
+Disallow: /ayarlar
+Disallow: /sifremi-unuttum
 
 # Destek ve yönetim sayfaları
-Disallow: /ticket.html
-Disallow: /admin-haberler.html
-Disallow: /guvenlik.html
+Disallow: /ticket
+Disallow: /admin-haberler
+Disallow: /guvenlik
 
 # Faturalandırma (arayüzde yok, arka planda çalışır)
-Disallow: /fatura.html
-Disallow: /dekont.html
+Disallow: /fatura
+Disallow: /dekont
 
 # Veri / güncelleme dosyaları
 Disallow: /launcher-data.json

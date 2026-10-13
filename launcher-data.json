@@ -8,7 +8,7 @@
       "version": "0.1.0",
       "status": "development",
       "icon": "https://hexagesgame.vercel.app/logo.png",
-      "url": "https://hexagesgame.vercel.app/oyunlar.html"
+      "url": "https://hexagesgame.vercel.app/oyunlar"
     },
     {
       "id": "hex-sync",

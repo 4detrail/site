@@ -84,7 +84,7 @@
 
             <!-- Forgot password (login only) -->
             <div id="forgot-link" style="text-align:right;margin-bottom:12px">
-              <a href="sifremi-unuttum.html" style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground);transition:color 0.3s" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--muted-foreground)'">
+              <a href="sifremi-unuttum" style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground);transition:color 0.3s" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--muted-foreground)'">
                 Şifremi Unuttum →
               </a>
             </div>
@@ -125,7 +125,7 @@
 
     // Redirect if already logged in
     onAuthStateChanged(auth, user => {
-      if (user) window.location.href = 'profil.html';
+      if (user) window.location.href = 'profil';
     });
 
     let currentMode = 'login';
@@ -184,7 +184,7 @@
           const cred = await createUserWithEmailAndPassword(auth, email, password);
           if (name) await updateProfile(cred.user, { displayName: name });
         }
-        window.location.href = 'profil.html';
+        window.location.href = 'profil';
       } catch (err) {
         showError(errorMap[err.code] || 'Bir hata oluştu. Tekrar deneyin.');
         btn.disabled = false;
@@ -196,7 +196,7 @@
       hideError();
       try {
         await signInWithPopup(auth, new GoogleAuthProvider());
-        window.location.href = 'profil.html';
+        window.location.href = 'profil';
       } catch (err) {
         showError('Google girişi başarısız.');
       }

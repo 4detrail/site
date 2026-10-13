@@ -71,8 +71,8 @@
               Bu faturaya ait dekont bulunamadı. Süresi geçmiş veya silinmiş olabilir.<br>
               Dekontlar oluşturulma tarihinden itibaren en fazla <strong>50 gün</strong> saklanır.
             </p>
-            <a href="profil.html" class="btn-download" style="font-size:11px;display:inline-block;margin-right:12px">PROFİLİME DÖN</a>
-            <a href="iletisim.html" style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground);border-bottom:1px solid var(--border);padding-bottom:2px">İLETİŞİM</a>
+            <a href="profil" class="btn-download" style="font-size:11px;display:inline-block;margin-right:12px">PROFİLİME DÖN</a>
+            <a href="iletisim" style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground);border-bottom:1px solid var(--border);padding-bottom:2px">İLETİŞİM</a>
           </div>
         </div>
 
@@ -110,7 +110,7 @@
 
           <div style="text-align:center;margin-top:24px" class="no-print">
             <button onclick="window.print()" class="btn-submit" style="width:auto;padding:12px 28px;font-size:11px">🖨 YAZDIR / İNDİR</button>
-            <a href="profil.html" style="margin-left:16px;font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground);border-bottom:1px solid var(--border);padding-bottom:2px">← PROFİLE DÖN</a>
+            <a href="profil" style="margin-left:16px;font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground);border-bottom:1px solid var(--border);padding-bottom:2px">← PROFİLE DÖN</a>
           </div>
           <div style="text-align:center;margin-top:16px;font-family:var(--font-mono);font-size:10px;color:var(--muted-foreground)" class="no-print">
             ⚠ Dekontlar oluşturulma tarihinden itibaren 50 gün boyunca erişilebilir.
@@ -146,7 +146,7 @@
       // Giriş yapılmamış
       if (!user) {
         document.getElementById('nf-msg').innerHTML =
-          'Dekontu görüntülemek için <a href="giris.html" style="color:white;border-bottom:1px solid">giriş yapmalısınız</a>.';
+          'Dekontu görüntülemek için <a href="giris" style="color:white;border-bottom:1px solid">giriş yapmalısınız</a>.';
         showNotFound(); return;
       }
 

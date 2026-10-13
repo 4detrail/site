@@ -176,10 +176,10 @@ function initNavbar() {
     });
   }
   if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
-  const page = window.location.pathname.split('/').pop() || 'index.html';
+  const page = (window.location.pathname.split('/').pop() || '').replace(/\.html$/, '');
   document.querySelectorAll('.nav-link').forEach((link) => {
-    const href = link.getAttribute('href');
-    if (href === page || (page === '' && href === 'index.html')) link.classList.add('active');
+    const href = (link.getAttribute('href') || '').split('?')[0].replace(/^\//, '').replace(/\.html$/, '');
+    if (href === page) link.classList.add('active');
   });
 }
 
@@ -214,19 +214,19 @@ function bindUserMenu() {
     if (e.key === 'Escape') { setOpen(false); btn.focus(); }
   });
   document.getElementById('um-logout')?.addEventListener('click', async () => {
-    try { await signOut(auth); } finally { window.location.href = 'index.html'; }
+    try { await signOut(auth); } finally { window.location.href = '/'; }
   });
   panel.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
 }
 
 const SITE_PAGES = [
-  { href: 'index.html', label: 'ANA SAYFA' },
-  { href: 'oyunlar.html', label: 'OYUNLAR' },
-  { href: 'oyun.html?id=chasing-the-shlump', label: 'CHASING THE SHLUMP' },
-  { href: 'hakkimizda.html', label: 'HAKKIMIZDA' },
-  { href: 'launcher.html', label: 'LAUNCHER' },
-  { href: 'iletisim.html', label: 'İLETİŞİM' },
-  { href: 'ticket.html', label: 'DESTEK' }
+  { href: '/', label: 'ANA SAYFA' },
+  { href: 'oyunlar', label: 'OYUNLAR' },
+  { href: 'oyun?id=chasing-the-shlump', label: 'CHASING THE SHLUMP' },
+  { href: 'hakkimizda', label: 'HAKKIMIZDA' },
+  { href: 'launcher', label: 'LAUNCHER' },
+  { href: 'iletisim', label: 'İLETİŞİM' },
+  { href: 'ticket', label: 'DESTEK' }
 ];
 
 function pagesHTML() {
@@ -243,13 +243,13 @@ function renderUserMenu(navAuth, user) {
     : `<div class="um-head"><span class="um-head-name">Hoş geldin</span><span class="um-head-mail">Giriş yaparak profil ve destek özelliklerini kullan</span></div>`;
   const accountItems = loggedIn
     ? `<div class="um-group-label">HESAP</div>
-       <a href="profil.html" role="menuitem" class="um-item"><span>Profil</span><small>Hesap ve destek talepleri</small></a>
-       <a href="ayarlar.html" role="menuitem" class="um-item"><span>Ayarlar</span><small>Görünüm ve hesap tercihleri</small></a>
-       <a href="privacy.html" role="menuitem" class="um-item"><span>Gizlilik Politikası</span><small>Verilerinizin nasıl korunduğu</small></a>
+       <a href="profil" role="menuitem" class="um-item"><span>Profil</span><small>Hesap ve destek talepleri</small></a>
+       <a href="ayarlar" role="menuitem" class="um-item"><span>Ayarlar</span><small>Görünüm ve hesap tercihleri</small></a>
+       <a href="privacy" role="menuitem" class="um-item"><span>Gizlilik Politikası</span><small>Verilerinizin nasıl korunduğu</small></a>
        <button type="button" role="menuitem" class="um-item um-logout" id="um-logout"><span>Çıkış Yap</span><small>Bu cihazdaki oturumu kapat</small></button>`
     : `<div class="um-group-label">HESAP</div>
-       <a href="giris.html" role="menuitem" class="um-item"><span>Giriş Yap</span><small>Hesabınla giriş yap ya da kayıt ol</small></a>
-       <a href="privacy.html" role="menuitem" class="um-item"><span>Gizlilik Politikası</span><small>Verilerinizin nasıl korunduğu</small></a>`;
+       <a href="giris" role="menuitem" class="um-item"><span>Giriş Yap</span><small>Hesabınla giriş yap ya da kayıt ol</small></a>
+       <a href="privacy" role="menuitem" class="um-item"><span>Gizlilik Politikası</span><small>Verilerinizin nasıl korunduğu</small></a>`;
   navAuth.innerHTML = `
     <div class="user-menu" id="user-menu">
       <button class="btn-profile user-menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="user-menu-panel">
@@ -276,11 +276,11 @@ function initAuthNav() {
       renderUserMenu(navAuth, user);
       if (mobileAuth) {
         const mobileAdminLink = '';
-        mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil.html" class="nav-link">→ PROFİL (${sanitize(user.email || '')})</a>`;
+        mobileAuth.innerHTML = `${mobileAdminLink}<a href="profil" class="nav-link">→ PROFİL (${sanitize(user.email || '')})</a>`;
       }
     } else {
       renderUserMenu(navAuth, null);
-      if (mobileAuth) mobileAuth.innerHTML = `<a href="giris.html" class="nav-link">→ GİRİŞ YAP</a>`;
+      if (mobileAuth) mobileAuth.innerHTML = `<a href="giris" class="nav-link">→ GİRİŞ YAP</a>`;
     }
   });
 }

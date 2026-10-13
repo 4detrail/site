@@ -23,7 +23,7 @@ HEXAGES GAMES - GÖRSEL DOSYALARI VE KURULUM NOTLARI
    GAMES dizisine yeni bir kayıt ekle. Oyunlar listesi, oyun sayfası ve
    admin haber panelinin oyun seçimi otomatik olarak güncellenir.
 
-4) HABER YÖNETİMİ — admin-haberler.html
+4) HABER YÖNETİMİ — admin-haberler
    Yalnızca yönetici hesapları girebilir. Profil > Yönetim bölümünden erişilir.
    Haberler Firestore'da "game_news" koleksiyonunda tutulur.
 
