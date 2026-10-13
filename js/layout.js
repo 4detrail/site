@@ -4,7 +4,7 @@
 const NAV_ITEMS = [
   { href: 'index.html', label: 'ANA SAYFA' },
   { href: 'oyunlar.html', label: 'OYUNLAR' },
-  { href: 'pluginlerimiz.html', label: 'PLUGİNLER' },
+  { href: 'hakkimizda.html', label: 'HAKKIMIZDA' },
   { href: 'launcher.html', label: 'LAUNCHER' },
   { href: 'iletisim.html', label: 'İLETİŞİM' },
   { href: 'ticket.html', label: 'DESTEK' }
@@ -62,7 +62,7 @@ export function getFooterHTML() {
         <div class="footer-links">
           <a href="index.html">→ ANA SAYFA</a>
           <a href="oyunlar.html">→ OYUNLAR</a>
-          <a href="pluginlerimiz.html">→ PLUGİNLER</a>
+          <a href="hakkimizda.html">→ HAKKIMIZDA</a>
           <a href="launcher.html">→ LAUNCHER</a>
           <a href="iletisim.html">→ İLETİŞİM</a>
           <a href="ticket.html">→ DESTEK</a>

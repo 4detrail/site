@@ -223,7 +223,7 @@ const SITE_PAGES = [
   { href: 'index.html', label: 'ANA SAYFA' },
   { href: 'oyunlar.html', label: 'OYUNLAR' },
   { href: 'oyun.html?id=chasing-the-shlump', label: 'CHASING THE SHLUMP' },
-  { href: 'pluginlerimiz.html', label: 'PLUGİNLER' },
+  { href: 'hakkimizda.html', label: 'HAKKIMIZDA' },
   { href: 'launcher.html', label: 'LAUNCHER' },
   { href: 'iletisim.html', label: 'İLETİŞİM' },
   { href: 'ticket.html', label: 'DESTEK' }

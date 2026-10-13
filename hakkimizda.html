@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hakkımızda | HEXAGES GAMES</title>
+  <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="description" content="HEXAGES GAMES hakkında: stüdyomuz, hikâyemiz ve hedeflerimiz." />
+  <link rel="canonical" href="https://hexagesgames.vercel.app/hakkimizda.html" />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="layout-top"></div>
+  <main>
+    <section class="page-hero">
+      <div class="v2-container">
+        <span class="mono-label">STÜDYO</span>
+        <h1 class="page-title">HAKKIMIZDA</h1>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="content-wrap">
+        <!--
+          ╔══════════════════════════════════════════════╗
+          ║  HAKKIMIZDA METNİ BURAYA                     ║
+          ║  Her paragraf için <p>...</p> kullan.        ║
+          ║  Ara başlık için <h2>...</h2>                ║
+          ║  Madde listesi için <ul><li>...</li></ul>    ║
+          ║  Metin uzun olabilir, sayfa otomatik uzar.   ║
+          ╚══════════════════════════════════════════════╝
+        -->
+        <div class="about-body reveal" id="about-text">
+          <p>Hakkımızda metni buraya eklenecek.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="layout-footer"></div>
+
+  <script type="module">
+    import { getNavHTML, getFooterHTML } from './js/layout.js';
+    import { initStarfield, initCursorGlow, initTheme, initNavbar, initReveal, initAuthNav } from './js/app.js';
+    document.getElementById('layout-top').innerHTML = getNavHTML();
+    document.getElementById('layout-footer').innerHTML = getFooterHTML();
+    initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+  </script>
+</body>
+</html>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Oyunlar | HEXAGES GAMES</title>
-  <meta name="description" content="HEXAGES GAMES oyun kataloğu. Geliştirmekte olan projeler, duyurular ve oyun haberleri." />
+  <meta name="description" content="HEXAGES GAMES oyun kataloğu. Geliştirmekte olan projeler, duyurular, oyun haberleri ve Minecraft pluginleri." />
   <link rel="canonical" href="https://hexagesgames.vercel.app/oyunlar.html" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Oyunlar | HEXAGES GAMES" />
@@ -53,6 +53,13 @@
             <a href="https://discord.gg/ETe46SWQtC" target="_blank" rel="noopener" class="btn-download">DİSCORD'A KATIL →</a>
           </div>
         </div>
+
+        <!-- PLUGİNLERİMİZ -->
+        <div class="reveal" id="pluginlerimiz" style="margin-top:96px">
+          <span class="mono-label">PLUGİNLER</span>
+          <h2 class="v2-h2" style="margin:14px 0 32px">PLUGİNLERİMİZ</h2>
+          <div class="pl-grid" id="plugins-grid"></div>
+        </div>
       </div>
     </section>
   </main>
@@ -65,6 +72,20 @@
     document.getElementById('layout-top').innerHTML = getNavHTML();
     document.getElementById('layout-footer').innerHTML = getFooterHTML();
     initTheme(); initStarfield(); initCursorGlow(); initNavbar(); initReveal(); initAuthNav();
+
+    const plugins = [
+      { name: 'HEXAGES BANKNOTES', desc: 'Sunucu ekonomisi için banknot sistemi', url: 'https://modrinth.com/plugin/hexagesbanknotes', tag: 'EKONOMİ' },
+      { name: 'NEX ADMIN', desc: 'Güçlü yönetim ve moderasyon araçları', url: 'https://modrinth.com/plugin/nexadmin', tag: 'YÖNETİM' },
+      { name: 'NEX DUELS', desc: 'Oyuncu düelloları ve arena sistemi', url: 'https://modrinth.com/plugin/nexduels', tag: 'PVP' }
+    ];
+    const grid = document.getElementById('plugins-grid');
+    plugins.forEach(p => {
+      const a = document.createElement('a');
+      a.className = 'pl-card';
+      a.href = p.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.innerHTML = `<span class="pl-tag">${p.tag}</span><h3 class="pl-name">${p.name}</h3><p class="pl-desc">${p.desc}</p><span class="pl-link">MODRINTH'TE İNDİR →</span>`;
+      grid.appendChild(a);
+    });
   </script>
 </body>
 </html>
