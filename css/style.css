@@ -1452,7 +1452,6 @@ footer { border-top: 1px solid var(--border); background: var(--background); }
   background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 62%);
   animation: glowPulse 8s ease-in-out infinite; pointer-events: none;
 }
-.hero-hex-float { animation: floatY 9s ease-in-out infinite; }
 
 .ticker { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; background: var(--card); }
 .ticker-track { display: flex; width: max-content; animation: marquee var(--ticker-dur, 40s) linear infinite; will-change: transform; }
@@ -1754,19 +1753,8 @@ section[style*="padding-top:128px"] .mono-label { margin-bottom: 4px; }
 .hero-sub { margin: 28px 0 0 !important; font-size: 17px; max-width: 520px; }
 .hero-buttons { justify-content: flex-start; }
 .hero-badge, .hero-sub, .hero-buttons { animation-duration: .7s; }
-.hero-art { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.hero-art .hex {
-  position: absolute; right: 6vw; top: 50%; transform: translateY(-50%);
-  clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--foreground) 7%, transparent), transparent 60%);
-}
-.hero-art .hex-a { width: min(560px, 42vw); height: min(560px, 42vw); }
-.hero-art .hex-b { width: min(340px, 26vw); height: min(340px, 26vw); right: calc(6vw + min(110px, 8vw));
-  background: linear-gradient(135deg, var(--accent-soft), transparent 70%); }
 .hero-glow { right: -14vw; opacity: .5; animation: none; }
 @media (max-width: 860px) {
-  .hero-art { opacity: .5; }
-  .hero-art .hex { right: -18vw; }
   .hero-content > * { max-width: 100%; }
 }
 
@@ -1777,3 +1765,4 @@ section[style*="padding-top:128px"] .mono-label { margin-bottom: 4px; }
 .about-body strong { color: var(--foreground); }
 .about-body ul { margin: 0 0 22px 20px; color: var(--muted-foreground); line-height: 1.85; font-size: 17px; }
 .ct-card .ct-yt-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; }
+
