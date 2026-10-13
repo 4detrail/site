@@ -1817,6 +1817,9 @@ section[style*="padding-top:128px"] .mono-label { margin-bottom: 4px; }
   font-family: 'Cut the crap', var(--font-heading);
   font-weight: 400;
   font-synthesis: none;
-  font-size: clamp(46px, 6.2vw, 92px);
+  font-size: clamp(56px, 7vw, 104px);
 }
 .hero-title .accent-line { font-weight: 400; }
+@media (max-width: 860px) {
+  .hero-title { text-align: center; }
+}
