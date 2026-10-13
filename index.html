@@ -70,9 +70,19 @@
     <!-- HERO -->
     <section class="hero" id="hero" style="position:relative;overflow:hidden">
       <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-art" aria-hidden="true">
+      <div class="hero-symbols" id="hero-symbols">
+        <div class="sym s-main" style="--d:14"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg><span>OYUN</span></div>
+        <div class="sym s-cube" style="--d:22"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>LAUNCHER</span></div>
+        <div class="sym s-code" style="--d:30"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>PLUGİN</span></div>
+        <div class="sym s-sword" style="--d:18"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg><span>DÜELLO</span></div>
+        <div class="sym s-users" style="--d:26"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>TOPLULUK</span></div>
+        <i class="px px1"></i><i class="px px2"></i><i class="px px3"></i>
+      </div>
+    </div>
       <div class="hero-content">
         <div class="hero-badge">OYUN STÜDYOSU · 2026</div>
-        <h1 class="hero-title">HEXAGES<br><span class="accent-line">GAMES</span><span class="title-glow" aria-hidden="true"></span></h1>
+        <h1 class="hero-title">HEXAGES<br><span class="accent-line">GAMES</span></h1>
         <p class="hero-sub" style="margin-top:28px">Oyunlarımızı özenle tasarlıyor, her detayda kaliteden ödün vermeden geliştiriyoruz. Yeni projelerimiz ve haberlerimiz burada.</p>
         <div class="hero-buttons" style="margin-top:36px;display:flex;gap:14px;flex-wrap:wrap">
           <a href="oyun?id=chasing-the-shlump" class="btn-download">CHASING THE SHLUMP →</a>
@@ -161,8 +171,23 @@
   <div id="layout-footer"></div>
 
   <style>
+    @keyframes hexRotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
     @media (max-width: 860px) { #spotlight { grid-template-columns: 1fr !important; gap: 48px !important; } }
   </style>
+
+  <script>
+  (function(){
+    var box=document.getElementById('hero-symbols'), hero=document.getElementById('hero');
+    if(!box||!hero||!matchMedia('(pointer: fine)').matches) return;
+    var raf=0,x=0,y=0;
+    hero.addEventListener('mousemove',function(e){
+      var r=hero.getBoundingClientRect();
+      x=(e.clientX-r.left)/r.width-.5; y=(e.clientY-r.top)/r.height-.5;
+      if(!raf) raf=requestAnimationFrame(function(){raf=0;box.style.setProperty('--mx',x.toFixed(3));box.style.setProperty('--my',y.toFixed(3));});
+    });
+    hero.addEventListener('mouseleave',function(){box.style.setProperty('--mx',0);box.style.setProperty('--my',0);});
+  })();
+  </script>
 
   <script>
 (function(){
